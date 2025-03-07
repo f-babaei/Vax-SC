@@ -344,10 +344,70 @@
 			<CurrentLevel>1729600953962</CurrentLevel>
 			<ConnectionsId>1729600953958</ConnectionsId>
 			<Variables>
+				<Variable Class="AuxVariable">
+					<Id>1741271736030</Id>
+					<Name><![CDATA[downstreamDemand]]></Name>
+					<X>40</X><Y>10</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties External="true" Constant="false" Array="false">
+						<Formula><![CDATA[0]]></Formula>
+						<Value><![CDATA[0]]></Value>
+						<Color/>
+					</Properties>
+
+				</Variable>
+				<Variable Class="AuxVariable">
+					<Id>1741271736032</Id>
+					<Name><![CDATA[upstreamDelivery]]></Name>
+					<X>40</X><Y>40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties External="true" Constant="false" Array="false">
+						<Formula><![CDATA[0]]></Formula>
+						<Value><![CDATA[0]]></Value>
+						<Color/>
+					</Properties>
+
+				</Variable>
+				<Variable Class="AuxVariable">
+					<Id>1741271736034</Id>
+					<Name><![CDATA[downstreamDelivery]]></Name>
+					<X>40</X><Y>70</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties External="false" Constant="false" Array="false">
+						<Formula><![CDATA[vaxSupplyRate]]></Formula>
+						<Value><![CDATA[0]]></Value>
+						<Color/>
+					</Properties>
+
+				</Variable>
+				<Variable Class="AuxVariable">
+					<Id>1741271736036</Id>
+					<Name><![CDATA[upstreamOrder]]></Name>
+					<X>40</X><Y>100</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties External="false" Constant="false" Array="false">
+						<Formula><![CDATA[DesiredVaxOrder]]></Formula>
+						<Value><![CDATA[0]]></Value>
+						<Color/>
+					</Properties>
+
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1729601150844</Id>
 					<Name><![CDATA[Owner]]></Name>
-					<X>100</X><Y>60</Y>
+					<X>-60</X><Y>20</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -402,6 +462,31 @@
 					<Z>0</Z>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
+			<Presentation>
+				<RoundedRectangle>
+					<Id>1741271736026</Id>
+					<Name><![CDATA[roundRectangle]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>40</Width>
+					<Height>110</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<ArcRadius>10</ArcRadius>
+				</RoundedRectangle>
+			</Presentation>
 
 				</Level>
 			</Presentation>
@@ -515,7 +600,7 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[SCEcoSys]]></Type>
+						<Type><![CDATA[Site]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
@@ -748,7 +833,7 @@
 				<Variable Class="AuxVariable">
 					<Id>1741001372579</Id>
 					<Name><![CDATA[DeliveryDelay]]></Name>
-					<X>590</X><Y>230</Y>
+					<X>650</X><Y>180</Y>
 					<Label><X>5</X><Y>15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -763,7 +848,7 @@
 				<Variable Class="AuxVariable">
 					<Id>1741001461398</Id>
 					<Name><![CDATA[DesiredSupplyRate]]></Name>
-					<X>510</X><Y>270</Y>
+					<X>570</X><Y>220</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -778,8 +863,8 @@
 				<Variable Class="AuxVariable">
 					<Id>1741001549795</Id>
 					<Name><![CDATA[InventoryCoverageRatio]]></Name>
-					<X>280</X><Y>270</Y>
-					<Label><X>0</X><Y>-20</Y></Label>
+					<X>340</X><Y>220</Y>
+					<Label><X>-50</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -793,7 +878,7 @@
 				<Variable Class="AuxVariable">
 					<Id>1741001668345</Id>
 					<Name><![CDATA[MaxSupplyRate]]></Name>
-					<X>490</X><Y>390</Y>
+					<X>550</X><Y>340</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -808,7 +893,7 @@
 				<Variable Class="AuxVariable">
 					<Id>1741001685040</Id>
 					<Name><![CDATA[InventoryGap]]></Name>
-					<X>170</X><Y>400</Y>
+					<X>230</X><Y>350</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -823,7 +908,7 @@
 				<Variable Class="AuxVariable">
 					<Id>1741001703852</Id>
 					<Name><![CDATA[DesiredInventory]]></Name>
-					<X>340</X><Y>470</Y>
+					<X>400</X><Y>420</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -838,7 +923,7 @@
 				<Variable Class="AuxVariable">
 					<Id>1741002097973</Id>
 					<Name><![CDATA[DesiredVaxOrder]]></Name>
-					<X>100</X><Y>530</Y>
+					<X>160</X><Y>480</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -854,7 +939,7 @@
 					<Id>1741088743639</Id>
 					<Name><![CDATA[VOB]]></Name>
 					<Description><![CDATA[Vaccine Order Backlog]]></Description>
-					<X>560</X><Y>200</Y>
+					<X>620</X><Y>150</Y>
 					<Label><X>5</X><Y>15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -870,7 +955,7 @@
 					<Id>1741001135488</Id>
 					<Name><![CDATA[VOBD]]></Name>
 					<Description><![CDATA[Vaccine Order Backlog Deviation]]></Description>
-					<X>570</X><Y>150</Y>
+					<X>630</X><Y>100</Y>
 					<Label><X>15</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -887,7 +972,7 @@
 					<Id>1741001176738</Id>
 					<Name><![CDATA[VI]]></Name>
 					<Description><![CDATA[Vaccine Inventory]]></Description>
-					<X>350</X><Y>330</Y>
+					<X>410</X><Y>280</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -904,7 +989,7 @@
 					<Id>1741001191849</Id>
 					<Name><![CDATA[EVD]]></Name>
 					<Description><![CDATA[Expected Vaccine Demand]]></Description>
-					<X>420</X><Y>550</Y>
+					<X>480</X><Y>500</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -920,7 +1005,7 @@
 				<Variable Class="StockVariable">
 					<Id>1741086610876</Id>
 					<Name><![CDATA[VD]]></Name>
-					<X>410</X><Y>630</Y>
+					<X>470</X><Y>580</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -937,7 +1022,7 @@
 				<Variable Class="Flow">
 					<Id>1741002413897</Id>
 					<Name><![CDATA[vaxSupplyRate]]></Name>
-					<X>350</X><Y>330</Y>
+					<X>410</X><Y>280</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -956,13 +1041,13 @@
 				<Variable Class="Flow">
 					<Id>1741002627771</Id>
 					<Name><![CDATA[vaxDeliveryRate]]></Name>
-					<X>180</X><Y>330</Y>
+					<X>240</X><Y>280</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties TargetId="1741001176738" External="true" Constant="false" Array="false">
-						<Formula><![CDATA[0]]></Formula>
+					<Properties TargetId="1741001176738" External="false" Constant="false" Array="false">
+						<Formula><![CDATA[upstreamDelivery]]></Formula>
 						<Color/>
 						<ValveIndex>1</ValveIndex>
 						<Points>
@@ -975,7 +1060,7 @@
 				<Variable Class="Flow">
 					<Id>1741002648115</Id>
 					<Name><![CDATA[vaxOrderRate]]></Name>
-					<X>380</X><Y>150</Y>
+					<X>440</X><Y>100</Y>
 					<Label><X>5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -994,7 +1079,7 @@
 				<Variable Class="Flow">
 					<Id>1741015546596</Id>
 					<Name><![CDATA[orderFullfilRate]]></Name>
-					<X>570</X><Y>150</Y>
+					<X>630</X><Y>100</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1013,18 +1098,18 @@
 				<Variable Class="Flow">
 					<Id>1741019073116</Id>
 					<Name><![CDATA[vaxDemand]]></Name>
-					<X>210</X><Y>550</Y>
+					<X>270</X><Y>500</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties TargetId="1741001191849" External="true" Constant="false" Array="false">
-						<Formula><![CDATA[0]]></Formula>
+					<Properties TargetId="1741001191849" External="false" Constant="false" Array="false">
+						<Formula><![CDATA[downstreamDemand]]></Formula>
 						<Color/>
 						<Shadow>
 							<Id>1741020162325</Id>
 							<Name><![CDATA[<vaxDemand>]]></Name>
-							<X>460</X><Y>60</Y>
+							<X>500</X><Y>40</Y>
 							<Label><X>0</X><Y>-20</Y></Label>
 							<PublicFlag>false</PublicFlag>
 							<PresentationFlag>true</PresentationFlag>
@@ -1041,7 +1126,7 @@
 				<Variable Class="Flow">
 					<Id>1741019121291</Id>
 					<Name><![CDATA[changeInDemand]]></Name>
-					<X>570</X><Y>550</Y>
+					<X>630</X><Y>500</Y>
 					<Label><X>-25</X><Y>20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1061,7 +1146,7 @@
 					<Id>1741001757591</Id>
 					<Name><![CDATA[TDD]]></Name>
 					<Description><![CDATA[TargetDeliveryDelay]]></Description>
-					<X>420</X><Y>220</Y>
+					<X>480</X><Y>170</Y>
 					<Label><X>-40</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1083,7 +1168,7 @@
 					<Id>1741001768592</Id>
 					<Name><![CDATA[MOPT]]></Name>
 					<Description><![CDATA[Minimum Order Processing Time]]></Description>
-					<X>500</X><Y>470</Y>
+					<X>560</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1105,7 +1190,7 @@
 					<Id>1741001822128</Id>
 					<Name><![CDATA[TAOR]]></Name>
 					<Description><![CDATA[Time To Avgerage Order Rate]]></Description>
-					<X>600</X><Y>510</Y>
+					<X>660</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1127,7 +1212,7 @@
 					<Id>1741001923538</Id>
 					<Name><![CDATA[IAT]]></Name>
 					<Description><![CDATA[Inventory Adjustment Time]]></Description>
-					<X>120</X><Y>460</Y>
+					<X>180</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1149,7 +1234,7 @@
 					<Id>1741002075294</Id>
 					<Name><![CDATA[VSS]]></Name>
 					<Description><![CDATA[Vaccine Safety Stock]]></Description>
-					<X>240</X><Y>470</Y>
+					<X>300</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1175,7 +1260,7 @@
 					<Direction><X>90</X><Y>50</Y></Direction>
 					<Id>1741015339954</Id>
 					<Name><![CDATA[TDD - DesiredSupplyRate]]></Name>
-					<X>420</X><Y>220</Y>
+					<X>480</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1190,7 +1275,7 @@
 					<Direction><X>-80</X><Y>80</Y></Direction>
 					<Id>1741015799853</Id>
 					<Name><![CDATA[orderFullfilRate - DeliveryDelay]]></Name>
-					<X>670</X><Y>150</Y>
+					<X>730</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1205,7 +1290,7 @@
 					<Direction><X>220</X><Y>-180</Y></Direction>
 					<Id>1741016794612</Id>
 					<Name><![CDATA[vaxSupplyRate - orderFullfilRate]]></Name>
-					<X>450</X><Y>330</Y>
+					<X>510</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1220,7 +1305,7 @@
 					<Direction><X>-40</X><Y>-60</Y></Direction>
 					<Id>1741017065029</Id>
 					<Name><![CDATA[MaxSupplyRate - vaxSupplyRate]]></Name>
-					<X>490</X><Y>390</Y>
+					<X>550</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1235,7 +1320,7 @@
 					<Direction><X>-60</X><Y>60</Y></Direction>
 					<Id>1741017065033</Id>
 					<Name><![CDATA[DesiredSupplyRate - vaxSupplyRate]]></Name>
-					<X>510</X><Y>270</Y>
+					<X>570</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1250,7 +1335,7 @@
 					<Direction><X>-10</X><Y>-80</Y></Direction>
 					<Id>1741017147061</Id>
 					<Name><![CDATA[MOPT - MaxSupplyRate]]></Name>
-					<X>500</X><Y>470</Y>
+					<X>560</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1265,7 +1350,7 @@
 					<Direction><X>140</X><Y>60</Y></Direction>
 					<Id>1741017147065</Id>
 					<Name><![CDATA[VI - MaxSupplyRate]]></Name>
-					<X>350</X><Y>330</Y>
+					<X>410</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1280,7 +1365,7 @@
 					<Direction><X>150</X><Y>-70</Y></Direction>
 					<Id>1741017330662</Id>
 					<Name><![CDATA[TDD - VOBD]]></Name>
-					<X>420</X><Y>220</Y>
+					<X>480</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1295,7 +1380,7 @@
 					<Direction><X>10</X><Y>-140</Y></Direction>
 					<Id>1741017456210</Id>
 					<Name><![CDATA[DesiredInventory - VI]]></Name>
-					<X>340</X><Y>470</Y>
+					<X>400</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1310,7 +1395,7 @@
 					<Direction><X>-70</X><Y>-60</Y></Direction>
 					<Id>1741018229986</Id>
 					<Name><![CDATA[VI - InventoryCoverageRatio]]></Name>
-					<X>350</X><Y>330</Y>
+					<X>410</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1325,7 +1410,7 @@
 					<Direction><X>-160</X><Y>0</Y></Direction>
 					<Id>1741018642829</Id>
 					<Name><![CDATA[MOPT - DesiredInventory]]></Name>
-					<X>500</X><Y>470</Y>
+					<X>560</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1340,7 +1425,7 @@
 					<Direction><X>100</X><Y>0</Y></Direction>
 					<Id>1741018642834</Id>
 					<Name><![CDATA[VSS - DesiredInventory]]></Name>
-					<X>240</X><Y>470</Y>
+					<X>300</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1355,7 +1440,7 @@
 					<Direction><X>-180</X><Y>100</Y></Direction>
 					<Id>1741019299784</Id>
 					<Name><![CDATA[TAOR - changeInDemand]]></Name>
-					<X>600</X><Y>510</Y>
+					<X>660</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1370,7 +1455,7 @@
 					<Direction><X>0</X><Y>60</Y></Direction>
 					<Id>1741019299789</Id>
 					<Name><![CDATA[EVD - changeInDemand]]></Name>
-					<X>420</X><Y>550</Y>
+					<X>480</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1382,10 +1467,10 @@
 				<Link SourceId="1741020162325" TargetId="1741002648115" Polarity="null">
 					<Height>-26.882</Height>
 					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>110</X><Y>30</Y></Direction>
+					<Direction><X>20</X><Y>60</Y></Direction>
 					<Id>1741020182030</Id>
 					<Name><![CDATA[<vaxDemand> - vaxOrderRate]]></Name>
-					<X>460</X><Y>60</Y>
+					<X>500</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1400,7 +1485,7 @@
 					<Direction><X>-170</X><Y>-70</Y></Direction>
 					<Id>1741020729250</Id>
 					<Name><![CDATA[DesiredInventory - InventoryGap]]></Name>
-					<X>340</X><Y>470</Y>
+					<X>400</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1415,7 +1500,7 @@
 					<Direction><X>-180</X><Y>70</Y></Direction>
 					<Id>1741020729254</Id>
 					<Name><![CDATA[VI - InventoryGap]]></Name>
-					<X>350</X><Y>330</Y>
+					<X>410</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1430,7 +1515,7 @@
 					<Direction><X>50</X><Y>-60</Y></Direction>
 					<Id>1741020729255</Id>
 					<Name><![CDATA[IAT - InventoryGap]]></Name>
-					<X>120</X><Y>460</Y>
+					<X>180</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1440,12 +1525,12 @@
 					<Delay>false</Delay>
 				</Link>
 				<Link SourceId="1741001685040" TargetId="1741002097973" Polarity="null">
-					<Height>-63.411</Height>
+					<Height>-46.461</Height>
 					<PolarityPosition>0.95</PolarityPosition>
 					<Direction><X>-70</X><Y>130</Y></Direction>
 					<Id>1741020812358</Id>
 					<Name><![CDATA[InventoryGap - DesiredVaxOrder]]></Name>
-					<X>170</X><Y>400</Y>
+					<X>230</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1460,7 +1545,7 @@
 					<Direction><X>-170</X><Y>-60</Y></Direction>
 					<Id>1741084661475</Id>
 					<Name><![CDATA[vaxSupplyRate - InventoryCoverageRatio]]></Name>
-					<X>450</X><Y>330</Y>
+					<X>510</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1475,7 +1560,7 @@
 					<Direction><X>70</X><Y>-80</Y></Direction>
 					<Id>1741086848447</Id>
 					<Name><![CDATA[VD - changeInDemand]]></Name>
-					<X>410</X><Y>630</Y>
+					<X>470</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1490,7 +1575,7 @@
 					<Direction><X>10</X><Y>-80</Y></Direction>
 					<Id>1741087212689</Id>
 					<Name><![CDATA[VD - EVD]]></Name>
-					<X>410</X><Y>630</Y>
+					<X>470</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1505,7 +1590,7 @@
 					<Direction><X>100</X><Y>80</Y></Direction>
 					<Id>1741087375265</Id>
 					<Name><![CDATA[vaxDemand - VD]]></Name>
-					<X>310</X><Y>550</Y>
+					<X>370</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1520,7 +1605,7 @@
 					<Direction><X>30</X><Y>-80</Y></Direction>
 					<Id>1741087428387</Id>
 					<Name><![CDATA[vaxDemand - DesiredInventory]]></Name>
-					<X>310</X><Y>550</Y>
+					<X>370</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1535,7 +1620,7 @@
 					<Direction><X>-140</X><Y>-80</Y></Direction>
 					<Id>1741087428391</Id>
 					<Name><![CDATA[changeInDemand - DesiredInventory]]></Name>
-					<X>480</X><Y>550</Y>
+					<X>540</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1550,7 +1635,7 @@
 					<Direction><X>-210</X><Y>-20</Y></Direction>
 					<Id>1741087521151</Id>
 					<Name><![CDATA[vaxDemand - DesiredVaxOrder]]></Name>
-					<X>310</X><Y>550</Y>
+					<X>370</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1565,7 +1650,7 @@
 					<Direction><X>-380</X><Y>-20</Y></Direction>
 					<Id>1741087521156</Id>
 					<Name><![CDATA[changeInDemand - DesiredVaxOrder]]></Name>
-					<X>480</X><Y>550</Y>
+					<X>540</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1580,7 +1665,7 @@
 					<Direction><X>30</X><Y>30</Y></Direction>
 					<Id>1741088787450</Id>
 					<Name><![CDATA[VOB - DeliveryDelay]]></Name>
-					<X>560</X><Y>200</Y>
+					<X>620</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1595,7 +1680,7 @@
 					<Direction><X>-50</X><Y>70</Y></Direction>
 					<Id>1741088791154</Id>
 					<Name><![CDATA[VOB - DesiredSupplyRate]]></Name>
-					<X>560</X><Y>200</Y>
+					<X>620</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1610,7 +1695,7 @@
 					<Direction><X>170</X><Y>-40</Y></Direction>
 					<Id>1741088843849</Id>
 					<Name><![CDATA[TDD - VOB]]></Name>
-					<X>420</X><Y>220</Y>
+					<X>480</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1625,7 +1710,7 @@
 					<Direction><X>20</X><Y>30</Y></Direction>
 					<Id>1741088843850</Id>
 					<Name><![CDATA[VOBD - VOB]]></Name>
-					<X>570</X><Y>150</Y>
+					<X>630</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1640,7 +1725,67 @@
 					<Direction><X>130</X><Y>30</Y></Direction>
 					<Id>1741088843851</Id>
 					<Name><![CDATA[vaxOrderRate - VOB]]></Name>
-					<X>460</X><Y>150</Y>
+					<X>520</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+				<Link SourceId="1741002413897" Polarity="null">
+					<Height>-48.796</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>-470</X><Y>-210</Y></Direction>
+					<Id>1741107768419</Id>
+					<Name><![CDATA[vaxSupplyRate - ]]></Name>
+					<X>510</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+				<Link SourceId="1741002097973" Polarity="null">
+					<Height>27.729</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>-120</X><Y>-380</Y></Direction>
+					<Id>1741107971306</Id>
+					<Name><![CDATA[DesiredVaxOrder - ]]></Name>
+					<X>160</X><Y>480</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+				<Link TargetId="1741020162325" Polarity="null">
+					<Height>20.0</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>460</X><Y>30</Y></Direction>
+					<Id>1741108097989</Id>
+					<Name><![CDATA[ - <vaxDemand>]]></Name>
+					<X>40</X><Y>10</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+				<Link TargetId="1741002627771" Polarity="null">
+					<Height>20.0</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>270</X><Y>240</Y></Direction>
+					<Id>1741108114214</Id>
+					<Name><![CDATA[ - vaxDeliveryRate]]></Name>
+					<X>40</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1654,7 +1799,7 @@
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1741016824647</Id>
 					<Name><![CDATA[tfFunc]]></Name>
-					<X>710</X><Y>330</Y>
+					<X>770</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
