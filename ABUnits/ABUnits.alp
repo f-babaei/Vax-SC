@@ -153,7 +153,6 @@
 		<ActiveObjectClass>
 			<Id>1743613314892</Id>
 			<Name><![CDATA[Unit]]></Name>
-			<Import><![CDATA[import absites.Site;]]></Import>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1743613314887</Id>
@@ -254,7 +253,7 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[Site]]></Type>
+						<Type><![CDATA[Agent]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
