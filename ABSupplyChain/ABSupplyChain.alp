@@ -123,7 +123,7 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[500//normal(50, 250, getDefaultRandomGenerator())]]></Formula>
+						<Formula><![CDATA[200//normal(5, 20)]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
@@ -138,7 +138,7 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[max(0, normal(5, 10, getDefaultRandomGenerator()))]]></Formula>
+						<Formula><![CDATA[max(0, normal(5, 10))]]></Formula>
 						<Color/>
 						<ValveIndex>1</ValveIndex>
 						<Points>
@@ -166,7 +166,7 @@
 					<SourceConnectableItemReference>
 						<PackageName><![CDATA[absites]]></PackageName>
 						<ClassName><![CDATA[VaxManufacturer]]></ClassName>
-						<ItemName><![CDATA[downstreamDelivery]]></ItemName>
+						<ItemName><![CDATA[downstreamShipment]]></ItemName>
 					</SourceConnectableItemReference>
 					<TargetEmbeddedObjectReference>
 						<PackageName><![CDATA[absupplychain]]></PackageName>
@@ -236,7 +236,7 @@
 					<SourceConnectableItemReference>
 						<PackageName><![CDATA[absites]]></PackageName>
 						<ClassName><![CDATA[VaxDistributor]]></ClassName>
-						<ItemName><![CDATA[downstreamDelivery]]></ItemName>
+						<ItemName><![CDATA[downstreamShipment]]></ItemName>
 					</SourceConnectableItemReference>
 					<TargetEmbeddedObjectReference>
 						<PackageName><![CDATA[absupplychain]]></PackageName>
@@ -917,7 +917,7 @@
 			</Parameters>
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
-				<ExecutionMode><![CDATA[virtualTime]]></ExecutionMode>
+				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
 				<Title><![CDATA[ABSupplyChain : Simulation]]></Title>
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
