@@ -1877,7 +1877,7 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[(MOPT+VSS)*(vaxOrderRate+EVDR)]]></Formula>
+						<Formula><![CDATA[(MOPT+VSS)*(EVDR)]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
@@ -2898,21 +2898,6 @@
 					<Id>1744037534797</Id>
 					<Name><![CDATA[MLT - DesiredWIP]]></Name>
 					<X>80</X><Y>280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
-				<Link SourceId="1744034179635" TargetId="1741088985080" Polarity="null">
-					<Height>20.0</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>120</X><Y>-110</Y></Direction>
-					<Id>1744038244081</Id>
-					<Name><![CDATA[<vaxOrderRate> - DesiredInventory]]></Name>
-					<X>400</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
