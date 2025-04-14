@@ -124,8 +124,8 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[200
-//normal(5, 16)]]></Formula>
+						<Formula><![CDATA[2000
+//110-pulse(100, 30)*.2*110*0]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
@@ -1156,14 +1156,14 @@
 						</RecurrenceCode>
 					</RecurrenceProperties>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>430</Width>
+					<Width>460</Width>
 					<Height>310</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
-						<Width>350</Width>
+						<Width>380</Width>
 						<Height>220</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
@@ -1188,17 +1188,17 @@
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
-						<Title><![CDATA[Manufacturer Inventory]]></Title>
-					<Id>1743674294387</Id>
-					<Expression><![CDATA[my_dataset]]></Expression>
-					<Color>-16776961</Color>
+						<Title><![CDATA[Manufacturer]]></Title>
+					<Id>1744640628076</Id>
+					<Expression><![CDATA[my_dataset4]]></Expression>
+					<Color>-10496</Color>
 					<Expression2><![CDATA[VaxManufacturer.VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[PW Inventory]]></Title>
+						<Title><![CDATA[Provincial Warehouse]]></Title>
 					<Id>1743674362584</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-8388608</Color>
@@ -1208,11 +1208,21 @@
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[Vaccination Centre Inventory]]></Title>
+						<Title><![CDATA[District Warehouse]]></Title>
+					<Id>1744639856007</Id>
+					<Expression><![CDATA[my_dataset3]]></Expression>
+					<Color>-16776961</Color>
+					<Expression2><![CDATA[DistrictWarehouse.VI]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<DatasetExpression>  
+						<Title><![CDATA[Vaccination Centre]]></Title>
 					<Id>1743674401851</Id>
 					<Expression><![CDATA[my_dataset2]]></Expression>
 					<Color>-2354116</Color>
-					<Expression2><![CDATA[VaxCentre1.VI]]></Expression2>
+					<Expression2><![CDATA[VaxCentre1.VI+VaxCentre2.VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1225,7 +1235,7 @@
     			<TimePlot>
 					<Id>1743675069408</Id>
 					<Name><![CDATA[plot1]]></Name>
-					<X>540</X><Y>420</Y>
+					<X>20</X><Y>770</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1246,15 +1256,15 @@
 						</RecurrenceCode>
 					</RecurrenceProperties>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>260</Width>
-					<Height>210</Height>
+					<Width>550</Width>
+					<Height>300</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
-						<Width>180</Width>
-						<Height>120</Height>
+						<Width>470</Width>
+						<Height>210</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -1278,30 +1288,40 @@
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
-						<Title><![CDATA[Vaccination Centre Backlog]]></Title>
+						<Title><![CDATA[Vaccination Centres]]></Title>
 					<Id>1743675266356</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-65536</Color>
-					<Expression2><![CDATA[VaxCentre1.VOB]]></Expression2>
+					<Expression2><![CDATA[VaxCentre1.VOB+VaxCentre2.VOB]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[PW Backlog]]></Title>
+						<Title><![CDATA[District Warehouse]]></Title>
+					<Id>1744639937447</Id>
+					<Expression><![CDATA[my_dataset4]]></Expression>
+					<Color>-3137392</Color>
+					<Expression2><![CDATA[DistrictWarehouse.VOB]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<DatasetExpression>  
+						<Title><![CDATA[Provincial Warehouse]]></Title>
 					<Id>1743676522780</Id>
 					<Expression><![CDATA[my_dataset2]]></Expression>
-					<Color>-6632142</Color>
+					<Color>-4565549</Color>
 					<Expression2><![CDATA[ProvincialWarehouse.VOB]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[Manufacturer Backlog]]></Title>
+						<Title><![CDATA[Manufacturer]]></Title>
 					<Id>1743676547859</Id>
 					<Expression><![CDATA[my_dataset3]]></Expression>
-					<Color>-14774017</Color>
+					<Color>-256</Color>
 					<Expression2><![CDATA[VaxManufacturer.MOB]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
@@ -1315,7 +1335,7 @@
     			<TimePlot>
 					<Id>1744384040636</Id>
 					<Name><![CDATA[plot2]]></Name>
-					<X>530</X><Y>610</Y>
+					<X>540</X><Y>660</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>

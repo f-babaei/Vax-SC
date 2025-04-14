@@ -324,12 +324,6 @@
 				<Parameter>
 					<Name><![CDATA[Owner]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[SLAT]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[EVDD]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
