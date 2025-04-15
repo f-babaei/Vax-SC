@@ -11,6 +11,46 @@
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[absites]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Month]]></ModelTimeUnit>
+	<Dimensions>
+		<!--   =========   Dimension   ========  -->
+		<Dimension>
+			<Id>1744744509994</Id>
+			<Name><![CDATA[MyDimension]]></Name>
+			<Type>enumeration</Type>
+			<Range><![CDATA[]]></Range>
+			<Element>
+				<Id>1744744509995</Id>
+				<Name><![CDATA[One]]></Name>
+				<Value>1</Value>
+			</Element>
+			<Element>
+				<Id>1744744509996</Id>
+				<Name><![CDATA[Two]]></Name>
+				<Value>2</Value>
+			</Element>
+		</Dimension>
+		<!--   =========   Dimension   ========  -->
+		<Dimension>
+			<Id>1744744528652</Id>
+			<Name><![CDATA[MyDimension1]]></Name>
+			<Type>enumeration</Type>
+			<Range><![CDATA[]]></Range>
+			<SuperDimension>
+				<PackageName><![CDATA[absites]]></PackageName>
+				<ClassName><![CDATA[MyDimension]]></ClassName>
+			</SuperDimension>
+			<Element>
+				<PackageName><![CDATA[absites]]></PackageName>
+				<ClassName><![CDATA[MyDimension]]></ClassName>
+				<ItemName><![CDATA[One]]></ItemName>
+			</Element>
+			<Element>
+				<PackageName><![CDATA[absites]]></PackageName>
+				<ClassName><![CDATA[MyDimension]]></ClassName>
+				<ItemName><![CDATA[Two]]></ItemName>
+			</Element>
+		</Dimension>
+	</Dimensions>
 	<Folders>
 	</Folders>
 	<ActiveObjectClasses>
@@ -608,6 +648,27 @@
 						<Formula><![CDATA[(DesiredVaxOnOrder-VoO)/SLAT]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
+					</Properties>
+
+				</Variable>
+				<Variable Class="AuxVariable">
+					<Id>1744744389151</Id>
+					<Name><![CDATA[test]]></Name>
+					<X>140</X><Y>50</Y>
+					<Label><X>0</X><Y>-20</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties External="true" Constant="false" Array="true">
+						<Formula><![CDATA[0]]></Formula>
+						<Value><![CDATA[0]]></Value>
+						<Color/>
+						<Array>
+							<Dimension>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[MyDimension1]]></ClassName>
+							</Dimension>
+						</Array>
 					</Properties>
 
 				</Variable>

@@ -11,6 +11,46 @@
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[absupplychain]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Day]]></ModelTimeUnit>
+	<Dimensions>
+		<!--   =========   Dimension   ========  -->
+		<Dimension>
+			<Id>1744731197465</Id>
+			<Name><![CDATA[MyDimension]]></Name>
+			<Type>enumeration</Type>
+			<Range><![CDATA[]]></Range>
+			<Element>
+				<Id>1744731197466</Id>
+				<Name><![CDATA[One]]></Name>
+				<Value>1</Value>
+			</Element>
+			<Element>
+				<Id>1744731197467</Id>
+				<Name><![CDATA[Two]]></Name>
+				<Value>2</Value>
+			</Element>
+		</Dimension>
+		<!--   =========   Dimension   ========  -->
+		<Dimension>
+			<Id>1744731980029</Id>
+			<Name><![CDATA[MyDimension1]]></Name>
+			<Type>enumeration</Type>
+			<Range><![CDATA[]]></Range>
+			<SuperDimension>
+				<PackageName><![CDATA[absupplychain]]></PackageName>
+				<ClassName><![CDATA[MyDimension]]></ClassName>
+			</SuperDimension>
+			<Element>
+				<PackageName><![CDATA[absupplychain]]></PackageName>
+				<ClassName><![CDATA[MyDimension]]></ClassName>
+				<ItemName><![CDATA[One]]></ItemName>
+			</Element>
+			<Element>
+				<PackageName><![CDATA[absupplychain]]></PackageName>
+				<ClassName><![CDATA[MyDimension]]></ClassName>
+				<ItemName><![CDATA[Two]]></ItemName>
+			</Element>
+		</Dimension>
+	</Dimensions>
 	<Folders>
 	</Folders>
 	<ActiveObjectClasses>
@@ -203,6 +243,87 @@
 						<Formula><![CDATA[dynamicVariable+dynamicVariable1]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
+					</Properties>
+
+				</Variable>
+				<Variable Class="AuxVariable">
+					<Id>1744731350043</Id>
+					<Name><![CDATA[dynamicVariable3]]></Name>
+					<X>170</X><Y>310</Y>
+					<Label><X>0</X><Y>-20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties External="false" Constant="false" Array="true">
+						<Formula><![CDATA[0]]></Formula>
+						<Value><![CDATA[0]]></Value>
+						<Color/>
+						<Array>
+							<Dimension>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[MyDimension]]></ClassName>
+							</Dimension>
+							<Dimension>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[MyDimension1]]></ClassName>
+							</Dimension>
+							<CustomExpression>
+								<Id>1744732138271</Id>
+								<Coordinate>
+									<PackageName><![CDATA[absupplychain]]></PackageName>
+									<ClassName><![CDATA[MyDimension]]></ClassName>
+									<ItemName><![CDATA[One]]></ItemName>
+								</Coordinate>
+								<Coordinate>
+									<PackageName><![CDATA[absupplychain]]></PackageName>
+									<ClassName><![CDATA[MyDimension]]></ClassName>
+									<ItemName><![CDATA[One]]></ItemName>
+								</Coordinate>
+								<Expression><![CDATA[VaxCentre1.upstreamOrder]]></Expression>
+							</CustomExpression>
+							<CustomExpression>
+								<Id>1744732152224</Id>
+								<Coordinate>
+									<PackageName><![CDATA[absupplychain]]></PackageName>
+									<ClassName><![CDATA[MyDimension]]></ClassName>
+									<ItemName><![CDATA[One]]></ItemName>
+								</Coordinate>
+								<Coordinate>
+									<PackageName><![CDATA[absupplychain]]></PackageName>
+									<ClassName><![CDATA[MyDimension]]></ClassName>
+									<ItemName><![CDATA[Two]]></ItemName>
+								</Coordinate>
+								<Expression><![CDATA[VaxCentre2.upstreamOrder]]></Expression>
+							</CustomExpression>
+							<CustomExpression>
+								<Id>1744732194648</Id>
+								<Coordinate>
+									<PackageName><![CDATA[absupplychain]]></PackageName>
+									<ClassName><![CDATA[MyDimension]]></ClassName>
+									<ItemName><![CDATA[Two]]></ItemName>
+								</Coordinate>
+								<Coordinate>
+									<PackageName><![CDATA[absupplychain]]></PackageName>
+									<ClassName><![CDATA[MyDimension]]></ClassName>
+									<ItemName><![CDATA[One]]></ItemName>
+								</Coordinate>
+								<Expression><![CDATA[DistrictWarehouse.downstreamShipment*VaxCentre1.upstreamOrder/(VaxCentre1.upstreamOrder+VaxCentre2.upstreamOrder)]]></Expression>
+							</CustomExpression>
+							<CustomExpression>
+								<Id>1744732230530</Id>
+								<Coordinate>
+									<PackageName><![CDATA[absupplychain]]></PackageName>
+									<ClassName><![CDATA[MyDimension]]></ClassName>
+									<ItemName><![CDATA[Two]]></ItemName>
+								</Coordinate>
+								<Coordinate>
+									<PackageName><![CDATA[absupplychain]]></PackageName>
+									<ClassName><![CDATA[MyDimension]]></ClassName>
+									<ItemName><![CDATA[Two]]></ItemName>
+								</Coordinate>
+								<Expression><![CDATA[DistrictWarehouse.downstreamShipment*VaxCentre2.upstreamOrder/(VaxCentre1.upstreamOrder+VaxCentre2.upstreamOrder)]]></Expression>
+							</CustomExpression>
+						</Array>
 					</Properties>
 
 				</Variable>
@@ -615,6 +736,30 @@
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
 						<Point><X>-265</X><Y>200</Y></Point>
+					</Points>
+				</Connector>
+				<Connector>
+					<Id>1744744573799</Id>
+					<Name><![CDATA[connector12]]></Name>
+					<X>170</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<SourceId>1744731350043</SourceId>
+					<TargetEmbeddedObjectReference>
+						<PackageName><![CDATA[absupplychain]]></PackageName>
+						<ClassName><![CDATA[SCMain]]></ClassName>
+						<ItemName><![CDATA[DistrictWarehouse]]></ItemName>
+					</TargetEmbeddedObjectReference>
+					<TargetConnectableItemReference>
+						<PackageName><![CDATA[absites]]></PackageName>
+						<ClassName><![CDATA[VaxDistributor]]></ClassName>
+						<ItemName><![CDATA[test]]></ItemName>
+					</TargetConnectableItemReference>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>450</X><Y>-150</Y></Point>
 					</Points>
 				</Connector>
 			</Connectors>
