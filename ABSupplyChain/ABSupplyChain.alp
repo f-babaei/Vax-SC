@@ -174,7 +174,7 @@
 				<Variable Class="AuxVariable">
 					<Id>1744568013790</Id>
 					<Name><![CDATA[AllocationPoint1]]></Name>
-					<X>530</X><Y>340</Y>
+					<X>610</X><Y>280</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -189,7 +189,7 @@
 				<Variable Class="AuxVariable">
 					<Id>1744568096549</Id>
 					<Name><![CDATA[AllocationPoint2]]></Name>
-					<X>530</X><Y>380</Y>
+					<X>610</X><Y>320</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -204,11 +204,11 @@
 				<Variable Class="AuxVariable">
 					<Id>1744568940850</Id>
 					<Name><![CDATA[dynamicVariable]]></Name>
-					<X>550</X><Y>280</Y>
+					<X>710</X><Y>170</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
+					<ShowLabel>false</ShowLabel>
 					<Properties External="true" Constant="false" Array="false">
 						<Formula><![CDATA[0]]></Formula>
 						<Value><![CDATA[0]]></Value>
@@ -219,11 +219,11 @@
 				<Variable Class="AuxVariable">
 					<Id>1744569143707</Id>
 					<Name><![CDATA[dynamicVariable1]]></Name>
-					<X>450</X><Y>280</Y>
+					<X>710</X><Y>120</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
+					<ShowLabel>false</ShowLabel>
 					<Properties External="true" Constant="false" Array="false">
 						<Formula><![CDATA[0]]></Formula>
 						<Value><![CDATA[0]]></Value>
@@ -233,8 +233,8 @@
 				</Variable>
 				<Variable Class="AuxVariable">
 					<Id>1744569200931</Id>
-					<Name><![CDATA[dynamicVariable2]]></Name>
-					<X>350</X><Y>320</Y>
+					<Name><![CDATA[AggregationPoint]]></Name>
+					<X>660</X><Y>120</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -246,91 +246,10 @@
 					</Properties>
 
 				</Variable>
-				<Variable Class="AuxVariable">
-					<Id>1744731350043</Id>
-					<Name><![CDATA[dynamicVariable3]]></Name>
-					<X>170</X><Y>310</Y>
-					<Label><X>0</X><Y>-20</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties External="false" Constant="false" Array="true">
-						<Formula><![CDATA[0]]></Formula>
-						<Value><![CDATA[0]]></Value>
-						<Color/>
-						<Array>
-							<Dimension>
-								<PackageName><![CDATA[absupplychain]]></PackageName>
-								<ClassName><![CDATA[MyDimension]]></ClassName>
-							</Dimension>
-							<Dimension>
-								<PackageName><![CDATA[absupplychain]]></PackageName>
-								<ClassName><![CDATA[MyDimension1]]></ClassName>
-							</Dimension>
-							<CustomExpression>
-								<Id>1744732138271</Id>
-								<Coordinate>
-									<PackageName><![CDATA[absupplychain]]></PackageName>
-									<ClassName><![CDATA[MyDimension]]></ClassName>
-									<ItemName><![CDATA[One]]></ItemName>
-								</Coordinate>
-								<Coordinate>
-									<PackageName><![CDATA[absupplychain]]></PackageName>
-									<ClassName><![CDATA[MyDimension]]></ClassName>
-									<ItemName><![CDATA[One]]></ItemName>
-								</Coordinate>
-								<Expression><![CDATA[VaxCentre1.upstreamOrder]]></Expression>
-							</CustomExpression>
-							<CustomExpression>
-								<Id>1744732152224</Id>
-								<Coordinate>
-									<PackageName><![CDATA[absupplychain]]></PackageName>
-									<ClassName><![CDATA[MyDimension]]></ClassName>
-									<ItemName><![CDATA[One]]></ItemName>
-								</Coordinate>
-								<Coordinate>
-									<PackageName><![CDATA[absupplychain]]></PackageName>
-									<ClassName><![CDATA[MyDimension]]></ClassName>
-									<ItemName><![CDATA[Two]]></ItemName>
-								</Coordinate>
-								<Expression><![CDATA[VaxCentre2.upstreamOrder]]></Expression>
-							</CustomExpression>
-							<CustomExpression>
-								<Id>1744732194648</Id>
-								<Coordinate>
-									<PackageName><![CDATA[absupplychain]]></PackageName>
-									<ClassName><![CDATA[MyDimension]]></ClassName>
-									<ItemName><![CDATA[Two]]></ItemName>
-								</Coordinate>
-								<Coordinate>
-									<PackageName><![CDATA[absupplychain]]></PackageName>
-									<ClassName><![CDATA[MyDimension]]></ClassName>
-									<ItemName><![CDATA[One]]></ItemName>
-								</Coordinate>
-								<Expression><![CDATA[DistrictWarehouse.downstreamShipment*VaxCentre1.upstreamOrder/(VaxCentre1.upstreamOrder+VaxCentre2.upstreamOrder)]]></Expression>
-							</CustomExpression>
-							<CustomExpression>
-								<Id>1744732230530</Id>
-								<Coordinate>
-									<PackageName><![CDATA[absupplychain]]></PackageName>
-									<ClassName><![CDATA[MyDimension]]></ClassName>
-									<ItemName><![CDATA[Two]]></ItemName>
-								</Coordinate>
-								<Coordinate>
-									<PackageName><![CDATA[absupplychain]]></PackageName>
-									<ClassName><![CDATA[MyDimension]]></ClassName>
-									<ItemName><![CDATA[Two]]></ItemName>
-								</Coordinate>
-								<Expression><![CDATA[DistrictWarehouse.downstreamShipment*VaxCentre2.upstreamOrder/(VaxCentre1.upstreamOrder+VaxCentre2.upstreamOrder)]]></Expression>
-							</CustomExpression>
-						</Array>
-					</Properties>
-
-				</Variable>
 				<Variable Class="Flow">
 					<Id>1743675210669</Id>
 					<Name><![CDATA[patientDemand1]]></Name>
-					<X>860</X><Y>50</Y>
+					<X>990</X><Y>60</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -349,7 +268,7 @@
 				<Variable Class="Flow">
 					<Id>1744568542004</Id>
 					<Name><![CDATA[patientDemand2]]></Name>
-					<X>860</X><Y>240</Y>
+					<X>990</X><Y>250</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -370,10 +289,10 @@
 				<Link SourceId="1744568940850" TargetId="1744569200931" Polarity="null">
 					<Height>20.0</Height>
 					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>-200</X><Y>40</Y></Direction>
+					<Direction><X>-50</X><Y>-50</Y></Direction>
 					<Id>1744569252522</Id>
-					<Name><![CDATA[dynamicVariable - dynamicVariable2]]></Name>
-					<X>550</X><Y>280</Y>
+					<Name><![CDATA[dynamicVariable - AggregationPoint]]></Name>
+					<X>710</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -385,10 +304,10 @@
 				<Link SourceId="1744569143707" TargetId="1744569200931" Polarity="null">
 					<Height>20.0</Height>
 					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>-100</X><Y>40</Y></Direction>
+					<Direction><X>-50</X><Y>0</Y></Direction>
 					<Id>1744569252523</Id>
-					<Name><![CDATA[dynamicVariable1 - dynamicVariable2]]></Name>
-					<X>450</X><Y>280</Y>
+					<Name><![CDATA[dynamicVariable1 - AggregationPoint]]></Name>
+					<X>710</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -497,7 +416,7 @@
 				<Connector>
 					<Id>1743673625232</Id>
 					<Name><![CDATA[connector5]]></Name>
-					<X>835</X><Y>120</Y>
+					<X>965</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -592,7 +511,7 @@
 				<Connector>
 					<Id>1744568052705</Id>
 					<Name><![CDATA[connector6]]></Name>
-					<X>530</X><Y>340</Y>
+					<X>610</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -610,15 +529,15 @@
 					</TargetConnectableItemReference>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>140</X><Y>0</Y></Point>
-						<Point><X>140</X><Y>-190</Y></Point>
-						<Point><X>170</X><Y>-190</Y></Point>
+						<Point><X>170</X><Y>0</Y></Point>
+						<Point><X>170</X><Y>-120</Y></Point>
+						<Point><X>220</X><Y>-120</Y></Point>
 					</Points>
 				</Connector>
 				<Connector>
 					<Id>1744568115349</Id>
 					<Name><![CDATA[connector7]]></Name>
-					<X>530</X><Y>380</Y>
+					<X>610</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -636,15 +555,14 @@
 					</TargetConnectableItemReference>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>150</X><Y>0</Y></Point>
-						<Point><X>150</X><Y>-70</Y></Point>
-						<Point><X>170</X><Y>-70</Y></Point>
+						<Point><X>120</X><Y>0</Y></Point>
+						<Point><X>220</X><Y>0</Y></Point>
 					</Points>
 				</Connector>
 				<Connector>
 					<Id>1744568560401</Id>
 					<Name><![CDATA[connector9]]></Name>
-					<X>835</X><Y>280</Y>
+					<X>965</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -669,7 +587,7 @@
 				<Connector>
 					<Id>1744568958845</Id>
 					<Name><![CDATA[connector8]]></Name>
-					<X>550</X><Y>280</Y>
+					<X>710</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -687,13 +605,14 @@
 					</TargetConnectableItemReference>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>150</X><Y>90</Y></Point>
+						<Point><X>0</X><Y>210</Y></Point>
+						<Point><X>120</X><Y>210</Y></Point>
 					</Points>
 				</Connector>
 				<Connector>
 					<Id>1744569154594</Id>
 					<Name><![CDATA[connector10]]></Name>
-					<X>450</X><Y>280</Y>
+					<X>710</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -711,7 +630,9 @@
 					</TargetConnectableItemReference>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>250</X><Y>-70</Y></Point>
+						<Point><X>50</X><Y>0</Y></Point>
+						<Point><X>50</X><Y>100</Y></Point>
+						<Point><X>120</X><Y>100</Y></Point>
 					</Points>
 				</Connector>
 				<Connector>
@@ -735,31 +656,7 @@
 					<TargetId>1744569200931</TargetId>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>-265</X><Y>200</Y></Point>
-					</Points>
-				</Connector>
-				<Connector>
-					<Id>1744744573799</Id>
-					<Name><![CDATA[connector12]]></Name>
-					<X>170</X><Y>310</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<SourceId>1744731350043</SourceId>
-					<TargetEmbeddedObjectReference>
-						<PackageName><![CDATA[absupplychain]]></PackageName>
-						<ClassName><![CDATA[SCMain]]></ClassName>
-						<ItemName><![CDATA[DistrictWarehouse]]></ItemName>
-					</TargetEmbeddedObjectReference>
-					<TargetConnectableItemReference>
-						<PackageName><![CDATA[absites]]></PackageName>
-						<ClassName><![CDATA[VaxDistributor]]></ClassName>
-						<ItemName><![CDATA[test]]></ItemName>
-					</TargetConnectableItemReference>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>450</X><Y>-150</Y></Point>
+						<Point><X>45</X><Y>0</Y></Point>
 					</Points>
 				</Connector>
 			</Connectors>
@@ -979,7 +876,7 @@
 				<EmbeddedObject>
 					<Id>1743669138947</Id>
 					<Name><![CDATA[VaxCentre1]]></Name>
-					<X>690</X><Y>110</Y>
+					<X>820</X><Y>120</Y>
 					<Label><X>50</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1074,7 +971,7 @@
 				<EmbeddedObject>
 					<Id>1744567248386</Id>
 					<Name><![CDATA[VaxCentre2]]></Name>
-					<X>690</X><Y>270</Y>
+					<X>820</X><Y>280</Y>
 					<Label><X>50</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>

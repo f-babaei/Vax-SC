@@ -651,27 +651,6 @@
 					</Properties>
 
 				</Variable>
-				<Variable Class="AuxVariable">
-					<Id>1744744389151</Id>
-					<Name><![CDATA[test]]></Name>
-					<X>140</X><Y>50</Y>
-					<Label><X>0</X><Y>-20</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties External="true" Constant="false" Array="true">
-						<Formula><![CDATA[0]]></Formula>
-						<Value><![CDATA[0]]></Value>
-						<Color/>
-						<Array>
-							<Dimension>
-								<PackageName><![CDATA[absites]]></PackageName>
-								<ClassName><![CDATA[MyDimension1]]></ClassName>
-							</Dimension>
-						</Array>
-					</Properties>
-
-				</Variable>
 				<Variable Class="StockVariable">
 					<Id>1741001135488</Id>
 					<Name><![CDATA[VOB]]></Name>
@@ -2229,22 +2208,6 @@
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
 						<Formula><![CDATA[vaxShipmentRate]]></Formula>
-						<Value><![CDATA[0]]></Value>
-						<Color/>
-					</Properties>
-
-				</Variable>
-				<Variable Class="AuxVariable">
-					<Id>1743615481196</Id>
-					<Name><![CDATA[upstreamOrder]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>0</X><Y>100</Y>
-					<Label><X>8</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[DesiredVaxOrder]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
