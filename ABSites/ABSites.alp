@@ -364,6 +364,9 @@
 				<Parameter>
 					<Name><![CDATA[Owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[cf]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -510,7 +513,7 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[VI/MOPT]]></Formula>
+						<Formula><![CDATA[VI/MOPT*prFunc()]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
@@ -540,7 +543,7 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[(MOPT+VSS)*(EVDR)]]></Formula>
+						<Formula><![CDATA[(MOPT/prFunc()+VSS)*(EVDR)]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
@@ -585,7 +588,7 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[vaxUOrderRate//DesiredVaxDelivery]]></Formula>
+						<Formula><![CDATA[DesiredVaxDelivery]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
@@ -616,36 +619,6 @@
 					<ShowLabel>true</ShowLabel>
 					<Properties External="true" Constant="false" Array="false">
 						<Formula><![CDATA[0]]></Formula>
-						<Value><![CDATA[0]]></Value>
-						<Color/>
-					</Properties>
-
-				</Variable>
-				<Variable Class="AuxVariable">
-					<Id>1744382124401</Id>
-					<Name><![CDATA[DesiredVaxOnOrder]]></Name>
-					<X>20</X><Y>440</Y>
-					<Label><X>0</X><Y>-20</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[EVDD*DesiredVaxDelivery]]></Formula>
-						<Value><![CDATA[0]]></Value>
-						<Color/>
-					</Properties>
-
-				</Variable>
-				<Variable Class="AuxVariable">
-					<Id>1744382201518</Id>
-					<Name><![CDATA[AdjForVaxOnOrder]]></Name>
-					<X>-40</X><Y>390</Y>
-					<Label><X>0</X><Y>-20</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[(DesiredVaxOnOrder-VoO)/SLAT]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
@@ -702,23 +675,6 @@
 						<Color/>
 					</Properties>
 				</Variable>
-				<Variable Class="StockVariable">
-					<Id>1744381819923</Id>
-					<Name><![CDATA[VoO]]></Name>
-					<Description><![CDATA[Vaccine on Orders]]></Description>
-					<X>240</X><Y>280</Y>
-					<Label><X>0</X><Y>-20</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties Array="false">
-					<EquationStyle>classic</EquationStyle>
-					<Width>20</Width>
-					<Height>20</Height>
-						<InitialValue><![CDATA[DesiredVaxOnOrder]]></InitialValue>
-						<Color/>
-					</Properties>
-				</Variable>
 				<Variable Class="Flow">
 					<Id>1741002413897</Id>
 					<Name><![CDATA[vaxSupplyRate]]></Name>
@@ -746,7 +702,7 @@
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SourceId="1744381819923" TargetId="1741001176738" External="false" Constant="false" Array="false">
+					<Properties TargetId="1741001176738" External="false" Constant="false" Array="false">
 						<Formula><![CDATA[upstreamDelivery]]></Formula>
 						<Color/>
 						<ValveIndex>1</ValveIndex>
@@ -820,25 +776,6 @@
 							<Point><X>0</X><Y>0</Y></Point>
 							<Point><X>-60</X><Y>0</Y></Point>
 							<Point><X>-150</X><Y>0</Y></Point>
-						</Points>
-					</Properties>
-				</Variable>
-				<Variable Class="Flow">
-					<Id>1744381847825</Id>
-					<Name><![CDATA[vaxUOrderRate]]></Name>
-					<X>40</X><Y>280</Y>
-					<Label><X>0</X><Y>-20</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TargetId="1744381819923" External="false" Constant="false" Array="false">
-						<Formula><![CDATA[max(0, DesiredVaxDelivery+AdjForVaxOnOrder)]]></Formula>
-						<Color/>
-						<ValveIndex>1</ValveIndex>
-						<Points>
-							<Point><X>0</X><Y>0</Y></Point>
-							<Point><X>100</X><Y>0</Y></Point>
-							<Point><X>200</X><Y>0</Y></Point>
 						</Points>
 					</Properties>
 				</Variable>
@@ -953,43 +890,23 @@
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1744382045903</Id>
-					<Name><![CDATA[SLAT]]></Name>
-					<Description><![CDATA[Supply Line Adjustment Time]]></Description>
-					<X>-110</X><Y>360</Y>
+					<Id>1748013389251</Id>
+					<Name><![CDATA[cf]]></Name>
+					<X>780</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[boolean]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
-							<Id>1744382045901</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1744382085279</Id>
-					<Name><![CDATA[EVDD]]></Name>
-					<Description><![CDATA[Expected Vaccine Delivery Delay]]></Description>
-					<X>-100</X><Y>440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1744382085277</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
+							<Id>1748013389249</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -1418,132 +1335,12 @@
 					<LineWidth>1</LineWidth>
 					<Delay>false</Delay>
 				</Link>
-				<Link SourceId="1744381847825" TargetId="1743614220712" Polarity="null">
-					<Height>20.0</Height>
+				<Link SourceId="1741002097973" TargetId="1743614220712" Polarity="null">
+					<Height>34.859</Height>
 					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>-140</X><Y>-180</Y></Direction>
-					<Id>1744382308419</Id>
-					<Name><![CDATA[vaxUOrderRate - upstreamOrder]]></Name>
-					<X>140</X><Y>280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
-				<Link SourceId="1744382045903" TargetId="1744382201518" Polarity="null">
-					<Height>-21.114</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>70</X><Y>30</Y></Direction>
-					<Id>1744382607785</Id>
-					<Name><![CDATA[SLAT - AdjForVaxOnOrder]]></Name>
-					<X>-110</X><Y>360</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
-				<Link SourceId="1744382124401" TargetId="1744382201518" Polarity="null">
-					<Height>20.0</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>-60</X><Y>-50</Y></Direction>
-					<Id>1744382607789</Id>
-					<Name><![CDATA[DesiredVaxOnOrder - AdjForVaxOnOrder]]></Name>
-					<X>20</X><Y>440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
-				<Link SourceId="1744381819923" TargetId="1744382201518" Polarity="null">
-					<Height>20.0</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>-280</X><Y>110</Y></Direction>
-					<Id>1744382607792</Id>
-					<Name><![CDATA[VoO - AdjForVaxOnOrder]]></Name>
-					<X>240</X><Y>280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
-				<Link SourceId="1741002097973" TargetId="1744382124401" Polarity="null">
-					<Height>20.0</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>-140</X><Y>-40</Y></Direction>
-					<Id>1744382654143</Id>
-					<Name><![CDATA[DesiredVaxDelivery - DesiredVaxOnOrder]]></Name>
-					<X>160</X><Y>480</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
-				<Link SourceId="1744382085279" TargetId="1744382124401" Polarity="null">
-					<Height>-29.026</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>120</X><Y>0</Y></Direction>
-					<Id>1744382654147</Id>
-					<Name><![CDATA[EVDD - DesiredVaxOnOrder]]></Name>
-					<X>-100</X><Y>440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
-				<Link SourceId="1744382124401" TargetId="1744381819923" Polarity="null">
-					<Height>-15.807</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>220</X><Y>-160</Y></Direction>
-					<Id>1744382708662</Id>
-					<Name><![CDATA[DesiredVaxOnOrder - VoO]]></Name>
-					<X>20</X><Y>440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
-				<Link SourceId="1744382201518" TargetId="1744381847825" Polarity="null">
-					<Height>20.0</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>180</X><Y>-110</Y></Direction>
-					<Id>1744382939062</Id>
-					<Name><![CDATA[AdjForVaxOnOrder - vaxUOrderRate]]></Name>
-					<X>-40</X><Y>390</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
-				<Link SourceId="1741002097973" TargetId="1744381847825" Polarity="null">
-					<Height>20.0</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>-20</X><Y>-200</Y></Direction>
-					<Id>1744382939064</Id>
-					<Name><![CDATA[DesiredVaxDelivery - vaxUOrderRate]]></Name>
+					<Direction><X>-160</X><Y>-380</Y></Direction>
+					<Id>1748015202282</Id>
+					<Name><![CDATA[DesiredVaxDelivery - upstreamOrder]]></Name>
 					<X>160</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1554,6 +1351,22 @@
 					<Delay>false</Delay>
 				</Link>
 			</Dependences>
+			<Functions>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1748013652679</Id>
+					<Name><![CDATA[prFunc]]></Name>
+					<X>780</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (cf){
+return min(1, 1-0.015*(TFunc(time(DAY))-25));}
+else {return 1;}]]></Body>
+				</Function>
+			</Functions>
 			<TableFunctions>
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1741016824647</Id>
@@ -1601,7 +1414,780 @@
 					<Value><![CDATA[1.0]]></Value>
 					<Value><![CDATA[1.0]]></Value>
 				</TableFunction>
+				<TableFunction AccessType="public" StaticFunction="false">
+					<Id>1748012470983</Id>
+					<Name><![CDATA[TFunc]]></Name>
+					<X>780</X><Y>420</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<InterpolationMethod>LINEAR</InterpolationMethod>
+					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
+					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
+					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
+					<ValuesQuery>
+						<Id>1748012470981</Id>
+						<TableReference>
+						</TableReference>
+							<ArgumentColumnReference>
+							</ArgumentColumnReference>
+							<ValueColumnReference>
+							</ValueColumnReference>
+					</ValuesQuery>
+// arguments and values
+					<Argument><![CDATA[1.0]]></Argument>
+					<Argument><![CDATA[2.0]]></Argument>
+					<Argument><![CDATA[3.0]]></Argument>
+					<Argument><![CDATA[4.0]]></Argument>
+					<Argument><![CDATA[5.0]]></Argument>
+					<Argument><![CDATA[6.0]]></Argument>
+					<Argument><![CDATA[7.0]]></Argument>
+					<Argument><![CDATA[8.0]]></Argument>
+					<Argument><![CDATA[9.0]]></Argument>
+					<Argument><![CDATA[10.0]]></Argument>
+					<Argument><![CDATA[11.0]]></Argument>
+					<Argument><![CDATA[12.0]]></Argument>
+					<Argument><![CDATA[13.0]]></Argument>
+					<Argument><![CDATA[14.0]]></Argument>
+					<Argument><![CDATA[15.0]]></Argument>
+					<Argument><![CDATA[16.0]]></Argument>
+					<Argument><![CDATA[17.0]]></Argument>
+					<Argument><![CDATA[18.0]]></Argument>
+					<Argument><![CDATA[19.0]]></Argument>
+					<Argument><![CDATA[20.0]]></Argument>
+					<Argument><![CDATA[21.0]]></Argument>
+					<Argument><![CDATA[22.0]]></Argument>
+					<Argument><![CDATA[23.0]]></Argument>
+					<Argument><![CDATA[24.0]]></Argument>
+					<Argument><![CDATA[25.0]]></Argument>
+					<Argument><![CDATA[26.0]]></Argument>
+					<Argument><![CDATA[27.0]]></Argument>
+					<Argument><![CDATA[28.0]]></Argument>
+					<Argument><![CDATA[29.0]]></Argument>
+					<Argument><![CDATA[30.0]]></Argument>
+					<Argument><![CDATA[31.0]]></Argument>
+					<Argument><![CDATA[32.0]]></Argument>
+					<Argument><![CDATA[33.0]]></Argument>
+					<Argument><![CDATA[34.0]]></Argument>
+					<Argument><![CDATA[35.0]]></Argument>
+					<Argument><![CDATA[36.0]]></Argument>
+					<Argument><![CDATA[37.0]]></Argument>
+					<Argument><![CDATA[38.0]]></Argument>
+					<Argument><![CDATA[39.0]]></Argument>
+					<Argument><![CDATA[40.0]]></Argument>
+					<Argument><![CDATA[41.0]]></Argument>
+					<Argument><![CDATA[42.0]]></Argument>
+					<Argument><![CDATA[43.0]]></Argument>
+					<Argument><![CDATA[44.0]]></Argument>
+					<Argument><![CDATA[45.0]]></Argument>
+					<Argument><![CDATA[46.0]]></Argument>
+					<Argument><![CDATA[47.0]]></Argument>
+					<Argument><![CDATA[48.0]]></Argument>
+					<Argument><![CDATA[49.0]]></Argument>
+					<Argument><![CDATA[50.0]]></Argument>
+					<Argument><![CDATA[51.0]]></Argument>
+					<Argument><![CDATA[52.0]]></Argument>
+					<Argument><![CDATA[53.0]]></Argument>
+					<Argument><![CDATA[54.0]]></Argument>
+					<Argument><![CDATA[55.0]]></Argument>
+					<Argument><![CDATA[56.0]]></Argument>
+					<Argument><![CDATA[57.0]]></Argument>
+					<Argument><![CDATA[58.0]]></Argument>
+					<Argument><![CDATA[59.0]]></Argument>
+					<Argument><![CDATA[60.0]]></Argument>
+					<Argument><![CDATA[61.0]]></Argument>
+					<Argument><![CDATA[62.0]]></Argument>
+					<Argument><![CDATA[63.0]]></Argument>
+					<Argument><![CDATA[64.0]]></Argument>
+					<Argument><![CDATA[65.0]]></Argument>
+					<Argument><![CDATA[66.0]]></Argument>
+					<Argument><![CDATA[67.0]]></Argument>
+					<Argument><![CDATA[68.0]]></Argument>
+					<Argument><![CDATA[69.0]]></Argument>
+					<Argument><![CDATA[70.0]]></Argument>
+					<Argument><![CDATA[71.0]]></Argument>
+					<Argument><![CDATA[72.0]]></Argument>
+					<Argument><![CDATA[73.0]]></Argument>
+					<Argument><![CDATA[74.0]]></Argument>
+					<Argument><![CDATA[75.0]]></Argument>
+					<Argument><![CDATA[76.0]]></Argument>
+					<Argument><![CDATA[77.0]]></Argument>
+					<Argument><![CDATA[78.0]]></Argument>
+					<Argument><![CDATA[79.0]]></Argument>
+					<Argument><![CDATA[80.0]]></Argument>
+					<Argument><![CDATA[81.0]]></Argument>
+					<Argument><![CDATA[82.0]]></Argument>
+					<Argument><![CDATA[83.0]]></Argument>
+					<Argument><![CDATA[84.0]]></Argument>
+					<Argument><![CDATA[85.0]]></Argument>
+					<Argument><![CDATA[86.0]]></Argument>
+					<Argument><![CDATA[87.0]]></Argument>
+					<Argument><![CDATA[88.0]]></Argument>
+					<Argument><![CDATA[89.0]]></Argument>
+					<Argument><![CDATA[90.0]]></Argument>
+					<Argument><![CDATA[91.0]]></Argument>
+					<Argument><![CDATA[92.0]]></Argument>
+					<Argument><![CDATA[93.0]]></Argument>
+					<Argument><![CDATA[94.0]]></Argument>
+					<Argument><![CDATA[95.0]]></Argument>
+					<Argument><![CDATA[96.0]]></Argument>
+					<Argument><![CDATA[97.0]]></Argument>
+					<Argument><![CDATA[98.0]]></Argument>
+					<Argument><![CDATA[99.0]]></Argument>
+					<Argument><![CDATA[100.0]]></Argument>
+					<Argument><![CDATA[101.0]]></Argument>
+					<Argument><![CDATA[102.0]]></Argument>
+					<Argument><![CDATA[103.0]]></Argument>
+					<Argument><![CDATA[104.0]]></Argument>
+					<Argument><![CDATA[105.0]]></Argument>
+					<Argument><![CDATA[106.0]]></Argument>
+					<Argument><![CDATA[107.0]]></Argument>
+					<Argument><![CDATA[108.0]]></Argument>
+					<Argument><![CDATA[109.0]]></Argument>
+					<Argument><![CDATA[110.0]]></Argument>
+					<Argument><![CDATA[111.0]]></Argument>
+					<Argument><![CDATA[112.0]]></Argument>
+					<Argument><![CDATA[113.0]]></Argument>
+					<Argument><![CDATA[114.0]]></Argument>
+					<Argument><![CDATA[115.0]]></Argument>
+					<Argument><![CDATA[116.0]]></Argument>
+					<Argument><![CDATA[117.0]]></Argument>
+					<Argument><![CDATA[118.0]]></Argument>
+					<Argument><![CDATA[119.0]]></Argument>
+					<Argument><![CDATA[120.0]]></Argument>
+					<Argument><![CDATA[121.0]]></Argument>
+					<Argument><![CDATA[122.0]]></Argument>
+					<Argument><![CDATA[123.0]]></Argument>
+					<Argument><![CDATA[124.0]]></Argument>
+					<Argument><![CDATA[125.0]]></Argument>
+					<Argument><![CDATA[126.0]]></Argument>
+					<Argument><![CDATA[127.0]]></Argument>
+					<Argument><![CDATA[128.0]]></Argument>
+					<Argument><![CDATA[129.0]]></Argument>
+					<Argument><![CDATA[130.0]]></Argument>
+					<Argument><![CDATA[131.0]]></Argument>
+					<Argument><![CDATA[132.0]]></Argument>
+					<Argument><![CDATA[133.0]]></Argument>
+					<Argument><![CDATA[134.0]]></Argument>
+					<Argument><![CDATA[135.0]]></Argument>
+					<Argument><![CDATA[136.0]]></Argument>
+					<Argument><![CDATA[137.0]]></Argument>
+					<Argument><![CDATA[138.0]]></Argument>
+					<Argument><![CDATA[139.0]]></Argument>
+					<Argument><![CDATA[140.0]]></Argument>
+					<Argument><![CDATA[141.0]]></Argument>
+					<Argument><![CDATA[142.0]]></Argument>
+					<Argument><![CDATA[143.0]]></Argument>
+					<Argument><![CDATA[144.0]]></Argument>
+					<Argument><![CDATA[145.0]]></Argument>
+					<Argument><![CDATA[146.0]]></Argument>
+					<Argument><![CDATA[147.0]]></Argument>
+					<Argument><![CDATA[148.0]]></Argument>
+					<Argument><![CDATA[149.0]]></Argument>
+					<Argument><![CDATA[150.0]]></Argument>
+					<Argument><![CDATA[151.0]]></Argument>
+					<Argument><![CDATA[152.0]]></Argument>
+					<Argument><![CDATA[153.0]]></Argument>
+					<Argument><![CDATA[154.0]]></Argument>
+					<Argument><![CDATA[155.0]]></Argument>
+					<Argument><![CDATA[156.0]]></Argument>
+					<Argument><![CDATA[157.0]]></Argument>
+					<Argument><![CDATA[158.0]]></Argument>
+					<Argument><![CDATA[159.0]]></Argument>
+					<Argument><![CDATA[160.0]]></Argument>
+					<Argument><![CDATA[161.0]]></Argument>
+					<Argument><![CDATA[162.0]]></Argument>
+					<Argument><![CDATA[163.0]]></Argument>
+					<Argument><![CDATA[164.0]]></Argument>
+					<Argument><![CDATA[165.0]]></Argument>
+					<Argument><![CDATA[166.0]]></Argument>
+					<Argument><![CDATA[167.0]]></Argument>
+					<Argument><![CDATA[168.0]]></Argument>
+					<Argument><![CDATA[169.0]]></Argument>
+					<Argument><![CDATA[170.0]]></Argument>
+					<Argument><![CDATA[171.0]]></Argument>
+					<Argument><![CDATA[172.0]]></Argument>
+					<Argument><![CDATA[173.0]]></Argument>
+					<Argument><![CDATA[174.0]]></Argument>
+					<Argument><![CDATA[175.0]]></Argument>
+					<Argument><![CDATA[176.0]]></Argument>
+					<Argument><![CDATA[177.0]]></Argument>
+					<Argument><![CDATA[178.0]]></Argument>
+					<Argument><![CDATA[179.0]]></Argument>
+					<Argument><![CDATA[180.0]]></Argument>
+					<Argument><![CDATA[181.0]]></Argument>
+					<Argument><![CDATA[182.0]]></Argument>
+					<Argument><![CDATA[183.0]]></Argument>
+					<Argument><![CDATA[184.0]]></Argument>
+					<Argument><![CDATA[185.0]]></Argument>
+					<Argument><![CDATA[186.0]]></Argument>
+					<Argument><![CDATA[187.0]]></Argument>
+					<Argument><![CDATA[188.0]]></Argument>
+					<Argument><![CDATA[189.0]]></Argument>
+					<Argument><![CDATA[190.0]]></Argument>
+					<Argument><![CDATA[191.0]]></Argument>
+					<Argument><![CDATA[192.0]]></Argument>
+					<Argument><![CDATA[193.0]]></Argument>
+					<Argument><![CDATA[194.0]]></Argument>
+					<Argument><![CDATA[195.0]]></Argument>
+					<Argument><![CDATA[196.0]]></Argument>
+					<Argument><![CDATA[197.0]]></Argument>
+					<Argument><![CDATA[198.0]]></Argument>
+					<Argument><![CDATA[199.0]]></Argument>
+					<Argument><![CDATA[200.0]]></Argument>
+					<Argument><![CDATA[201.0]]></Argument>
+					<Argument><![CDATA[202.0]]></Argument>
+					<Argument><![CDATA[203.0]]></Argument>
+					<Argument><![CDATA[204.0]]></Argument>
+					<Argument><![CDATA[205.0]]></Argument>
+					<Argument><![CDATA[206.0]]></Argument>
+					<Argument><![CDATA[207.0]]></Argument>
+					<Argument><![CDATA[208.0]]></Argument>
+					<Argument><![CDATA[209.0]]></Argument>
+					<Argument><![CDATA[210.0]]></Argument>
+					<Argument><![CDATA[211.0]]></Argument>
+					<Argument><![CDATA[212.0]]></Argument>
+					<Argument><![CDATA[213.0]]></Argument>
+					<Argument><![CDATA[214.0]]></Argument>
+					<Argument><![CDATA[215.0]]></Argument>
+					<Argument><![CDATA[216.0]]></Argument>
+					<Argument><![CDATA[217.0]]></Argument>
+					<Argument><![CDATA[218.0]]></Argument>
+					<Argument><![CDATA[219.0]]></Argument>
+					<Argument><![CDATA[220.0]]></Argument>
+					<Argument><![CDATA[221.0]]></Argument>
+					<Argument><![CDATA[222.0]]></Argument>
+					<Argument><![CDATA[223.0]]></Argument>
+					<Argument><![CDATA[224.0]]></Argument>
+					<Argument><![CDATA[225.0]]></Argument>
+					<Argument><![CDATA[226.0]]></Argument>
+					<Argument><![CDATA[227.0]]></Argument>
+					<Argument><![CDATA[228.0]]></Argument>
+					<Argument><![CDATA[229.0]]></Argument>
+					<Argument><![CDATA[230.0]]></Argument>
+					<Argument><![CDATA[231.0]]></Argument>
+					<Argument><![CDATA[232.0]]></Argument>
+					<Argument><![CDATA[233.0]]></Argument>
+					<Argument><![CDATA[234.0]]></Argument>
+					<Argument><![CDATA[235.0]]></Argument>
+					<Argument><![CDATA[236.0]]></Argument>
+					<Argument><![CDATA[237.0]]></Argument>
+					<Argument><![CDATA[238.0]]></Argument>
+					<Argument><![CDATA[239.0]]></Argument>
+					<Argument><![CDATA[240.0]]></Argument>
+					<Argument><![CDATA[241.0]]></Argument>
+					<Argument><![CDATA[242.0]]></Argument>
+					<Argument><![CDATA[243.0]]></Argument>
+					<Argument><![CDATA[244.0]]></Argument>
+					<Argument><![CDATA[245.0]]></Argument>
+					<Argument><![CDATA[246.0]]></Argument>
+					<Argument><![CDATA[247.0]]></Argument>
+					<Argument><![CDATA[248.0]]></Argument>
+					<Argument><![CDATA[249.0]]></Argument>
+					<Argument><![CDATA[250.0]]></Argument>
+					<Argument><![CDATA[251.0]]></Argument>
+					<Argument><![CDATA[252.0]]></Argument>
+					<Argument><![CDATA[253.0]]></Argument>
+					<Argument><![CDATA[254.0]]></Argument>
+					<Argument><![CDATA[255.0]]></Argument>
+					<Argument><![CDATA[256.0]]></Argument>
+					<Argument><![CDATA[257.0]]></Argument>
+					<Argument><![CDATA[258.0]]></Argument>
+					<Argument><![CDATA[259.0]]></Argument>
+					<Argument><![CDATA[260.0]]></Argument>
+					<Argument><![CDATA[261.0]]></Argument>
+					<Argument><![CDATA[262.0]]></Argument>
+					<Argument><![CDATA[263.0]]></Argument>
+					<Argument><![CDATA[264.0]]></Argument>
+					<Argument><![CDATA[265.0]]></Argument>
+					<Argument><![CDATA[266.0]]></Argument>
+					<Argument><![CDATA[267.0]]></Argument>
+					<Argument><![CDATA[268.0]]></Argument>
+					<Argument><![CDATA[269.0]]></Argument>
+					<Argument><![CDATA[270.0]]></Argument>
+					<Argument><![CDATA[271.0]]></Argument>
+					<Argument><![CDATA[272.0]]></Argument>
+					<Argument><![CDATA[273.0]]></Argument>
+					<Argument><![CDATA[274.0]]></Argument>
+					<Argument><![CDATA[275.0]]></Argument>
+					<Argument><![CDATA[276.0]]></Argument>
+					<Argument><![CDATA[277.0]]></Argument>
+					<Argument><![CDATA[278.0]]></Argument>
+					<Argument><![CDATA[279.0]]></Argument>
+					<Argument><![CDATA[280.0]]></Argument>
+					<Argument><![CDATA[281.0]]></Argument>
+					<Argument><![CDATA[282.0]]></Argument>
+					<Argument><![CDATA[283.0]]></Argument>
+					<Argument><![CDATA[284.0]]></Argument>
+					<Argument><![CDATA[285.0]]></Argument>
+					<Argument><![CDATA[286.0]]></Argument>
+					<Argument><![CDATA[287.0]]></Argument>
+					<Argument><![CDATA[288.0]]></Argument>
+					<Argument><![CDATA[289.0]]></Argument>
+					<Argument><![CDATA[290.0]]></Argument>
+					<Argument><![CDATA[291.0]]></Argument>
+					<Argument><![CDATA[292.0]]></Argument>
+					<Argument><![CDATA[293.0]]></Argument>
+					<Argument><![CDATA[294.0]]></Argument>
+					<Argument><![CDATA[295.0]]></Argument>
+					<Argument><![CDATA[296.0]]></Argument>
+					<Argument><![CDATA[297.0]]></Argument>
+					<Argument><![CDATA[298.0]]></Argument>
+					<Argument><![CDATA[299.0]]></Argument>
+					<Argument><![CDATA[300.0]]></Argument>
+					<Argument><![CDATA[301.0]]></Argument>
+					<Argument><![CDATA[302.0]]></Argument>
+					<Argument><![CDATA[303.0]]></Argument>
+					<Argument><![CDATA[304.0]]></Argument>
+					<Argument><![CDATA[305.0]]></Argument>
+					<Argument><![CDATA[306.0]]></Argument>
+					<Argument><![CDATA[307.0]]></Argument>
+					<Argument><![CDATA[308.0]]></Argument>
+					<Argument><![CDATA[309.0]]></Argument>
+					<Argument><![CDATA[310.0]]></Argument>
+					<Argument><![CDATA[311.0]]></Argument>
+					<Argument><![CDATA[312.0]]></Argument>
+					<Argument><![CDATA[313.0]]></Argument>
+					<Argument><![CDATA[314.0]]></Argument>
+					<Argument><![CDATA[315.0]]></Argument>
+					<Argument><![CDATA[316.0]]></Argument>
+					<Argument><![CDATA[317.0]]></Argument>
+					<Argument><![CDATA[318.0]]></Argument>
+					<Argument><![CDATA[319.0]]></Argument>
+					<Argument><![CDATA[320.0]]></Argument>
+					<Argument><![CDATA[321.0]]></Argument>
+					<Argument><![CDATA[322.0]]></Argument>
+					<Argument><![CDATA[323.0]]></Argument>
+					<Argument><![CDATA[324.0]]></Argument>
+					<Argument><![CDATA[325.0]]></Argument>
+					<Argument><![CDATA[326.0]]></Argument>
+					<Argument><![CDATA[327.0]]></Argument>
+					<Argument><![CDATA[328.0]]></Argument>
+					<Argument><![CDATA[329.0]]></Argument>
+					<Argument><![CDATA[330.0]]></Argument>
+					<Argument><![CDATA[331.0]]></Argument>
+					<Argument><![CDATA[332.0]]></Argument>
+					<Argument><![CDATA[333.0]]></Argument>
+					<Argument><![CDATA[334.0]]></Argument>
+					<Argument><![CDATA[335.0]]></Argument>
+					<Argument><![CDATA[336.0]]></Argument>
+					<Argument><![CDATA[337.0]]></Argument>
+					<Argument><![CDATA[338.0]]></Argument>
+					<Argument><![CDATA[339.0]]></Argument>
+					<Argument><![CDATA[340.0]]></Argument>
+					<Argument><![CDATA[341.0]]></Argument>
+					<Argument><![CDATA[342.0]]></Argument>
+					<Argument><![CDATA[343.0]]></Argument>
+					<Argument><![CDATA[344.0]]></Argument>
+					<Argument><![CDATA[345.0]]></Argument>
+					<Argument><![CDATA[346.0]]></Argument>
+					<Argument><![CDATA[347.0]]></Argument>
+					<Argument><![CDATA[348.0]]></Argument>
+					<Argument><![CDATA[349.0]]></Argument>
+					<Argument><![CDATA[350.0]]></Argument>
+					<Argument><![CDATA[351.0]]></Argument>
+					<Argument><![CDATA[352.0]]></Argument>
+					<Argument><![CDATA[353.0]]></Argument>
+					<Argument><![CDATA[354.0]]></Argument>
+					<Argument><![CDATA[355.0]]></Argument>
+					<Argument><![CDATA[356.0]]></Argument>
+					<Argument><![CDATA[357.0]]></Argument>
+					<Argument><![CDATA[358.0]]></Argument>
+					<Argument><![CDATA[359.0]]></Argument>
+					<Argument><![CDATA[360.0]]></Argument>
+					<Argument><![CDATA[361.0]]></Argument>
+					<Argument><![CDATA[362.0]]></Argument>
+					<Argument><![CDATA[363.0]]></Argument>
+					<Argument><![CDATA[364.0]]></Argument>
+					<Argument><![CDATA[365.0]]></Argument>
+					<Value><![CDATA[26.5]]></Value>
+					<Value><![CDATA[26.9]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[25.1]]></Value>
+					<Value><![CDATA[26.4]]></Value>
+					<Value><![CDATA[25.4]]></Value>
+					<Value><![CDATA[26.4]]></Value>
+					<Value><![CDATA[26.6]]></Value>
+					<Value><![CDATA[26.5]]></Value>
+					<Value><![CDATA[27.2]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.5]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[29.3]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[29.1]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[26.6]]></Value>
+					<Value><![CDATA[27.2]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[26.8]]></Value>
+					<Value><![CDATA[25.4]]></Value>
+					<Value><![CDATA[25.4]]></Value>
+					<Value><![CDATA[27.7]]></Value>
+					<Value><![CDATA[27.6]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[29.1]]></Value>
+					<Value><![CDATA[28.6]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[29.4]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[28.0]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[27.6]]></Value>
+					<Value><![CDATA[28.0]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[27.7]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[27.6]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[26.8]]></Value>
+					<Value><![CDATA[26.9]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[26.8]]></Value>
+					<Value><![CDATA[27.1]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[27.1]]></Value>
+					<Value><![CDATA[27.6]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[27.7]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+					<Value><![CDATA[28.6]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[29.8]]></Value>
+					<Value><![CDATA[29.3]]></Value>
+					<Value><![CDATA[29.1]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[29.4]]></Value>
+					<Value><![CDATA[29.4]]></Value>
+					<Value><![CDATA[28.6]]></Value>
+					<Value><![CDATA[29.8]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[30.1]]></Value>
+					<Value><![CDATA[30.2]]></Value>
+					<Value><![CDATA[29.4]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[30.3]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[30.3]]></Value>
+					<Value><![CDATA[30.2]]></Value>
+					<Value><![CDATA[30.5]]></Value>
+					<Value><![CDATA[30.4]]></Value>
+					<Value><![CDATA[31.1]]></Value>
+					<Value><![CDATA[30.6]]></Value>
+					<Value><![CDATA[30.2]]></Value>
+					<Value><![CDATA[30.2]]></Value>
+					<Value><![CDATA[30.2]]></Value>
+					<Value><![CDATA[31.1]]></Value>
+					<Value><![CDATA[31.0]]></Value>
+					<Value><![CDATA[29.3]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[30.3]]></Value>
+					<Value><![CDATA[30.3]]></Value>
+					<Value><![CDATA[30.6]]></Value>
+					<Value><![CDATA[30.8]]></Value>
+					<Value><![CDATA[31.2]]></Value>
+					<Value><![CDATA[31.4]]></Value>
+					<Value><![CDATA[31.1]]></Value>
+					<Value><![CDATA[31.0]]></Value>
+					<Value><![CDATA[31.6]]></Value>
+					<Value><![CDATA[31.0]]></Value>
+					<Value><![CDATA[31.5]]></Value>
+					<Value><![CDATA[31.4]]></Value>
+					<Value><![CDATA[31.2]]></Value>
+					<Value><![CDATA[30.5]]></Value>
+					<Value><![CDATA[31.4]]></Value>
+					<Value><![CDATA[32.1]]></Value>
+					<Value><![CDATA[32.2]]></Value>
+					<Value><![CDATA[31.3]]></Value>
+					<Value><![CDATA[31.6]]></Value>
+					<Value><![CDATA[32.6]]></Value>
+					<Value><![CDATA[31.4]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[30.8]]></Value>
+					<Value><![CDATA[30.1]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[30.6]]></Value>
+					<Value><![CDATA[30.9]]></Value>
+					<Value><![CDATA[30.6]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[29.7]]></Value>
+					<Value><![CDATA[31.2]]></Value>
+					<Value><![CDATA[31.9]]></Value>
+					<Value><![CDATA[29.7]]></Value>
+					<Value><![CDATA[27.5]]></Value>
+					<Value><![CDATA[29.1]]></Value>
+					<Value><![CDATA[30.4]]></Value>
+					<Value><![CDATA[30.6]]></Value>
+					<Value><![CDATA[30.2]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[26.4]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[30.1]]></Value>
+					<Value><![CDATA[30.4]]></Value>
+					<Value><![CDATA[30.6]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[28.6]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[28.6]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[29.3]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.4]]></Value>
+					<Value><![CDATA[30.6]]></Value>
+					<Value><![CDATA[29.7]]></Value>
+					<Value><![CDATA[30.1]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[30.7]]></Value>
+					<Value><![CDATA[31.2]]></Value>
+					<Value><![CDATA[30.3]]></Value>
+					<Value><![CDATA[29.8]]></Value>
+					<Value><![CDATA[30.7]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[28.5]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[28.4]]></Value>
+					<Value><![CDATA[27.6]]></Value>
+					<Value><![CDATA[26.4]]></Value>
+					<Value><![CDATA[28.5]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[30.4]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[29.4]]></Value>
+					<Value><![CDATA[30.2]]></Value>
+					<Value><![CDATA[29.9]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[29.4]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[28.0]]></Value>
+					<Value><![CDATA[26.3]]></Value>
+					<Value><![CDATA[26.6]]></Value>
+					<Value><![CDATA[27.2]]></Value>
+					<Value><![CDATA[27.1]]></Value>
+					<Value><![CDATA[26.9]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+					<Value><![CDATA[29.1]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[29.7]]></Value>
+					<Value><![CDATA[30.0]]></Value>
+					<Value><![CDATA[29.9]]></Value>
+					<Value><![CDATA[30.3]]></Value>
+					<Value><![CDATA[30.2]]></Value>
+					<Value><![CDATA[30.4]]></Value>
+					<Value><![CDATA[30.6]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.6]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[27.5]]></Value>
+					<Value><![CDATA[29.1]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[29.7]]></Value>
+					<Value><![CDATA[30.7]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[29.5]]></Value>
+					<Value><![CDATA[28.6]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[27.6]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[27.7]]></Value>
+					<Value><![CDATA[29.1]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[27.6]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[27.5]]></Value>
+					<Value><![CDATA[28.4]]></Value>
+					<Value><![CDATA[28.0]]></Value>
+					<Value><![CDATA[27.5]]></Value>
+					<Value><![CDATA[29.3]]></Value>
+					<Value><![CDATA[30.1]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[27.0]]></Value>
+					<Value><![CDATA[27.0]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[29.1]]></Value>
+					<Value><![CDATA[26.9]]></Value>
+					<Value><![CDATA[27.1]]></Value>
+					<Value><![CDATA[25.7]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[28.4]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.6]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[28.4]]></Value>
+					<Value><![CDATA[29.8]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[27.3]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+					<Value><![CDATA[28.5]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[26.8]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[27.7]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[27.5]]></Value>
+					<Value><![CDATA[26.6]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[27.7]]></Value>
+					<Value><![CDATA[28.4]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[28.5]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[28.6]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[29.5]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[27.9]]></Value>
+					<Value><![CDATA[27.2]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[27.7]]></Value>
+					<Value><![CDATA[27.6]]></Value>
+					<Value><![CDATA[28.0]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[27.5]]></Value>
+					<Value><![CDATA[26.8]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[28.5]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[29.7]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[27.4]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[29.5]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+					<Value><![CDATA[27.8]]></Value>
+					<Value><![CDATA[28.5]]></Value>
+					<Value><![CDATA[28.8]]></Value>
+					<Value><![CDATA[29.3]]></Value>
+					<Value><![CDATA[29.7]]></Value>
+					<Value><![CDATA[29.5]]></Value>
+					<Value><![CDATA[30.6]]></Value>
+					<Value><![CDATA[29.8]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[29.4]]></Value>
+					<Value><![CDATA[29.0]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[28.9]]></Value>
+					<Value><![CDATA[29.1]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[27.6]]></Value>
+					<Value><![CDATA[26.9]]></Value>
+					<Value><![CDATA[28.1]]></Value>
+					<Value><![CDATA[28.0]]></Value>
+					<Value><![CDATA[28.2]]></Value>
+					<Value><![CDATA[28.3]]></Value>
+					<Value><![CDATA[29.2]]></Value>
+					<Value><![CDATA[29.6]]></Value>
+					<Value><![CDATA[28.7]]></Value>
+				</TableFunction>
 			</TableFunctions>
+			<Connectivity>
+				<ExcelFile>
+					<Id>1748012138051</Id>
+					<Name><![CDATA[excelFile]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>780</X><Y>380</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ResourceReference>
+						<PackageName><![CDATA[absites]]></PackageName>
+						<ClassName><![CDATA[C:/Users/fc1fb/Models/Vax SC/Data/ho_chi_minh_2023_data.xlsx]]></ClassName>
+					</ResourceReference>
+					<SaveInSnapshot>false</SaveInSnapshot>
+					<LoadOnStartup>true</LoadOnStartup>
+					<SaveOnDispose>true</SaveOnDispose>
+				</ExcelFile>
+			</Connectivity>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1741000867355</Id>
@@ -4847,6 +5433,14 @@
 			<BypassInitialScreen>true</BypassInitialScreen>
 		</SimulationExperiment>	
 	</Experiments>
+	<ModelResources>
+		<Resource>
+			<Id>1748012224530</Id>
+			<Path><![CDATA[C:/Users/fc1fb/Models/Vax SC/Data/ho_chi_minh_2023_data.xlsx]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
+		</Resource>
+	</ModelResources>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
