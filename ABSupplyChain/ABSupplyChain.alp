@@ -1655,9 +1655,6 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[cf]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[true]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -1744,9 +1741,6 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[cf]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[true]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -1834,9 +1828,6 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[cf]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[true]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -2095,9 +2086,6 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[cf]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[true]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -2184,9 +2172,6 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[cf]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[true]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -2273,9 +2258,6 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[cf]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[true]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -2362,9 +2344,6 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[cf]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[true]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -2592,9 +2571,6 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[cf]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[true]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -2980,6 +2956,16 @@
 					<Expression><![CDATA[my_dataset3]]></Expression>
 					<Color>-16776961</Color>
 					<Expression2><![CDATA[DHC1.VI+DHC2.VI+DHC3.VI+DHC4.VI+DHC5.VI+DHC6.VI]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<DatasetExpression>  
+						<Title><![CDATA[Title 4]]></Title>
+					<Id>1748421346555</Id>
+					<Expression><![CDATA[my_dataset4]]></Expression>
+					<Color>-29696</Color>
+					<Expression2><![CDATA[TIS1.VI+TIS2.VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>

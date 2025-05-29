@@ -364,9 +364,6 @@
 				<Parameter>
 					<Name><![CDATA[Owner]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[cf]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
