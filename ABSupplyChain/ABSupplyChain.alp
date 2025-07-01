@@ -307,7 +307,9 @@ setupPHO();]]></StartupCode>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for (VaxCentre pus : Puskesmas){
 	pus.PubHealthOffice = pus.getNearestAgent(PHO);
-	pus.vaxDisLink.connectTo(pus.PubHealthOffice);
+	//traceln(pus.getNearestAgent(PHO));
+	//traceln(pus.getNearestAgentByRoute(PHO));
+	pus.linkToDistributor.connectTo(pus.PubHealthOffice);
 	}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -321,8 +323,8 @@ setupPHO();]]></StartupCode>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for (VaxDistributor vd : PHO){
-	vd.UpstreamConnection = vd.getNearestAgent(NationalOffice);
-	vd.vaxManufactureLink.connectTo(vd.UpstreamConnection);
+	vd.UpstreamConnection = vd.getNearestAgent(NationalOffices);
+	vd.linkToManufacturer.connectTo(vd.UpstreamConnection);
 	}]]></Body>
 				</Function>
 			</Functions>
@@ -736,7 +738,7 @@ setupPHO();]]></StartupCode>
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1751297301732</Id>
-					<Name><![CDATA[NationalOffice]]></Name>
+					<Name><![CDATA[NationalOffices]]></Name>
 					<X>-120</X><Y>160</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -986,7 +988,7 @@ setupPHO();]]></StartupCode>
 				</EmbeddedObjectPresentation>
 				<EmbeddedObjectPresentation>
 					<Id>1751297307249</Id>
-					<Name><![CDATA[NationalOffice_presentation]]></Name>
+					<Name><![CDATA[NationalOffices_presentation]]></Name>
 					<X>0</X><Y>0</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
