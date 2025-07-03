@@ -386,6 +386,9 @@
 				<Parameter>
 					<Name><![CDATA[Owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[Name]]></Name>
+				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[//VI=0.1;
 //VOB=0.1;]]></StartupCode>
@@ -490,6 +493,21 @@
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[VaxDistributor]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1751470514553</Id>
+					<Name><![CDATA[onOrder]]></Name>
+					<X>60</X><Y>330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="AuxVariable">
@@ -1355,10 +1373,11 @@
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[//VI += max(0, DVO);//order DVO if DVO>0
-if (DVO>0) {
+if (DVO>50 && !onOrder) {
 Order o = new Order(DVO, DesiredVaxDelivery, this, null);
 // Sending message
 linkToDistributor.send(o);
+onOrder = true;
 DVO = 0;
 }]]></Action>
 				</Event>
@@ -1392,7 +1411,9 @@ else {return 1;}]]></Body>
 						<Name><![CDATA[shipmentMsg]]></Name>
 						<Type><![CDATA[Order]]></Type>
 					</Parameter>
-					<Body><![CDATA[VI += shipmentMsg.amount;]]></Body>
+					<Body><![CDATA[VI += shipmentMsg.amount;
+onOrder = false;
+//traceln(time(DAY));]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -2628,6 +2649,12 @@ else {return 1;}]]></Body>
 				<Parameter>
 					<Name><![CDATA[Owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[Name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[Capacity]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -2961,10 +2988,11 @@ else {return 1;}]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Array="false">
-					<EquationStyle>classic</EquationStyle>
+					<EquationStyle>custom</EquationStyle>
 					<Width>20</Width>
 					<Height>20</Height>
-						<InitialValue><![CDATA[0]]></InitialValue>
+						<Expression><![CDATA[RSV<Capacity ? vaxShipmentRate:0]]></Expression>
+						<InitialValue><![CDATA[0//1000]]></InitialValue>
 						<Color/>
 					</Properties>
 				</Variable>
@@ -3258,6 +3286,31 @@ else {return 1;}]]></Body>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1751296976363</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1751556114070</Id>
+					<Name><![CDATA[Capacity]]></Name>
+					<Description><![CDATA[Re-order time]]></Description>
+					<X>50</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[6000]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1751556114068</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -3784,6 +3837,21 @@ else {return 1;}]]></Body>
 					<Id>1751296910562</Id>
 					<Name><![CDATA[vaxOrderRate - changeInDemand]]></Name>
 					<X>400</X><Y>560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+				<Link SourceId="1751556114070" TargetId="1751296820395" Polarity="null">
+					<Height>-71.415</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>690</X><Y>200</Y></Direction>
+					<Id>1751556168415</Id>
+					<Name><![CDATA[Capacity - RSV]]></Name>
+					<X>50</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4481,6 +4549,12 @@ ShippingDept.ship(realisedShipment, this, orderMsg.from);
 				<Parameter>
 					<Name><![CDATA[Owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[Name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[Capacity]]></Name>
+				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[//VI = 0.1;
 //VOB = 0.1;
@@ -4586,6 +4660,21 @@ ShippingDept.ship(realisedShipment, this, orderMsg.from);
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[VaxManufacturer]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1751470635693</Id>
+					<Name><![CDATA[onOrder]]></Name>
+					<X>60</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="AuxVariable">
@@ -4796,10 +4885,11 @@ ShippingDept.ship(realisedShipment, this, orderMsg.from);
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Array="false">
-					<EquationStyle>classic</EquationStyle>
+					<EquationStyle>custom</EquationStyle>
 					<Width>20</Width>
 					<Height>20</Height>
-						<InitialValue><![CDATA[0]]></InitialValue>
+						<Expression><![CDATA[RSV<Capacity ? vaxSupplyRate:0]]></Expression>
+						<InitialValue><![CDATA[0//500]]></InitialValue>
 						<Color/>
 					</Properties>
 				</Variable>
@@ -5008,7 +5098,8 @@ ShippingDept.ship(realisedShipment, this, orderMsg.from);
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[triangular(IAT, TAOR, (IAT+TAOR)/2)]]></Code>
+							<Code><![CDATA[//triangular(IAT, TAOR, (IAT+TAOR)/2)
+normal(IAT, TAOR, (IAT+TAOR)/2, 1)]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1751274411689</Id>
@@ -5033,6 +5124,31 @@ ShippingDept.ship(realisedShipment, this, orderMsg.from);
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1751274411693</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1751556005605</Id>
+					<Name><![CDATA[Capacity]]></Name>
+					<Description><![CDATA[Re-order time]]></Description>
+					<X>60</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[600]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1751556005603</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -5447,6 +5563,21 @@ ShippingDept.ship(realisedShipment, this, orderMsg.from);
 					<LineWidth>1</LineWidth>
 					<Delay>false</Delay>
 				</Link>
+				<Link SourceId="1751556005605" TargetId="1751276955192" Polarity="null">
+					<Height>-83.074</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>560</X><Y>120</Y></Direction>
+					<Id>1751556157823</Id>
+					<Name><![CDATA[Capacity - RSV]]></Name>
+					<X>60</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
 			</Dependences>
 			<Events>
 				<Event>
@@ -5479,10 +5610,12 @@ ShippingDept.ship(realisedShipment, this, orderMsg.from);
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
-					<Action><![CDATA[if (DVO>0) {
+					<Action><![CDATA[if (DVO>50 && !onOrder) {
 Order o = new Order(DVO, DesiredVaxDelivery, this, null);
 // Sending message
 linkToManufacturer.send(o);
+//traceln(time());
+onOrder = true;
 DVO = 0;
 }]]></Action>
 				</Event>
@@ -5537,7 +5670,9 @@ ShippingDept.ship(realisedShipment, this, orderMsg.from);
 						<Name><![CDATA[shipmentMsg]]></Name>
 						<Type><![CDATA[Order]]></Type>
 					</Parameter>
-					<Body><![CDATA[VI += shipmentMsg.amount;]]></Body>
+					<Body><![CDATA[VI += shipmentMsg.amount;
+onOrder = false;
+//traceln(time());]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -6750,7 +6885,7 @@ ShippingDept.ship(realisedShipment, this, orderMsg.from);
 					<LineStyle>SOLID</LineStyle>
 					<Width>5</Width>
 					<Height>10</Height>
-					<HeightCode><![CDATA[VI/400*20]]></HeightCode>
+					<HeightCode><![CDATA[RSV/Capacity*20]]></HeightCode>
 					<Rotation>180.0</Rotation>
 					<FillColor>-16711936</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -8843,7 +8978,7 @@ while(quantity>0) {
 							<Value Class="EntityCodeValue">
 								<IsAgentEntity>true</IsAgentEntity>
 								<EntityEmbeddedObject>
-									<Id>1751463841995</Id>
+									<Id>1751531028132</Id>
 									<ActiveObjectClass>
 										<PackageName><![CDATA[absites]]></PackageName>
 										<ClassName><![CDATA[Vehicle]]></ClassName>
@@ -8899,7 +9034,7 @@ while(quantity>0) {
 									</LocationNameCode>
 									<InitializationType>LOAD_FROM_DATABASE</InitializationType>
 									<InitializationDatabaseTableQuery>
-										<Id>1751463841994</Id>
+										<Id>1751531028131</Id>
 										<TableReference>
 										</TableReference>
 									</InitializationDatabaseTableQuery>
