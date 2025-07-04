@@ -1229,8 +1229,8 @@ return result;]]></Body>
 				<StopOption><![CDATA[Stop at specified time]]></StopOption>
 				<InitialDate><![CDATA[1729555200000]]></InitialDate>
 				<InitialTime><![CDATA[0.0]]></InitialTime>
-				<FinalDate><![CDATA[1815955200000]]></FinalDate>
-				<FinalTime><![CDATA[1000.0]]></FinalTime>
+				<FinalDate><![CDATA[1902355200000]]></FinalDate>
+				<FinalTime><![CDATA[2000.0]]></FinalTime>
 			</ModelTimeProperties>
 			<BypassInitialScreen>true</BypassInitialScreen>
 		</SimulationExperiment>	

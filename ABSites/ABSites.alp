@@ -3897,7 +3897,7 @@ DVO = 0;]]></Action>
 						<Type><![CDATA[Order]]></Type>
 					</Parameter>
 					<Body><![CDATA[MOB += orderMsg.amount;
-vaxOrderRate = orderMsg.amountRate;
+vaxOrderRate = max(vaxOrderRate, orderMsg.amountRate);
 //double realisedShipment = min(RSV, orderMsg.amount);
 double realisedShipment = min(VI, orderMsg.amount);
 double realisedRate = vaxShipmentRate;
@@ -5618,7 +5618,7 @@ else {return 1;}]]></Body>
 						<Type><![CDATA[Order]]></Type>
 					</Parameter>
 					<Body><![CDATA[VOB += orderMsg.amount;
-vaxOrderRate = orderMsg.amountRate;
+vaxOrderRate = max(vaxOrderRate, orderMsg.amountRate);
 //double realisedShipment = min(RSV, orderMsg.amount);
 double realisedShipment = min(VI, orderMsg.amount);
 double realisedRate = vaxSupplyRate;
@@ -9940,7 +9940,7 @@ unit.setLocation(this.getOwner());]]></Code>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[waitingTime(agent)]]></Code>
+								<Code><![CDATA[0.1//waitingTime(agent)]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
 							</Value>
 						</Parameter>
