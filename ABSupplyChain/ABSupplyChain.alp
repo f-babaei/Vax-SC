@@ -503,6 +503,9 @@ return result;]]></Body>
 						<Parameter>
 							<Name><![CDATA[Capacity]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[StorageCapacity]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">

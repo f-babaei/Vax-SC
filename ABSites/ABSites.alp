@@ -392,12 +392,18 @@
 				<Parameter>
 					<Name><![CDATA[Capacity]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[StorageCapacity]]></Name>
+				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[vaxOrderRate = Capacity/52/2/(7/2);
+
 VOB = vaxOrderRate*TDD;
 EVDR = vaxOrderRate;
-VI = vaxOrderRate*(VSS+MOPT);
-DVO = EVDR;]]></StartupCode>
+VI = vaxOrderRate*(VSS+MOPT+ROT*2/3/2);
+DVO = EVDR;
+
+StorageCapacity = 6*7*vaxOrderRate; // six weeks of average daily order]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1741000867358</Id>
@@ -516,6 +522,21 @@ DVO = EVDR;]]></StartupCode>
 						<Type><![CDATA[VaxLocalDistributor]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1756288057283</Id>
+					<Name><![CDATA[onEmergencyOrder]]></Name>
+					<X>230</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="AuxVariable">
 					<Id>1741001372579</Id>
 					<Name><![CDATA[DeliveryDelay]]></Name>
@@ -600,7 +621,7 @@ DVO = EVDR;]]></StartupCode>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[(MOPT/prFunc()+VSS)*(EVDR)]]></Formula>
+						<Formula><![CDATA[(MOPT/prFunc()+VSS+ROT*2/3/2)*(EVDR)]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
@@ -958,7 +979,7 @@ DVO = EVDR;]]></StartupCode>
 				<Variable Class="Parameter">
 					<Id>1755857276796</Id>
 					<Name><![CDATA[Capacity]]></Name>
-					<Description><![CDATA[Re-order time]]></Description>
+					<Description><![CDATA[Annual Demand]]></Description>
 					<X>60</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -970,6 +991,27 @@ DVO = EVDR;]]></StartupCode>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1755857276794</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1756286933434</Id>
+					<Name><![CDATA[StorageCapacity]]></Name>
+					<X>60</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1756286933432</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -1324,6 +1366,21 @@ DVO = EVDR;]]></StartupCode>
 					<LineWidth>1</LineWidth>
 					<Delay>false</Delay>
 				</Link>
+				<Link SourceId="1751096437782" TargetId="1741001703852" Polarity="null">
+					<Height>103.653</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>340</X><Y>170</Y></Direction>
+					<Id>1756288780410</Id>
+					<Name><![CDATA[ROT - DesiredInventory]]></Name>
+					<X>60</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
 			</Dependences>
 			<Events>
 				<Event>
@@ -1369,6 +1426,58 @@ onOrder = true;
 DVO -= o.amount;
 }]]></Action>
 				</Event>
+				<Event>
+					<Id>1756283615991</Id>
+					<Name><![CDATA[emergencyOrder]]></Name>
+					<X>230</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+						</Rate>
+						<Id>1756283615989</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1749283200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[3.5]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[3.5]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[InventoryCoverageRatio<VSS & !onEmergencyOrder]]></Condition>
+					</Properties>
+					<Action><![CDATA[//VI += max(0, DVO);//order DVO if DVO>0
+if (VSS>InventoryCoverageRatio & !onEmergencyOrder) {
+double EOT = order.getRest(DAY);
+double orderAmount = min(DVO, max(VSS, EOT)*vaxOrderRate);
+//VI += orderAmount;
+
+Order o = new Order(orderAmount, DVO/EOT, this, this);
+linkToDistributor.send(o);
+onEmergencyOrder = true;
+DVO -= orderAmount;
+}
+
+//Order o = new Order(DVO, DesiredVaxDelivery, this, null);
+//Order o = new Order(DVO, DVO/ROT, this, null);
+
+// Sending message
+//linkToDistributor.send(o);
+
+
+//DVO -= o.amount;
+//}]]></Action>
+				</Event>
 			</Events>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -1401,7 +1510,7 @@ else {return 1;}]]></Body>
 					</Parameter>
 					<Body><![CDATA[VI += shipmentMsg.amount;
 onOrder = false;
-]]></Body>
+onEmergencyOrder = false;]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -2309,7 +2418,7 @@ onOrder = false;
 					<RadiusY>40</RadiusY>
 					<StartAngle>-60.0</StartAngle>
 					<Angle>240.0</Angle>
-					<AngleCode><![CDATA[2 * PI * VI / Capacity]]></AngleCode>
+					<AngleCode><![CDATA[2 * PI * VI / StorageCapacity]]></AngleCode>
 					<FillColor>-16711936</FillColor>
 					<FillMaterial>null</FillMaterial>
 				</Arc>
@@ -2605,6 +2714,148 @@ onOrder = false;
 			</Presentation>
 
 				</Group>
+    			<TimeStackChart>
+					<Id>1756293824279</Id>
+					<Name><![CDATA[chart]]></Name>
+					<X>230</X><Y>620</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1756293824277</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1756368000000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>260</Width>
+					<Height>210</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>180</Width>
+						<Height>120</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
+					<DatasetExpression>
+					<Id>1756293832717</Id>
+					<Expression><![CDATA[my_dataset1]]></Expression>
+					<Color>-2987746</Color>
+					<Expression2><![CDATA[VI]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+							<Title><![CDATA[Title 1]]></Title>
+					</DatasetExpression>
+					<DatasetExpression>
+					<Id>1756294102758</Id>
+					<Expression><![CDATA[my_dataset2]]></Expression>
+					<Color>-2448096</Color>
+					<Expression2><![CDATA[DVO]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+							<Title><![CDATA[Title 2]]></Title>
+					</DatasetExpression>
+					<SamplesToKeep>365</SamplesToKeep>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimeStackChart>
+    			<TimePlot>
+					<Id>1756293963183</Id>
+					<Name><![CDATA[plot]]></Name>
+					<X>520</X><Y>630</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1756293963181</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1756368000000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>260</Width>
+					<Height>210</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>180</Width>
+						<Height>120</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<DatasetExpression>  
+						<Title><![CDATA[Title]]></Title>
+					<Id>1756293964274</Id>
+					<Expression><![CDATA[my_dataset]]></Expression>
+					<Color>-2987746</Color>
+					<Expression2><![CDATA[DeliveryDelay]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<SamplesToKeep>365</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
 			</Presentation>
 
 				</Level>
@@ -6496,7 +6747,7 @@ onOrder = false;
 							<Name><![CDATA[VehicleCapacity]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[//Capacity/8*1.2
-1.5e6]]></Code>
+1.5e6*2/7]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -7058,7 +7309,7 @@ onOrder = false;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="timeout" Mode="cyclic">
+					<Properties TriggerType="rate" Mode="cyclic">
 						<Timeout Class="CodeUnitValue">
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
@@ -7984,7 +8235,7 @@ moveTo(Supplier);]]></Action>
 					<IconOffset>20.0</IconOffset>
 					<Properties Source="1751359544335" Target="1751359544329" Trigger="timeout">
 						<Action><![CDATA[moveTo(shipment.to);
-//dest.setText(((VaxCentre) shipment.to).Name);]]></Action>
+dest.setText(((Site) shipment.to).Name);]]></Action>
 						<Timeout Class="CodeUnitValue">
 							<Code><![CDATA[uniform( 1, 2 ) ]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
@@ -12194,6 +12445,35 @@ onOrder = false;
 					<Value><![CDATA[28.7]]></Value>
 				</TableFunction>
 			</TableFunctions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1756289211131</Id>
+					<Name><![CDATA[datasetDD]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>770</X><Y>330</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1756289211129</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1756368000000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<FreezeXAxis>true</FreezeXAxis>
+					<VerticalAxisExpression><![CDATA[DeliveryDelay]]></VerticalAxisExpression>
+					<SamplesToKeep>100</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1755790360583</Id>
