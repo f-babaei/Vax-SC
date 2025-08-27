@@ -190,6 +190,7 @@
 			<Name><![CDATA[SCGISMain]]></Name>
 			<StartupCode><![CDATA[setupNO();
 setupPHO();
+setupDHO();
 setupPuskesmas();
 setupPopCentres();]]></StartupCode>
 			<Generic>false</Generic>
@@ -305,7 +306,7 @@ setupPopCentres();]]></StartupCode>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1751019953423</Id>
 					<Name><![CDATA[setupPopCentres]]></Name>
-					<X>-240</X><Y>250</Y>
+					<X>-240</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -318,7 +319,7 @@ setupPopCentres();]]></StartupCode>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1751212403861</Id>
 					<Name><![CDATA[setupPuskesmas]]></Name>
-					<X>-240</X><Y>220</Y>
+					<X>-240</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -326,11 +327,11 @@ setupPopCentres();]]></StartupCode>
 					<Body><![CDATA[for (VaxCentre pu : Puskesmas){
 	//traceln(pu.OrderFromName);
 	collectionPartners.add(pu);
-	pu.PubHealthOffice = (VaxDistributor) findPartner(pu.OrderFromName);
+	pu.UpstreamConnection = (VaxLocalDistributor) findPartner(pu.OrderFromName);
 	//pu.PubHealthOffice = pu.getNearestAgent(PHO);
 	//traceln(pu.getNearestAgent(PHO));
 	//traceln(pu.getNearestAgentByRoute(PHO));
-	pu.linkToDistributor.connectTo(pu.PubHealthOffice);
+	pu.linkToDistributor.connectTo(pu.UpstreamConnection);
 	}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -386,6 +387,23 @@ return result;]]></Body>
 	collectionPartners.add(vm);
 	}]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1755791365829</Id>
+					<Name><![CDATA[setupDHO]]></Name>
+					<X>-240</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[for (VaxLocalDistributor vd : DHO){
+	collectionPartners.add(vd);
+	vd.UpstreamConnection = (VaxDistributor) findPartner(vd.OrderFromName);
+	//vd.UpstreamConnection = vd.getNearestAgent(NationalOffices);
+	vd.linkToDistributor.connectTo(vd.UpstreamConnection);
+	}]]></Body>
+				</Function>
 			</Functions>
 			<AgentLinks>
 				<AgentLink>
@@ -413,7 +431,7 @@ return result;]]></Body>
 				<EmbeddedObject>
 					<Id>1749654052611</Id>
 					<Name><![CDATA[Puskesmas]]></Name>
-					<X>-120</X><Y>220</Y>
+					<X>-120</X><Y>250</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -434,31 +452,31 @@ return result;]]></Body>
 						<Parameter>
 							<Name><![CDATA[TDD]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[3]]></Code>
+								<Code><![CDATA[0.5]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[MOPT]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[2]]></Code>
+								<Code><![CDATA[0.25]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[TAOR]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[8]]></Code>
+								<Code><![CDATA[triangular(21, 30, 22)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[IAT]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[1]]></Code>
+								<Code><![CDATA[triangular(5, 14, 10)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[VSS]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[2]]></Code>
+								<Code><![CDATA[7]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -472,12 +490,18 @@ return result;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[ROT]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[triangular(21, 30, 24)]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[OrderFromName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[Name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Capacity]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -552,12 +576,24 @@ return result;]]></Body>
 								<ItemName><![CDATA[upstream_connection]]></ItemName>
 							</Value>
 						</Item>
+						<Item>
+							<Key>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[VaxCentre]]></ClassName>
+								<ItemName><![CDATA[Capacity]]></ItemName>
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[puskesmas]]></ClassName>
+								<ItemName><![CDATA[initial_demand]]></ItemName>
+							</Value>
+						</Item>
 					</ParameterToDatabaseColumnMapping>
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1751019825977</Id>
 					<Name><![CDATA[PopCentres]]></Name>
-					<X>-120</X><Y>250</Y>
+					<X>-120</X><Y>280</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -579,9 +615,6 @@ return result;]]></Body>
 							<Name><![CDATA[vaxCentre]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[name]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[Owner]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[this]]></Code>
@@ -589,6 +622,15 @@ return result;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[Name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[averageDemand]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[weeklySessions]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[2]]></Code>
+							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -622,8 +664,8 @@ return result;]]></Body>
 						<Item>
 							<Key>
 								<PackageName><![CDATA[absites]]></PackageName>
-								<ClassName><![CDATA[PopCentre]]></ClassName>
-								<ItemName><![CDATA[name]]></ItemName>
+								<ClassName><![CDATA[Site]]></ClassName>
+								<ItemName><![CDATA[Name]]></ItemName>
 							</Key>
 							<Value>
 								<PackageName><![CDATA[absupplychain]]></PackageName>
@@ -649,6 +691,18 @@ return result;]]></Body>
 								<PackageName><![CDATA[absupplychain]]></PackageName>
 								<ClassName><![CDATA[puskesmas]]></ClassName>
 								<ItemName><![CDATA[longitude]]></ItemName>
+							</Value>
+						</Item>
+						<Item>
+							<Key>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[PopCentre]]></ClassName>
+								<ItemName><![CDATA[averageDemand]]></ItemName>
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[puskesmas]]></ClassName>
+								<ItemName><![CDATA[annual_demand]]></ItemName>
 							</Value>
 						</Item>
 					</ParameterToDatabaseColumnMapping>
@@ -678,31 +732,31 @@ return result;]]></Body>
 						<Parameter>
 							<Name><![CDATA[TDD]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[3]]></Code>
+								<Code><![CDATA[triangular(9, 17, 14)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[MOPT]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[2]]></Code>
+								<Code><![CDATA[triangular(5, 10, 7)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[TAOR]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[8]]></Code>
+								<Code><![CDATA[80]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[IAT]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[1]]></Code>
+								<Code><![CDATA[triangular(17, 30, 21)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[VSS]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[2]]></Code>
+								<Code><![CDATA[triangular(30, 60, 45)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -710,6 +764,9 @@ return result;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[ROT]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[triangular(80, 100, 90)]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[OrderFromName]]></Name>
@@ -799,6 +856,18 @@ return result;]]></Body>
 								<ItemName><![CDATA[upstream_connection]]></ItemName>
 							</Value>
 						</Item>
+						<Item>
+							<Key>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[VaxDistributor]]></ClassName>
+								<ItemName><![CDATA[Capacity]]></ItemName>
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[provincial_public_health]]></ClassName>
+								<ItemName><![CDATA[initial_demand]]></ItemName>
+							</Value>
+						</Item>
 					</ParameterToDatabaseColumnMapping>
 				</EmbeddedObject>
 				<EmbeddedObject>
@@ -825,43 +894,43 @@ return result;]]></Body>
 						<Parameter>
 							<Name><![CDATA[TDD]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[3]]></Code>
+								<Code><![CDATA[triangular(17, 30, 21)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[MOPT]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[2]]></Code>
+								<Code><![CDATA[triangular(10, 14, 12)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[TAOR]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[8]]></Code>
+								<Code><![CDATA[170]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[IAT]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[1]]></Code>
+								<Code><![CDATA[3//1]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[VSS]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[2]]></Code>
+								<Code><![CDATA[90]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[WIPAT]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[1]]></Code>
+								<Code><![CDATA[3//1]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[MLT]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[normal(0.1, 20, 0.5, 3)]]></Code>
+								<Code><![CDATA[30//normal(0.1, 20, 0.5, 3)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -943,6 +1012,177 @@ return result;]]></Body>
 								<ItemName><![CDATA[longitude]]></ItemName>
 							</Value>
 						</Item>
+						<Item>
+							<Key>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[VaxManufacturer]]></ClassName>
+								<ItemName><![CDATA[Capacity]]></ItemName>
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[national_office]]></ClassName>
+								<ItemName><![CDATA[initial_demand]]></ItemName>
+							</Value>
+						</Item>
+					</ParameterToDatabaseColumnMapping>
+				</EmbeddedObject>
+				<EmbeddedObject>
+					<Id>1755791302944</Id>
+					<Name><![CDATA[DHO]]></Name>
+					<X>-120</X><Y>220</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<PresentationId>1755791306686</PresentationId>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[absites]]></PackageName>
+						<ClassName><![CDATA[VaxLocalDistributor]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[absites]]></PackageName>
+							<ClassName><![CDATA[VaxLocalDistributor]]></ClassName>
+							<ItemName><![CDATA[1755790360397]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[TDD]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[triangular(5, 14, 8)]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[MOPT]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[triangular(3, 7, 5)]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[TAOR]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[triangular(30, 60, 40)]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[IAT]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[triangular(9, 17, 14)]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[VSS]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[30]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[cf]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[ROT]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[triangular(30, 60, 45)]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[OrderFromName]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Capacity]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Owner]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Name]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>true</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>
+					<InitialLocationType>XYZ</InitialLocationType>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>LOAD_FROM_DATABASE</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<Id>1755791302942</Id>
+						<TableReference>
+							<PackageName><![CDATA[absupplychain]]></PackageName>
+							<ClassName><![CDATA[district_health_office]]></ClassName>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+					<ParameterToDatabaseColumnMapping>
+						<Item>
+							<Key>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[Site]]></ClassName>
+								<ItemName><![CDATA[Name]]></ItemName>
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[district_health_office]]></ClassName>
+								<ItemName><![CDATA[name]]></ItemName>
+							</Value>
+						</Item>
+						<Item>
+							<Key>
+								FAKE_PARAMETER_GIS_LOCATION_LATITUDE_xjal
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[district_health_office]]></ClassName>
+								<ItemName><![CDATA[latitude]]></ItemName>
+							</Value>
+						</Item>
+						<Item>
+							<Key>
+								FAKE_PARAMETER_GIS_LOCATION_LONGITUDE_xjal
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[district_health_office]]></ClassName>
+								<ItemName><![CDATA[longitude]]></ItemName>
+							</Value>
+						</Item>
+						<Item>
+							<Key>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[VaxLocalDistributor]]></ClassName>
+								<ItemName><![CDATA[OrderFromName]]></ItemName>
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[district_health_office]]></ClassName>
+								<ItemName><![CDATA[upstream_connection]]></ItemName>
+							</Value>
+						</Item>
+						<Item>
+							<Key>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[VaxLocalDistributor]]></ClassName>
+								<ItemName><![CDATA[Capacity]]></ItemName>
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[district_health_office]]></ClassName>
+								<ItemName><![CDATA[initial_demand]]></ItemName>
+							</Value>
+						</Item>
 					</ParameterToDatabaseColumnMapping>
 				</EmbeddedObject>
 			</EmbeddedObjects>
@@ -975,8 +1215,8 @@ return result;]]></Body>
 					<Height>564</Height>
 					<GISShapes>
 					</GISShapes>
-					<Latitude>1.8766257525765413</Latitude>
-					<Longitude>124.63768102182605</Longitude>
+					<Latitude>-1.206103768251736</Latitude>
+					<Longitude>122.75841203655763</Longitude>
 					<Scale>20000000</Scale>
 					<BorderColor>-4144960</BorderColor>
 					<FillColor>-1</FillColor>
@@ -1072,6 +1312,24 @@ return result;]]></Body>
 					<Latitude>1.8766257525765413</Latitude>
 					<Longitude>124.63768102182605</Longitude>
 				</EmbeddedObjectPresentation>
+				<EmbeddedObjectPresentation>
+					<Id>1755791306686</Id>
+					<Name><![CDATA[DHO_presentation]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+					<Latitude>-1.206103768251736</Latitude>
+					<Longitude>122.75841203655763</Longitude>
+				</EmbeddedObjectPresentation>
 			</Presentation>
 
 				</Level>
@@ -1098,7 +1356,7 @@ return result;]]></Body>
 		<ShutdownCompact>false</ShutdownCompact>
 		<ImportSettings>
 			<ExternalConnection>
-				<Id>1749657665160</Id>
+				<Id>1755857247103</Id>
 				<Name><![CDATA[database]]></Name>
 				<X>0</X><Y>0</Y>
 				<Label><X>10</X><Y>0</Y></Label>
@@ -1119,17 +1377,7 @@ return result;]]></Body>
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
 			<TableImportSettings>
-				<Id>1749657668422</Id>
-				<TableReference>
-					<PackageName><![CDATA[absupplychain]]></PackageName>
-					<ClassName><![CDATA[national_office]]></ClassName>
-				</TableReference>
-				<ConnectionIndex>0</ConnectionIndex>
-				<ExternalTableName><![CDATA["NationalOffice"]]></ExternalTableName>
-				<AutoImport>false</AutoImport>
-			</TableImportSettings>
-			<TableImportSettings>
-				<Id>1749657668425</Id>
+				<Id>1755857248953</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[puskesmas]]></ClassName>
@@ -1139,13 +1387,33 @@ return result;]]></Body>
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1749657668428</Id>
+				<Id>1755857248956</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[provincial_public_health]]></ClassName>
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
 				<ExternalTableName><![CDATA["ProvincialPublicHealth"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<Id>1755857248959</Id>
+				<TableReference>
+					<PackageName><![CDATA[absupplychain]]></PackageName>
+					<ClassName><![CDATA[district_health_office]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>0</ConnectionIndex>
+				<ExternalTableName><![CDATA["DistrictHealthOffice"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<Id>1755857248962</Id>
+				<TableReference>
+					<PackageName><![CDATA[absupplychain]]></PackageName>
+					<ClassName><![CDATA[national_office]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>0</ConnectionIndex>
+				<ExternalTableName><![CDATA["NationalOffice"]]></ExternalTableName>
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 		</ImportSettings>
@@ -1229,8 +1497,8 @@ return result;]]></Body>
 				<StopOption><![CDATA[Stop at specified time]]></StopOption>
 				<InitialDate><![CDATA[1729555200000]]></InitialDate>
 				<InitialTime><![CDATA[0.0]]></InitialTime>
-				<FinalDate><![CDATA[1902355200000]]></FinalDate>
-				<FinalTime><![CDATA[2000.0]]></FinalTime>
+				<FinalDate><![CDATA[1761091200000]]></FinalDate>
+				<FinalTime><![CDATA[365.0]]></FinalTime>
 			</ModelTimeProperties>
 			<BypassInitialScreen>true</BypassInitialScreen>
 		</SimulationExperiment>	
