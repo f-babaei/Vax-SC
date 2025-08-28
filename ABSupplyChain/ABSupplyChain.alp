@@ -192,7 +192,10 @@
 setupPHO();
 setupDHO();
 setupPuskesmas();
-setupPopCentres();]]></StartupCode>
+setupPopCentres();
+
+disruptionStart = (int) triangular(1, 50, 365);
+disruptionEnd = (int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1749222362305</Id>
@@ -284,6 +287,48 @@ setupPopCentres();]]></StartupCode>
 			<CurrentLevel>1749222362306</CurrentLevel>
 			<ConnectionsId>1749222362301</ConnectionsId>
 			<Variables>
+				<Variable Class="Parameter">
+					<Id>1756374542430</Id>
+					<Name><![CDATA[disruptionStart]]></Name>
+					<X>-240</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1756374542428</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1756374552173</Id>
+					<Name><![CDATA[disruptionEnd]]></Name>
+					<X>-240</X><Y>350</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1756374552171</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1751468355429</Id>
 					<Name><![CDATA[collectionPartners]]></Name>
@@ -299,7 +344,75 @@ setupPopCentres();]]></StartupCode>
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1756374797019</Id>
+					<Name><![CDATA[affectedDHOCollection]]></Name>
+					<X>-240</X><Y>430</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[VaxLocalDistributor]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
+			<Events>
+				<Event>
+					<Id>1756374559221</Id>
+					<Name><![CDATA[disrupt]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-240</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
+						</Rate>
+						<Id>1756374559219</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1756454400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[int currentDay = (int) time(); // Assuming time() is in days
+double severity = 1.0 - (( (double) currentDay - (double) disruptionStart) / ((double) disruptionEnd - (double) disruptionStart)); // fades over time
+
+if (currentDay >= disruptionStart && currentDay < disruptionEnd) {
+   // Disruption is active
+   // Apply effects: reduce throughput, delay orders, etc.
+   //traceln();
+   for (VaxLocalDistributor vd : affectedDHOCollection) {
+    vd.ShippingDept.set_VehicleSpeed(0.5);//+55*(1-severity)); 
+    
+    }
+    
+   //log("Disruption active on day " + currentDay);
+}
+else {
+for (VaxLocalDistributor vd : affectedDHOCollection) {
+    vd.ShippingDept.VehicleSpeed = 55;
+    }
+    }]]></Action>
+				</Event>
+			</Events>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -402,7 +515,23 @@ return result;]]></Body>
 	vd.UpstreamConnection = (VaxDistributor) findPartner(vd.OrderFromName);
 	//vd.UpstreamConnection = vd.getNearestAgent(NationalOffices);
 	vd.linkToDistributor.connectTo(vd.UpstreamConnection);
-	}]]></Body>
+	}
+	
+double regionMinX = -4;
+double regionMaxX = -1;
+double regionMinY = 133;
+double regionMaxY = 137;
+
+for (VaxLocalDistributor vd : DHO) {
+    double x = vd.getX();
+    double y = vd.getY();
+
+    if (x >= regionMinX && x <= regionMaxX && y >= regionMinY && y <= regionMaxY) {
+        if (uniform(0, 1) < 0.5) { // 30% chance to be affected
+            affectedDHOCollection.add(vd);
+        }
+    }
+}]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -1487,6 +1616,12 @@ return result;]]></Body>
 			</Presentation>
 
 			<Parameters>
+				<Parameter>
+					<ParameterName><![CDATA[disruptionStart]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[disruptionEnd]]></ParameterName>
+				</Parameter>
 			</Parameters>
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
