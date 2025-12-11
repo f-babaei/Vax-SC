@@ -329,6 +329,30 @@ disruptionEnd = (int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1765469912917</Id>
+					<Name><![CDATA[GlobalResCoeff]]></Name>
+					<X>-240</X><Y>480</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[1.0]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1765469912915</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1751468355429</Id>
 					<Name><![CDATA[collectionPartners]]></Name>
@@ -364,7 +388,6 @@ disruptionEnd = (int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
 				<Event>
 					<Id>1756374559221</Id>
 					<Name><![CDATA[disrupt]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-240</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -634,6 +657,12 @@ for (VaxLocalDistributor vd : DHO) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[StorageCapacity]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[ResCoeff]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[GlobalResCoeff]]></Code>
+							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -1621,6 +1650,9 @@ for (VaxLocalDistributor vd : DHO) {
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[disruptionEnd]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[GlobalResCoeff]]></ParameterName>
 				</Parameter>
 			</Parameters>
 			<PresentationProperties>
