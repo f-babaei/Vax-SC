@@ -10571,6 +10571,18 @@ ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapa
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1765470966098</Id>
+					<Name><![CDATA[CurrentMean]]></Name>
+					<X>250</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[Shipping]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="AuxVariable">
 					<Id>1755790360406</Id>
 					<Name><![CDATA[DeliveryDelay]]></Name>
@@ -11517,7 +11529,11 @@ else {return 1;}]]></Body>
 						<Name><![CDATA[orderMsg]]></Name>
 						<Type><![CDATA[Order]]></Type>
 					</Parameter>
-					<Body><![CDATA[VOB += orderMsg.amount;
+					<Body><![CDATA[//Need to be implemented with better details like tracking the downstream performance or 
+//add a feature to order agent to determine type of shipping
+//CurrentMean = (ShippingDept.VehicleSpeed>50)?ShippingDept:ExpressShipping;
+CurrentMean = ShippingDept;
+VOB += orderMsg.amount;
 //updating the order rate based on the maximum observed value from different message sources
 //this is a conservative implementation like H_inf, we may use avg values like H_2
 if (orderMsg.to == null) {
@@ -11526,8 +11542,8 @@ double realisedShipment = min(RSV, orderMsg.amount);
 double realisedRate = vaxSupplyRate;
 RSV -= realisedShipment;
 if (orderMsg.to == null) {
-ShippingDept.ship(realisedShipment, realisedRate, null, orderMsg.from);}
-else {ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from);}
+CurrentMean.ship(realisedShipment, realisedRate, null, orderMsg.from);}
+else {CurrentMean.ship(realisedShipment, realisedRate, this, orderMsg.from);}
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -12477,6 +12493,68 @@ onOrder = false;
 					<InitializationType>SPECIFIED_NUMBER</InitializationType>
 					<InitializationDatabaseTableQuery>
 						<Id>1755790360465</Id>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+				<EmbeddedObject>
+					<Id>1765470921724</Id>
+					<Name><![CDATA[ExpressShipping]]></Name>
+					<X>350</X><Y>50</Y>
+					<Label><X>-20</X><Y>-20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[absites]]></PackageName>
+						<ClassName><![CDATA[Shipping]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[absites]]></PackageName>
+							<ClassName><![CDATA[Shipping]]></ClassName>
+							<ItemName><![CDATA[1751369860952]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[VehicleCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[30]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[FleetSize]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[VehicleSpeed]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[35]]></Code>
+							</Value>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>false</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>
+					<InitialLocationType>XYZ</InitialLocationType>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>SPECIFIED_NUMBER</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<Id>1765470921722</Id>
 						<TableReference>
 						</TableReference>
 					</InitializationDatabaseTableQuery>
