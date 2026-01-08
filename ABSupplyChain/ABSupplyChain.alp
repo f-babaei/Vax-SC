@@ -194,8 +194,8 @@ setupDHO();
 setupPuskesmas();
 setupPopCentres();
 
-disruptionStart = (int) triangular(1, 50, 365);
-disruptionEnd = (int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
+disruptionStart = 71;//(int) triangular(1, 50, 365);
+disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1749222362305</Id>

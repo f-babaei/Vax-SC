@@ -389,9 +389,6 @@
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[ResCoeff]]></Name>
-				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[VSS *= ResCoeff;
 
@@ -9468,7 +9465,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 							<Value Class="EntityCodeValue">
 								<IsAgentEntity>true</IsAgentEntity>
 								<EntityEmbeddedObject>
-									<Id>1765469811493</Id>
+									<Id>1767874502480</Id>
 									<ActiveObjectClass>
 										<PackageName><![CDATA[absites]]></PackageName>
 										<ClassName><![CDATA[Vehicle]]></ClassName>
@@ -9524,7 +9521,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 									</LocationNameCode>
 									<InitializationType>LOAD_FROM_DATABASE</InitializationType>
 									<InitializationDatabaseTableQuery>
-										<Id>1765469811492</Id>
+										<Id>1767874502479</Id>
 										<TableReference>
 										</TableReference>
 									</InitializationDatabaseTableQuery>
@@ -11531,8 +11528,8 @@ else {return 1;}]]></Body>
 					</Parameter>
 					<Body><![CDATA[//Need to be implemented with better details like tracking the downstream performance or 
 //add a feature to order agent to determine type of shipping
-//CurrentMean = (ShippingDept.VehicleSpeed>50)?ShippingDept:ExpressShipping;
-CurrentMean = ShippingDept;
+CurrentMean = (ShippingDept.VehicleSpeed>50)?ShippingDept:ExpressShipping;
+//CurrentMean = ShippingDept;
 VOB += orderMsg.amount;
 //updating the order rate based on the maximum observed value from different message sources
 //this is a conservative implementation like H_inf, we may use avg values like H_2
@@ -12528,6 +12525,9 @@ onOrder = false;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[FleetSize]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[6]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[VehicleSpeed]]></Name>
