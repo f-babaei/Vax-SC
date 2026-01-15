@@ -188,14 +188,39 @@
 		<ActiveObjectClass>
 			<Id>1749222362300</Id>
 			<Name><![CDATA[SCGISMain]]></Name>
+			<Import><![CDATA[import java.io.File;
+import java.io.PrintWriter;]]></Import>
 			<StartupCode><![CDATA[setupNO();
 setupPHO();
-setupDHO();
-setupPuskesmas();
+setupHealthZone();
+setupHealthArea();
 setupPopCentres();
+
+history = new ArrayList<>();
 
 disruptionStart = 71;//(int) triangular(1, 50, 365);
 disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
+			<DestroyCode><![CDATA[try {
+    File file = new File("C:/Users/fc1fb/Downloads/history_export.csv");
+    PrintWriter pw = new PrintWriter(file);
+
+    // Loop through each snapshot
+    for (double[] snapshot : history) {
+        // Convert array to comma-separated string
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < snapshot.length; i++) {
+            sb.append(snapshot[i]);
+            if (i < snapshot.length - 1) sb.append(",");
+        }
+        pw.println(sb.toString());
+    }
+
+    pw.close();
+    traceln("Export complete: " + file.getAbsolutePath());
+
+} catch (Exception e) {
+    e.printStackTrace();
+}]]></DestroyCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1749222362305</Id>
@@ -287,6 +312,18 @@ disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></Startu
 			<CurrentLevel>1749222362306</CurrentLevel>
 			<ConnectionsId>1749222362301</ConnectionsId>
 			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1768494965050</Id>
+					<Name><![CDATA[history]]></Name>
+					<X>440</X><Y>1320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1756374542430</Id>
 					<Name><![CDATA[disruptionStart]]></Name>
@@ -388,6 +425,7 @@ disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></Startu
 				<Event>
 					<Id>1756374559221</Id>
 					<Name><![CDATA[disrupt]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-240</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -435,6 +473,80 @@ for (VaxLocalDistributor vd : affectedDHOCollection) {
     }
     }]]></Action>
 				</Event>
+				<Event>
+					<Id>1768492749008</Id>
+					<Name><![CDATA[updateSet]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>300</X><Y>1320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
+						</Rate>
+						<Id>1768492749006</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1768550400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[for (VaxCentre a : HealthArea) {
+    dataset.add(a.orderFullfilRate);
+}
+
+]]></Action>
+				</Event>
+				<Event>
+					<Id>1768495003413</Id>
+					<Name><![CDATA[updateSet1]]></Name>
+					<X>440</X><Y>1380</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
+						</Rate>
+						<Id>1768495003411</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1768550400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[double[] snapshot = HealthArea.stream()
+    .mapToDouble(a -> a.orderFullfilRate)
+    .toArray();
+history.add(snapshot); 
+
+]]></Action>
+				</Event>
 			</Events>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -448,19 +560,19 @@ for (VaxLocalDistributor vd : affectedDHOCollection) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for (PopCentre pc : PopCentres) 
-	pc.set_vaxCentre(pc.getNearestAgentByRoute(Puskesmas));]]></Body>
+	pc.set_vaxCentre(pc.getNearestAgentByRoute(HealthArea));]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1751212403861</Id>
-					<Name><![CDATA[setupPuskesmas]]></Name>
+					<Name><![CDATA[setupHealthArea]]></Name>
 					<X>-240</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (VaxCentre pu : Puskesmas){
+					<Body><![CDATA[for (VaxCentre pu : HealthArea){
 	//traceln(pu.OrderFromName);
 	collectionPartners.add(pu);
 	pu.UpstreamConnection = (VaxLocalDistributor) findPartner(pu.OrderFromName);
@@ -527,20 +639,20 @@ return result;]]></Body>
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1755791365829</Id>
-					<Name><![CDATA[setupDHO]]></Name>
+					<Name><![CDATA[setupHealthZone]]></Name>
 					<X>-240</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (VaxLocalDistributor vd : DHO){
+					<Body><![CDATA[for (VaxLocalDistributor vd : HealthZone){
 	collectionPartners.add(vd);
 	vd.UpstreamConnection = (VaxDistributor) findPartner(vd.OrderFromName);
 	//vd.UpstreamConnection = vd.getNearestAgent(NationalOffices);
 	vd.linkToDistributor.connectTo(vd.UpstreamConnection);
 	}
 	
-double regionMinX = -4;
+/*double regionMinX = -4;
 double regionMaxX = -1;
 double regionMinY = 133;
 double regionMaxY = 137;
@@ -554,9 +666,37 @@ for (VaxLocalDistributor vd : DHO) {
             affectedDHOCollection.add(vd);
         }
     }
-}]]></Body>
+}*/]]></Body>
 				</Function>
 			</Functions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1768492720935</Id>
+					<Name><![CDATA[dataset]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>160</X><Y>1320</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1768492720933</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1768550400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>2000</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1749222362301</Id>
@@ -582,7 +722,7 @@ for (VaxLocalDistributor vd : DHO) {
 			<EmbeddedObjects>
 				<EmbeddedObject>
 					<Id>1749654052611</Id>
-					<Name><![CDATA[Puskesmas]]></Name>
+					<Name><![CDATA[HealthArea]]></Name>
 					<X>-120</X><Y>250</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1189,7 +1329,7 @@ for (VaxLocalDistributor vd : DHO) {
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1755791302944</Id>
-					<Name><![CDATA[DHO]]></Name>
+					<Name><![CDATA[HealthZone]]></Name>
 					<X>-120</X><Y>220</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1421,7 +1561,7 @@ for (VaxLocalDistributor vd : DHO) {
 				</EmbeddedObjectPresentation>
 				<EmbeddedObjectPresentation>
 					<Id>1751031696067</Id>
-					<Name><![CDATA[Puskesmas_presentation]]></Name>
+					<Name><![CDATA[HealthArea_presentation]]></Name>
 					<X>0</X><Y>0</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -1475,7 +1615,7 @@ for (VaxLocalDistributor vd : DHO) {
 				</EmbeddedObjectPresentation>
 				<EmbeddedObjectPresentation>
 					<Id>1755791306686</Id>
-					<Name><![CDATA[DHO_presentation]]></Name>
+					<Name><![CDATA[HealthZone_presentation]]></Name>
 					<X>0</X><Y>0</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -1551,7 +1691,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471772634</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-23296</Color>
-					<Expression2><![CDATA[Puskesmas.get(0).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(0).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1561,7 +1701,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471829262</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-4343957</Color>
-					<Expression2><![CDATA[Puskesmas.get(1).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(1).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1571,7 +1711,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471831069</Id>
 					<Expression><![CDATA[my_dataset2]]></Expression>
 					<Color>-12004916</Color>
-					<Expression2><![CDATA[Puskesmas.get(2).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(2).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1581,7 +1721,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471832862</Id>
 					<Expression><![CDATA[my_dataset3]]></Expression>
 					<Color>-8097537</Color>
-					<Expression2><![CDATA[Puskesmas.get(3).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(3).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1591,7 +1731,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471834709</Id>
 					<Expression><![CDATA[my_dataset4]]></Expression>
 					<Color>-60269</Color>
-					<Expression2><![CDATA[Puskesmas.get(4).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(4).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1601,7 +1741,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471843247</Id>
 					<Expression><![CDATA[my_dataset5]]></Expression>
 					<Color>-29696</Color>
-					<Expression2><![CDATA[Puskesmas.get(5).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(5).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1611,7 +1751,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471845357</Id>
 					<Expression><![CDATA[my_dataset6]]></Expression>
 					<Color>-12799119</Color>
-					<Expression2><![CDATA[Puskesmas.get(6).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(6).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1621,7 +1761,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471847949</Id>
 					<Expression><![CDATA[my_dataset7]]></Expression>
 					<Color>-9807155</Color>
-					<Expression2><![CDATA[Puskesmas.get(7).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(7).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1631,7 +1771,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471849918</Id>
 					<Expression><![CDATA[my_dataset8]]></Expression>
 					<Color>-2987746</Color>
-					<Expression2><![CDATA[Puskesmas.get(8).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(8).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1641,7 +1781,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471851750</Id>
 					<Expression><![CDATA[my_dataset9]]></Expression>
 					<Color>-2448096</Color>
-					<Expression2><![CDATA[Puskesmas.get(9).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(9).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1651,7 +1791,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471853982</Id>
 					<Expression><![CDATA[my_dataset10]]></Expression>
 					<Color>-9728477</Color>
-					<Expression2><![CDATA[Puskesmas.get(10).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(10).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1661,7 +1801,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471856566</Id>
 					<Expression><![CDATA[my_dataset11]]></Expression>
 					<Color>-16728065</Color>
-					<Expression2><![CDATA[Puskesmas.get(11).InventoryCoverageRatio]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(11).InventoryCoverageRatio]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1731,7 +1871,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971407</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-23296</Color>
-					<Expression2><![CDATA[Puskesmas.get(0).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(0).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1741,7 +1881,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971408</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-4343957</Color>
-					<Expression2><![CDATA[Puskesmas.get(1).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(1).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1751,7 +1891,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971409</Id>
 					<Expression><![CDATA[my_dataset2]]></Expression>
 					<Color>-12004916</Color>
-					<Expression2><![CDATA[Puskesmas.get(2).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(2).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1761,7 +1901,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971410</Id>
 					<Expression><![CDATA[my_dataset3]]></Expression>
 					<Color>-8097537</Color>
-					<Expression2><![CDATA[Puskesmas.get(3).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(3).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1771,7 +1911,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971411</Id>
 					<Expression><![CDATA[my_dataset4]]></Expression>
 					<Color>-60269</Color>
-					<Expression2><![CDATA[Puskesmas.get(4).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(4).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1781,7 +1921,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971412</Id>
 					<Expression><![CDATA[my_dataset5]]></Expression>
 					<Color>-29696</Color>
-					<Expression2><![CDATA[Puskesmas.get(5).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(5).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1791,7 +1931,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971413</Id>
 					<Expression><![CDATA[my_dataset6]]></Expression>
 					<Color>-12799119</Color>
-					<Expression2><![CDATA[Puskesmas.get(6).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(6).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1801,7 +1941,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971414</Id>
 					<Expression><![CDATA[my_dataset7]]></Expression>
 					<Color>-9807155</Color>
-					<Expression2><![CDATA[Puskesmas.get(7).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(7).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1811,7 +1951,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971415</Id>
 					<Expression><![CDATA[my_dataset8]]></Expression>
 					<Color>-2987746</Color>
-					<Expression2><![CDATA[Puskesmas.get(8).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(8).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1821,7 +1961,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971416</Id>
 					<Expression><![CDATA[my_dataset9]]></Expression>
 					<Color>-2448096</Color>
-					<Expression2><![CDATA[Puskesmas.get(9).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(9).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1831,7 +1971,7 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971417</Id>
 					<Expression><![CDATA[my_dataset10]]></Expression>
 					<Color>-9728477</Color>
-					<Expression2><![CDATA[Puskesmas.get(10).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(10).VI]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1841,7 +1981,78 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1765471971418</Id>
 					<Expression><![CDATA[my_dataset11]]></Expression>
 					<Color>-16728065</Color>
-					<Expression2><![CDATA[Puskesmas.get(11).VI]]></Expression2>
+					<Expression2><![CDATA[HealthArea.get(11).VI]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<SamplesToKeep>100</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
+    			<TimePlot>
+					<Id>1768491783017</Id>
+					<Name><![CDATA[plot2]]></Name>
+					<X>80</X><Y>980</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1768491783015</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1768550400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>440</Width>
+					<Height>300</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>360</Width>
+						<Height>210</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<DatasetExpression>  
+						<Title><![CDATA[Title]]></Title>
+					<Id>1768491784135</Id>
+					<Expression><![CDATA[my_dataset]]></Expression>
+					<Color>-9404272</Color>
+					<Expression2><![CDATA[HealthArea.stream().mapToDouble(a->a.orderFullfilRate).sum()
+//HealthZone.stream().mapToDouble(a->a.orderFullfilRate).average().orElse(0)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -1898,7 +2109,7 @@ for (VaxLocalDistributor vd : DHO) {
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
 			<TableImportSettings>
-				<Id>1755857248953</Id>
+				<Id>1768486524286</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[puskesmas]]></ClassName>
@@ -1908,7 +2119,7 @@ for (VaxLocalDistributor vd : DHO) {
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1755857248956</Id>
+				<Id>1768486524280</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[provincial_public_health]]></ClassName>
@@ -1918,7 +2129,7 @@ for (VaxLocalDistributor vd : DHO) {
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1755857248959</Id>
+				<Id>1768486524283</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[district_health_office]]></ClassName>
@@ -1928,7 +2139,7 @@ for (VaxLocalDistributor vd : DHO) {
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1755857248962</Id>
+				<Id>1768486524277</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[national_office]]></ClassName>
