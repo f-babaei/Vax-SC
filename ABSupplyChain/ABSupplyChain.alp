@@ -1376,9 +1376,9 @@ for (VaxLocalDistributor vd : DHO) {
 					<Height>564</Height>
 					<GISShapes>
 					</GISShapes>
-					<Latitude>-1.206103768251736</Latitude>
-					<Longitude>122.75841203655763</Longitude>
-					<Scale>20000000</Scale>
+					<Latitude>0.1775198918458401</Latitude>
+					<Longitude>19.74591883530903</Longitude>
+					<Scale>3000000</Scale>
 					<BorderColor>-4144960</BorderColor>
 					<FillColor>-1</FillColor>
 					<ShowTiles>true</ShowTiles>
