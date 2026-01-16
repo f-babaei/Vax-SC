@@ -197,6 +197,8 @@ setupHealthArea();
 setupPopCentres();
 
 history = new ArrayList<>();
+history1 = new ArrayList<>();
+history2 = new ArrayList<>();
 
 disruptionStart = 71;//(int) triangular(1, 50, 365);
 disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
@@ -206,6 +208,48 @@ disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></Startu
 
     // Loop through each snapshot
     for (double[] snapshot : history) {
+        // Convert array to comma-separated string
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < snapshot.length; i++) {
+            sb.append(snapshot[i]);
+            if (i < snapshot.length - 1) sb.append(",");
+        }
+        pw.println(sb.toString());
+    }
+
+    pw.close();
+    traceln("Export complete: " + file.getAbsolutePath());
+
+} catch (Exception e) {
+    e.printStackTrace();
+}
+try {
+    File file = new File("C:/Users/fc1fb/Downloads/history_export1.csv");
+    PrintWriter pw = new PrintWriter(file);
+
+    // Loop through each snapshot
+    for (double[] snapshot : history1) {
+        // Convert array to comma-separated string
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < snapshot.length; i++) {
+            sb.append(snapshot[i]);
+            if (i < snapshot.length - 1) sb.append(",");
+        }
+        pw.println(sb.toString());
+    }
+
+    pw.close();
+    traceln("Export complete: " + file.getAbsolutePath());
+
+} catch (Exception e) {
+    e.printStackTrace();
+}
+try {
+    File file = new File("C:/Users/fc1fb/Downloads/history_export2.csv");
+    PrintWriter pw = new PrintWriter(file);
+
+    // Loop through each snapshot
+    for (double[] snapshot : history2) {
         // Convert array to comma-separated string
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < snapshot.length; i++) {
@@ -316,6 +360,30 @@ disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></Startu
 					<Id>1768494965050</Id>
 					<Name><![CDATA[history]]></Name>
 					<X>440</X><Y>1320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1768576365957</Id>
+					<Name><![CDATA[history1]]></Name>
+					<X>560</X><Y>1320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1768576370821</Id>
+					<Name><![CDATA[history2]]></Name>
+					<X>680</X><Y>1320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -540,10 +608,18 @@ for (VaxLocalDistributor vd : affectedDHOCollection) {
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
-					<Action><![CDATA[double[] snapshot = HealthArea.stream()
+					<Action><![CDATA[double[] snapshot = HealthZone.stream()
     .mapToDouble(a -> a.orderFullfilRate)
     .toArray();
-history.add(snapshot); 
+history.add(snapshot);
+snapshot = HealthArea.stream()
+    .mapToDouble(a -> a.VI)
+    .toArray();
+history1.add(snapshot);
+snapshot = HealthArea.stream()
+    .mapToDouble(a -> a.InventoryCoverageRatio)
+    .toArray();
+history2.add(snapshot);
 
 ]]></Action>
 				</Event>
@@ -2109,7 +2185,7 @@ for (VaxLocalDistributor vd : DHO) {
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
 			<TableImportSettings>
-				<Id>1768486524286</Id>
+				<Id>1768576208009</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[puskesmas]]></ClassName>
@@ -2119,7 +2195,7 @@ for (VaxLocalDistributor vd : DHO) {
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1768486524280</Id>
+				<Id>1768576208003</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[provincial_public_health]]></ClassName>
@@ -2129,7 +2205,7 @@ for (VaxLocalDistributor vd : DHO) {
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1768486524283</Id>
+				<Id>1768576208006</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[district_health_office]]></ClassName>
@@ -2139,7 +2215,7 @@ for (VaxLocalDistributor vd : DHO) {
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1768486524277</Id>
+				<Id>1768576208000</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[national_office]]></ClassName>

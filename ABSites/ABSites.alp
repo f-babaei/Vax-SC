@@ -7212,7 +7212,7 @@ onOrder = false;
 					</Properties>
 					<Action><![CDATA[double mu = averageDemand/52/weeklySessions;
 double sig = 0.2*mu;
-double currentDemand = mu;//max(0, normal(sig, mu));
+double currentDemand = max(0, normal(sig, mu));
 
 //vaxCentre.VOB += currentDemand;
 //vaxCentre.vaxOrderRate = max(0, (currentDemand-prevDemand)/(time()-prevT));
