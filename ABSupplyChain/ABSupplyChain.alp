@@ -202,7 +202,7 @@ history2 = new ArrayList<>();
 
 disruptionStart = 71;//(int) triangular(1, 50, 365);
 disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
-			<DestroyCode><![CDATA[try {
+			<DestroyCode><![CDATA[/*try {
     File file = new File("C:/Users/fc1fb/Downloads/history_export.csv");
     PrintWriter pw = new PrintWriter(file);
 
@@ -1710,6 +1710,7 @@ for (VaxLocalDistributor vd : DHO) {
     			<TimePlot>
 					<Id>1765471770775</Id>
 					<Name><![CDATA[plot]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>0</X><Y>600</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -1890,6 +1891,7 @@ for (VaxLocalDistributor vd : DHO) {
     			<TimePlot>
 					<Id>1765471971421</Id>
 					<Name><![CDATA[plot1]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>460</X><Y>600</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -2070,7 +2072,7 @@ for (VaxLocalDistributor vd : DHO) {
     			<TimePlot>
 					<Id>1768491783017</Id>
 					<Name><![CDATA[plot2]]></Name>
-					<X>80</X><Y>980</Y>
+					<X>20</X><Y>950</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2127,8 +2129,29 @@ for (VaxLocalDistributor vd : DHO) {
 					<Id>1768491784135</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-9404272</Color>
-					<Expression2><![CDATA[HealthArea.stream().mapToDouble(a->a.orderFullfilRate).sum()
+					<Expression2><![CDATA[//HealthArea.stream().mapToDouble(a->a.orderFullfilRate).sum()
+HealthArea.stream().mapToDouble(a->a.VI).sum()
 //HealthZone.stream().mapToDouble(a->a.orderFullfilRate).average().orElse(0)]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<DatasetExpression>  
+						<Title><![CDATA[Title 1]]></Title>
+					<Id>1774023062714</Id>
+					<Expression><![CDATA[my_dataset1]]></Expression>
+					<Color>-7667573</Color>
+					<Expression2><![CDATA[HealthArea.stream().mapToDouble(a->a.VI).max().orElse(0)]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<DatasetExpression>  
+						<Title><![CDATA[Title 2]]></Title>
+					<Id>1774023261848</Id>
+					<Expression><![CDATA[my_dataset2]]></Expression>
+					<Color>-23296</Color>
+					<Expression2><![CDATA[HealthZone.stream().mapToDouble(a->a.VI).sum()]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -2164,7 +2187,7 @@ for (VaxLocalDistributor vd : DHO) {
 		<ShutdownCompact>false</ShutdownCompact>
 		<ImportSettings>
 			<ExternalConnection>
-				<Id>1755857247103</Id>
+				<Id>1774263921332</Id>
 				<Name><![CDATA[database]]></Name>
 				<X>0</X><Y>0</Y>
 				<Label><X>10</X><Y>0</Y></Label>
@@ -2185,17 +2208,7 @@ for (VaxLocalDistributor vd : DHO) {
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
 			<TableImportSettings>
-				<Id>1768576208009</Id>
-				<TableReference>
-					<PackageName><![CDATA[absupplychain]]></PackageName>
-					<ClassName><![CDATA[puskesmas]]></ClassName>
-				</TableReference>
-				<ConnectionIndex>0</ConnectionIndex>
-				<ExternalTableName><![CDATA["Puskesmas"]]></ExternalTableName>
-				<AutoImport>false</AutoImport>
-			</TableImportSettings>
-			<TableImportSettings>
-				<Id>1768576208003</Id>
+				<Id>1774263922825</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[provincial_public_health]]></ClassName>
@@ -2205,7 +2218,17 @@ for (VaxLocalDistributor vd : DHO) {
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1768576208006</Id>
+				<Id>1774263922828</Id>
+				<TableReference>
+					<PackageName><![CDATA[absupplychain]]></PackageName>
+					<ClassName><![CDATA[national_office]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>0</ConnectionIndex>
+				<ExternalTableName><![CDATA["NationalOffice"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<Id>1774263922831</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[district_health_office]]></ClassName>
@@ -2215,13 +2238,13 @@ for (VaxLocalDistributor vd : DHO) {
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1768576208000</Id>
+				<Id>1774263922834</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
-					<ClassName><![CDATA[national_office]]></ClassName>
+					<ClassName><![CDATA[puskesmas]]></ClassName>
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
-				<ExternalTableName><![CDATA["NationalOffice"]]></ExternalTableName>
+				<ExternalTableName><![CDATA["Puskesmas"]]></ExternalTableName>
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 		</ImportSettings>

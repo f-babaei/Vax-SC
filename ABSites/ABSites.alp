@@ -7212,7 +7212,7 @@ onOrder = false;
 					</Properties>
 					<Action><![CDATA[double mu = averageDemand/52/weeklySessions;
 double sig = 0.2*mu;
-double currentDemand = max(0, normal(sig, mu));
+double currentDemand = mu;//max(0, normal(sig, mu));
 
 //vaxCentre.VOB += currentDemand;
 //vaxCentre.vaxOrderRate = max(0, (currentDemand-prevDemand)/(time()-prevT));
@@ -9465,7 +9465,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 							<Value Class="EntityCodeValue">
 								<IsAgentEntity>true</IsAgentEntity>
 								<EntityEmbeddedObject>
-									<Id>1768312891728</Id>
+									<Id>1774021630714</Id>
 									<ActiveObjectClass>
 										<PackageName><![CDATA[absites]]></PackageName>
 										<ClassName><![CDATA[Vehicle]]></ClassName>
@@ -9521,7 +9521,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 									</LocationNameCode>
 									<InitializationType>LOAD_FROM_DATABASE</InitializationType>
 									<InitializationDatabaseTableQuery>
-										<Id>1768312891727</Id>
+										<Id>1774021630713</Id>
 										<TableReference>
 										</TableReference>
 									</InitializationDatabaseTableQuery>
