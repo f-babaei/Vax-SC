@@ -2187,7 +2187,7 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 		<ShutdownCompact>false</ShutdownCompact>
 		<ImportSettings>
 			<ExternalConnection>
-				<Id>1774263921332</Id>
+				<Id>1774631445455</Id>
 				<Name><![CDATA[database]]></Name>
 				<X>0</X><Y>0</Y>
 				<Label><X>10</X><Y>0</Y></Label>
@@ -2208,17 +2208,7 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
 			<TableImportSettings>
-				<Id>1774263922825</Id>
-				<TableReference>
-					<PackageName><![CDATA[absupplychain]]></PackageName>
-					<ClassName><![CDATA[provincial_public_health]]></ClassName>
-				</TableReference>
-				<ConnectionIndex>0</ConnectionIndex>
-				<ExternalTableName><![CDATA["ProvincialPublicHealth"]]></ExternalTableName>
-				<AutoImport>false</AutoImport>
-			</TableImportSettings>
-			<TableImportSettings>
-				<Id>1774263922828</Id>
+				<Id>1774631447631</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[national_office]]></ClassName>
@@ -2228,7 +2218,17 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1774263922831</Id>
+				<Id>1774631447634</Id>
+				<TableReference>
+					<PackageName><![CDATA[absupplychain]]></PackageName>
+					<ClassName><![CDATA[provincial_public_health]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>0</ConnectionIndex>
+				<ExternalTableName><![CDATA["ProvincialPublicHealth"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<Id>1774631447637</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[district_health_office]]></ClassName>
@@ -2238,7 +2238,7 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
-				<Id>1774263922834</Id>
+				<Id>1774631447640</Id>
 				<TableReference>
 					<PackageName><![CDATA[absupplychain]]></PackageName>
 					<ClassName><![CDATA[puskesmas]]></ClassName>
