@@ -1,2 +1,6 @@
 
-Data/8B231DE9.tmp
+*.tmp
+*.lck
+*.log
+*.csv
+*.xlsx
