@@ -389,10 +389,16 @@
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[adjFactor]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[Rollout]]></Name>
+				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[VSS *= ResCoeff;
-
-vaxOrderRate = Capacity/52/2/(7/2);
+//Capacity = Rollout*adjFactor;
+vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 
 VOB = vaxOrderRate*TDD;
 EVDR = vaxOrderRate;
@@ -1031,6 +1037,48 @@ StorageCapacity = 6*7*vaxOrderRate; // six weeks of average daily order]]></Star
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1765469996052</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1777478805335</Id>
+					<Name><![CDATA[adjFactor]]></Name>
+					<X>20</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1777478805333</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1777478805341</Id>
+					<Name><![CDATA[Rollout]]></Name>
+					<X>20</X><Y>580</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1777478805339</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -2770,8 +2818,14 @@ else {onEmergencyOrder = false;}]]></Body>
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[adjFactor]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[Rollout]]></Name>
+				</Parameter>
 			</Parameters>
-			<StartupCode><![CDATA[vaxOrderRate = Capacity/52/2/(7/2);
+			<StartupCode><![CDATA[vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 MOB = vaxOrderRate*TDD;
 EVDR = vaxOrderRate;
 VI = vaxOrderRate*(VSS+MOPT);
@@ -3431,6 +3485,48 @@ ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapa
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1751556114068</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1777482717824</Id>
+					<Name><![CDATA[adjFactor]]></Name>
+					<X>30</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1777482717822</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1777482717828</Id>
+					<Name><![CDATA[Rollout]]></Name>
+					<X>30</X><Y>580</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1777482717826</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -4639,8 +4735,15 @@ ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from);
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[adjFactor]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[Rollout]]></Name>
+				</Parameter>
 			</Parameters>
-			<StartupCode><![CDATA[vaxOrderRate = Capacity/52/2/(7/2);
+			<StartupCode><![CDATA[//Capacity = Rollout * adjFactor;
+vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 VOB = vaxOrderRate*TDD;
 EVDR = vaxOrderRate;
 VI = vaxOrderRate*(VSS+MOPT);
@@ -5225,6 +5328,48 @@ ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapa
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1751556005603</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1777478940106</Id>
+					<Name><![CDATA[adjFactor]]></Name>
+					<X>20</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1777478940104</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1777478940110</Id>
+					<Name><![CDATA[Rollout]]></Name>
+					<X>20</X><Y>580</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1777478940108</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -7260,13 +7405,13 @@ onOrder = false;
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
-					<Action><![CDATA[double mu = averageDemand/52/weeklySessions;
+					<Action><![CDATA[double mu = averageDemand;///52/weeklySessions;
 double sig = 0.2*mu;
 double currentDemand = mu;//max(0, normal(sig, mu));
 
 //vaxCentre.VOB += currentDemand;
-//vaxCentre.vaxOrderRate = max(0, (currentDemand-prevDemand)/(time()-prevT));
-vaxCentre.vaxOrderRate = max(0, currentDemand/(7/weeklySessions));]]></Action>
+vaxCentre.vaxOrderRate = max(0, currentDemand);
+//vaxCentre.vaxOrderRate = max(0, currentDemand/(7/weeklySessions));]]></Action>
 				</Event>
 			</Events>
 			<AgentLinks>
@@ -10493,8 +10638,15 @@ waitingTime(agent)
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[adjFactor]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[Rollout]]></Name>
+				</Parameter>
 			</Parameters>
-			<StartupCode><![CDATA[vaxOrderRate = Capacity/52/2/(7/2);
+			<StartupCode><![CDATA[//Capacity = Rollout * adjFactor;
+vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 VOB = vaxOrderRate*TDD;
 EVDR = vaxOrderRate;
 VI = vaxOrderRate*(VSS+MOPT);
@@ -11091,6 +11243,48 @@ ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapa
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1755790360517</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1777478880174</Id>
+					<Name><![CDATA[adjFactor]]></Name>
+					<X>30</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1777478880172</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1777478880178</Id>
+					<Name><![CDATA[Rollout]]></Name>
+					<X>30</X><Y>580</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1777478880176</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>

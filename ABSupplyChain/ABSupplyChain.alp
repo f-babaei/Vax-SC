@@ -196,75 +196,14 @@ setupHealthZone();
 setupHealthArea();
 setupPopCentres();
 
-history = new ArrayList<>();
-history1 = new ArrayList<>();
-history2 = new ArrayList<>();
+HZ_ofr_history = new ArrayList<>();
+HA_vi_history = new ArrayList<>();
+HA_icr_history = new ArrayList<>();
+HA_ofr_history = new ArrayList<>();
 
 disruptionStart = 71;//(int) triangular(1, 50, 365);
 disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
-			<DestroyCode><![CDATA[/*try {
-    File file = new File("C:/Users/fc1fb/Downloads/history_export.csv");
-    PrintWriter pw = new PrintWriter(file);
-
-    // Loop through each snapshot
-    for (double[] snapshot : history) {
-        // Convert array to comma-separated string
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < snapshot.length; i++) {
-            sb.append(snapshot[i]);
-            if (i < snapshot.length - 1) sb.append(",");
-        }
-        pw.println(sb.toString());
-    }
-
-    pw.close();
-    traceln("Export complete: " + file.getAbsolutePath());
-
-} catch (Exception e) {
-    e.printStackTrace();
-}
-try {
-    File file = new File("C:/Users/fc1fb/Downloads/history_export1.csv");
-    PrintWriter pw = new PrintWriter(file);
-
-    // Loop through each snapshot
-    for (double[] snapshot : history1) {
-        // Convert array to comma-separated string
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < snapshot.length; i++) {
-            sb.append(snapshot[i]);
-            if (i < snapshot.length - 1) sb.append(",");
-        }
-        pw.println(sb.toString());
-    }
-
-    pw.close();
-    traceln("Export complete: " + file.getAbsolutePath());
-
-} catch (Exception e) {
-    e.printStackTrace();
-}
-try {
-    File file = new File("C:/Users/fc1fb/Downloads/history_export2.csv");
-    PrintWriter pw = new PrintWriter(file);
-
-    // Loop through each snapshot
-    for (double[] snapshot : history2) {
-        // Convert array to comma-separated string
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < snapshot.length; i++) {
-            sb.append(snapshot[i]);
-            if (i < snapshot.length - 1) sb.append(",");
-        }
-        pw.println(sb.toString());
-    }
-
-    pw.close();
-    traceln("Export complete: " + file.getAbsolutePath());
-
-} catch (Exception e) {
-    e.printStackTrace();
-}]]></DestroyCode>
+			<DestroyCode><![CDATA[//saveStats();]]></DestroyCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1749222362305</Id>
@@ -358,8 +297,8 @@ try {
 			<Variables>
 				<Variable Class="PlainVariable">
 					<Id>1768494965050</Id>
-					<Name><![CDATA[history]]></Name>
-					<X>440</X><Y>1320</Y>
+					<Name><![CDATA[HZ_ofr_history]]></Name>
+					<X>560</X><Y>1370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -370,8 +309,8 @@ try {
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1768576365957</Id>
-					<Name><![CDATA[history1]]></Name>
-					<X>560</X><Y>1320</Y>
+					<Name><![CDATA[HA_vi_history]]></Name>
+					<X>560</X><Y>1410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -382,8 +321,8 @@ try {
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1768576370821</Id>
-					<Name><![CDATA[history2]]></Name>
-					<X>680</X><Y>1320</Y>
+					<Name><![CDATA[HA_icr_history]]></Name>
+					<X>560</X><Y>1450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -435,6 +374,18 @@ try {
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1777637717326</Id>
+					<Name><![CDATA[HA_ofr_history]]></Name>
+					<X>560</X><Y>1490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -516,10 +467,34 @@ try {
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[350]]></Code>
+							<Code><![CDATA[20000//371//1824999.998]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1777477325949</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1777627833694</Id>
+					<Name><![CDATA[TotalDose]]></Name>
+					<X>-240</X><Y>570</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[520000//2600]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1777627833692</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -612,7 +587,7 @@ for (VaxLocalDistributor vd : affectedDHOCollection) {
 				</Event>
 				<Event>
 					<Id>1768492749008</Id>
-					<Name><![CDATA[updateSet]]></Name>
+					<Name><![CDATA[updateSet1]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>300</X><Y>1320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -649,8 +624,8 @@ for (VaxLocalDistributor vd : affectedDHOCollection) {
 				</Event>
 				<Event>
 					<Id>1768495003413</Id>
-					<Name><![CDATA[updateSet1]]></Name>
-					<X>440</X><Y>1380</Y>
+					<Name><![CDATA[updateSet]]></Name>
+					<X>440</X><Y>1370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -673,24 +648,62 @@ for (VaxLocalDistributor vd : affectedDHOCollection) {
 						</OccurrenceTime>
 						<RecurrenceCode Class="CodeUnitValue">
 							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[double[] snapshot = HealthZone.stream()
     .mapToDouble(a -> a.orderFullfilRate)
     .toArray();
-history.add(snapshot);
+HZ_ofr_history.add(snapshot);
 snapshot = HealthArea.stream()
     .mapToDouble(a -> a.VI)
     .toArray();
-history1.add(snapshot);
+HA_vi_history.add(snapshot);
 snapshot = HealthArea.stream()
     .mapToDouble(a -> a.InventoryCoverageRatio)
     .toArray();
-history2.add(snapshot);
-
+HA_icr_history.add(snapshot);
+snapshot = HealthArea.stream()
+    .mapToDouble(a -> a.orderFullfilRate)
+    .toArray();
+HA_ofr_history.add(snapshot);
 ]]></Action>
+				</Event>
+				<Event>
+					<Id>1777631338356</Id>
+					<Name><![CDATA[stopSim]]></Name>
+					<X>-240</X><Y>630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
+						</Rate>
+						<Id>1777631338354</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1756454400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[if (time() >= TotalDose/GlobalRollout) {
+    //traceln("simTime:" + time());
+    finishSimulation();    
+}]]></Action>
 				</Event>
 			</Events>
 			<Functions>
@@ -845,6 +858,101 @@ targetArea.navigateTo();
 uiBar.setPos(targetArea.getX(), targetArea.getY(), 0);
 currentViewIndex = viewIndex;]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1777638066512</Id>
+					<Name><![CDATA[saveStats]]></Name>
+					<X>160</X><Y>1380</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[try {
+    File file = new File("C:/Users/fc1fb/Downloads/HZ_ofr_history.csv");
+    PrintWriter pw = new PrintWriter(file);
+
+    // Loop through each snapshot
+    for (double[] snapshot : HZ_ofr_history) {
+        // Convert array to comma-separated string
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < snapshot.length; i++) {
+            sb.append(snapshot[i]);
+            if (i < snapshot.length - 1) sb.append(",");
+        }
+        pw.println(sb.toString());
+    }
+
+    pw.close();
+    traceln("Export complete: " + file.getAbsolutePath());
+
+} catch (Exception e) {
+    e.printStackTrace();
+}
+try {
+    File file = new File("C:/Users/fc1fb/Downloads/HA_vi_history.csv");
+    PrintWriter pw = new PrintWriter(file);
+
+    // Loop through each snapshot
+    for (double[] snapshot : HA_vi_history) {
+        // Convert array to comma-separated string
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < snapshot.length; i++) {
+            sb.append(snapshot[i]);
+            if (i < snapshot.length - 1) sb.append(",");
+        }
+        pw.println(sb.toString());
+    }
+
+    pw.close();
+    traceln("Export complete: " + file.getAbsolutePath());
+
+} catch (Exception e) {
+    e.printStackTrace();
+}
+try {
+    File file = new File("C:/Users/fc1fb/Downloads/HA_icr_history.csv");
+    PrintWriter pw = new PrintWriter(file);
+
+    // Loop through each snapshot
+    for (double[] snapshot : HA_icr_history) {
+        // Convert array to comma-separated string
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < snapshot.length; i++) {
+            sb.append(snapshot[i]);
+            if (i < snapshot.length - 1) sb.append(",");
+        }
+        pw.println(sb.toString());
+    }
+
+    pw.close();
+    traceln("Export complete: " + file.getAbsolutePath());
+
+} catch (Exception e) {
+    e.printStackTrace();
+}
+try {
+    File file = new File("C:/Users/fc1fb/Downloads/HA_ofr_history.csv");
+    PrintWriter pw = new PrintWriter(file);
+
+    // Loop through each snapshot
+    for (double[] snapshot : HA_ofr_history) {
+        // Convert array to comma-separated string
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < snapshot.length; i++) {
+            sb.append(snapshot[i]);
+            if (i < snapshot.length - 1) sb.append(",");
+        }
+        pw.println(sb.toString());
+    }
+
+    pw.close();
+    traceln("Export complete: " + file.getAbsolutePath());
+
+} catch (Exception e) {
+    e.printStackTrace();
+}]]></Body>
+				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
@@ -981,6 +1089,15 @@ currentViewIndex = viewIndex;]]></Body>
 								<Code><![CDATA[GlobalResCoeff]]></Code>
 							</Value>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[adjFactor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Rollout]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[GlobalRollout]]></Code>
+							</Value>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -1064,6 +1181,18 @@ currentViewIndex = viewIndex;]]></Body>
 								<PackageName><![CDATA[absupplychain]]></PackageName>
 								<ClassName><![CDATA[puskesmas]]></ClassName>
 								<ItemName><![CDATA[initial_demand]]></ItemName>
+							</Value>
+						</Item>
+						<Item>
+							<Key>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[VaxCentre]]></ClassName>
+								<ItemName><![CDATA[adjFactor]]></ItemName>
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[puskesmas]]></ClassName>
+								<ItemName><![CDATA[demand_factor]]></ItemName>
 							</Value>
 						</Item>
 					</ParameterToDatabaseColumnMapping>
@@ -1282,6 +1411,18 @@ currentViewIndex = viewIndex;]]></Body>
 						<Parameter>
 							<Name><![CDATA[Capacity]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[adjFactor]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[1]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Rollout]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[GlobalRollout]]></Code>
+							</Value>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -1450,6 +1591,18 @@ currentViewIndex = viewIndex;]]></Body>
 						<Parameter>
 							<Name><![CDATA[Capacity]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[adjFactor]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[1]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Rollout]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[GlobalRollout]]></Code>
+							</Value>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -1597,6 +1750,15 @@ currentViewIndex = viewIndex;]]></Body>
 						<Parameter>
 							<Name><![CDATA[Name]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[adjFactor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Rollout]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[GlobalRollout]]></Code>
+							</Value>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -1680,6 +1842,18 @@ currentViewIndex = viewIndex;]]></Body>
 								<PackageName><![CDATA[absupplychain]]></PackageName>
 								<ClassName><![CDATA[district_health_office]]></ClassName>
 								<ItemName><![CDATA[initial_demand]]></ItemName>
+							</Value>
+						</Item>
+						<Item>
+							<Key>
+								<PackageName><![CDATA[absites]]></PackageName>
+								<ClassName><![CDATA[VaxLocalDistributor]]></ClassName>
+								<ItemName><![CDATA[adjFactor]]></ItemName>
+							</Key>
+							<Value>
+								<PackageName><![CDATA[absupplychain]]></PackageName>
+								<ClassName><![CDATA[district_health_office]]></ClassName>
+								<ItemName><![CDATA[demand_factor]]></ItemName>
 							</Value>
 						</Item>
 					</ParameterToDatabaseColumnMapping>
@@ -1829,368 +2003,6 @@ currentViewIndex = viewIndex;]]></Body>
 					<Latitude>-1.206103768251736</Latitude>
 					<Longitude>122.75841203655763</Longitude>
 				</EmbeddedObjectPresentation>
-    			<TimePlot>
-					<Id>1765471770775</Id>
-					<Name><![CDATA[plot]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>0</X><Y>600</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<AutoUpdate>true</AutoUpdate>
-					<RecurrenceProperties>
-						<Id>1765471770773</Id>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1765526400000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
-						</RecurrenceCode>
-					</RecurrenceProperties>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>450</Width>
-					<Height>340</Height>
-					<BackgroundColor/>
-					<BorderColor/>
-					<ChartArea>
-						<XOffset>50</XOffset>
-						<YOffset>30</YOffset>
-						<Width>370</Width>
-						<Height>240</Height>
-						<BackgroundColor>-1</BackgroundColor>
-						<BorderColor>-16777216</BorderColor>
-						<GridColor>-12566464</GridColor>
-					</ChartArea>
-					<Legend>
-						<Place>SOUTH</Place>
-						<TextColor>-16777216</TextColor>
-						<Size>40</Size>
-					</Legend>
-					<Labels>
-						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
-						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
-						<TextColor>-12566464</TextColor>
-					</Labels>
-					<ShowLegend>true</ShowLegend>
-					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
-					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
-					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
-					<VerScaleType>AUTO</VerScaleType>
-					<DrawLine>true</DrawLine>
-					<Interpolation>LINEAR</Interpolation>
-					<DatasetExpression>  
-						<Title><![CDATA[0]]></Title>
-					<Id>1765471772634</Id>
-					<Expression><![CDATA[my_dataset]]></Expression>
-					<Color>-23296</Color>
-					<Expression2><![CDATA[HealthArea.get(0).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[1]]></Title>
-					<Id>1765471829262</Id>
-					<Expression><![CDATA[my_dataset1]]></Expression>
-					<Color>-4343957</Color>
-					<Expression2><![CDATA[HealthArea.get(1).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[2]]></Title>
-					<Id>1765471831069</Id>
-					<Expression><![CDATA[my_dataset2]]></Expression>
-					<Color>-12004916</Color>
-					<Expression2><![CDATA[HealthArea.get(2).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[3]]></Title>
-					<Id>1765471832862</Id>
-					<Expression><![CDATA[my_dataset3]]></Expression>
-					<Color>-8097537</Color>
-					<Expression2><![CDATA[HealthArea.get(3).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[4]]></Title>
-					<Id>1765471834709</Id>
-					<Expression><![CDATA[my_dataset4]]></Expression>
-					<Color>-60269</Color>
-					<Expression2><![CDATA[HealthArea.get(4).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[5]]></Title>
-					<Id>1765471843247</Id>
-					<Expression><![CDATA[my_dataset5]]></Expression>
-					<Color>-29696</Color>
-					<Expression2><![CDATA[HealthArea.get(5).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[6]]></Title>
-					<Id>1765471845357</Id>
-					<Expression><![CDATA[my_dataset6]]></Expression>
-					<Color>-12799119</Color>
-					<Expression2><![CDATA[HealthArea.get(6).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[7]]></Title>
-					<Id>1765471847949</Id>
-					<Expression><![CDATA[my_dataset7]]></Expression>
-					<Color>-9807155</Color>
-					<Expression2><![CDATA[HealthArea.get(7).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[8]]></Title>
-					<Id>1765471849918</Id>
-					<Expression><![CDATA[my_dataset8]]></Expression>
-					<Color>-2987746</Color>
-					<Expression2><![CDATA[HealthArea.get(8).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[9]]></Title>
-					<Id>1765471851750</Id>
-					<Expression><![CDATA[my_dataset9]]></Expression>
-					<Color>-2448096</Color>
-					<Expression2><![CDATA[HealthArea.get(9).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[10]]></Title>
-					<Id>1765471853982</Id>
-					<Expression><![CDATA[my_dataset10]]></Expression>
-					<Color>-9728477</Color>
-					<Expression2><![CDATA[HealthArea.get(10).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[11]]></Title>
-					<Id>1765471856566</Id>
-					<Expression><![CDATA[my_dataset11]]></Expression>
-					<Color>-16728065</Color>
-					<Expression2><![CDATA[HealthArea.get(11).InventoryCoverageRatio]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
-					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
-					<FillAreaUnderLine>false</FillAreaUnderLine>
-					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
-    			</TimePlot>
-    			<TimePlot>
-					<Id>1765471971421</Id>
-					<Name><![CDATA[plot1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>460</X><Y>600</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<AutoUpdate>true</AutoUpdate>
-					<RecurrenceProperties>
-						<Id>1765471971419</Id>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1765526400000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
-						</RecurrenceCode>
-					</RecurrenceProperties>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>450</Width>
-					<Height>340</Height>
-					<BackgroundColor/>
-					<BorderColor/>
-					<ChartArea>
-						<XOffset>50</XOffset>
-						<YOffset>30</YOffset>
-						<Width>370</Width>
-						<Height>240</Height>
-						<BackgroundColor>-1</BackgroundColor>
-						<BorderColor>-16777216</BorderColor>
-						<GridColor>-12566464</GridColor>
-					</ChartArea>
-					<Legend>
-						<Place>SOUTH</Place>
-						<TextColor>-16777216</TextColor>
-						<Size>40</Size>
-					</Legend>
-					<Labels>
-						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
-						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
-						<TextColor>-12566464</TextColor>
-					</Labels>
-					<ShowLegend>true</ShowLegend>
-					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
-					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
-					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
-					<VerScaleType>AUTO</VerScaleType>
-					<DrawLine>true</DrawLine>
-					<Interpolation>LINEAR</Interpolation>
-					<DatasetExpression>  
-						<Title><![CDATA[0]]></Title>
-					<Id>1765471971407</Id>
-					<Expression><![CDATA[my_dataset]]></Expression>
-					<Color>-23296</Color>
-					<Expression2><![CDATA[HealthArea.get(0).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[1]]></Title>
-					<Id>1765471971408</Id>
-					<Expression><![CDATA[my_dataset1]]></Expression>
-					<Color>-4343957</Color>
-					<Expression2><![CDATA[HealthArea.get(1).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[2]]></Title>
-					<Id>1765471971409</Id>
-					<Expression><![CDATA[my_dataset2]]></Expression>
-					<Color>-12004916</Color>
-					<Expression2><![CDATA[HealthArea.get(2).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[3]]></Title>
-					<Id>1765471971410</Id>
-					<Expression><![CDATA[my_dataset3]]></Expression>
-					<Color>-8097537</Color>
-					<Expression2><![CDATA[HealthArea.get(3).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[4]]></Title>
-					<Id>1765471971411</Id>
-					<Expression><![CDATA[my_dataset4]]></Expression>
-					<Color>-60269</Color>
-					<Expression2><![CDATA[HealthArea.get(4).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[5]]></Title>
-					<Id>1765471971412</Id>
-					<Expression><![CDATA[my_dataset5]]></Expression>
-					<Color>-29696</Color>
-					<Expression2><![CDATA[HealthArea.get(5).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[6]]></Title>
-					<Id>1765471971413</Id>
-					<Expression><![CDATA[my_dataset6]]></Expression>
-					<Color>-12799119</Color>
-					<Expression2><![CDATA[HealthArea.get(6).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[7]]></Title>
-					<Id>1765471971414</Id>
-					<Expression><![CDATA[my_dataset7]]></Expression>
-					<Color>-9807155</Color>
-					<Expression2><![CDATA[HealthArea.get(7).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[8]]></Title>
-					<Id>1765471971415</Id>
-					<Expression><![CDATA[my_dataset8]]></Expression>
-					<Color>-2987746</Color>
-					<Expression2><![CDATA[HealthArea.get(8).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[9]]></Title>
-					<Id>1765471971416</Id>
-					<Expression><![CDATA[my_dataset9]]></Expression>
-					<Color>-2448096</Color>
-					<Expression2><![CDATA[HealthArea.get(9).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[10]]></Title>
-					<Id>1765471971417</Id>
-					<Expression><![CDATA[my_dataset10]]></Expression>
-					<Color>-9728477</Color>
-					<Expression2><![CDATA[HealthArea.get(10).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<DatasetExpression>  
-						<Title><![CDATA[11]]></Title>
-					<Id>1765471971418</Id>
-					<Expression><![CDATA[my_dataset11]]></Expression>
-					<Color>-16728065</Color>
-					<Expression2><![CDATA[HealthArea.get(11).VI]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-						<PointStyle>NONE</PointStyle>
-						<LineWidth>1.0</LineWidth>
-					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
-					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
-					<FillAreaUnderLine>false</FillAreaUnderLine>
-					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
-    			</TimePlot>
     			<TimePlot>
 					<Id>1768491783017</Id>
 					<Name><![CDATA[plot2]]></Name>
@@ -2438,6 +2250,87 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 			</Presentation>
 
 				</Group>
+    			<TimePlot>
+					<Id>1777482933990</Id>
+					<Name><![CDATA[plot3]]></Name>
+					<X>20</X><Y>650</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1777482933988</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1768550400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>440</Width>
+					<Height>300</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>360</Width>
+						<Height>210</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<DatasetExpression>  
+						<Title><![CDATA[Overall Rollout (Health Areas)]]></Title>
+					<Id>1777482933985</Id>
+					<Expression><![CDATA[my_dataset]]></Expression>
+					<Color>-16776961</Color>
+					<Expression2><![CDATA[HealthArea.stream().mapToDouble(a->a.orderFullfilRate).sum()
+//HealthZone.stream().mapToDouble(a->a.orderFullfilRate).average().orElse(0)]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<DatasetExpression>  
+						<Title><![CDATA[Overall Rollout (Health Zones)]]></Title>
+					<Id>1777483212376</Id>
+					<Expression><![CDATA[my_dataset1]]></Expression>
+					<Color>-65536</Color>
+					<Expression2><![CDATA[HealthZone.stream().mapToDouble(a->a.orderFullfilRate).sum()]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<SamplesToKeep>100</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
 			</Presentation>
 
 				</Level>
@@ -2642,6 +2535,9 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 				<Parameter>
 					<ParameterName><![CDATA[GlobalRollout]]></ParameterName>
 				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[TotalDose]]></ParameterName>
+				</Parameter>
 			</Parameters>
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
@@ -2665,18 +2561,595 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 			<Id>1777477298526</Id>
 			<Name><![CDATA[ParametersVariation]]></Name>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
+			<InitialSetupCode><![CDATA[allHistories = new ArrayList<>();
+allowedCombos = new LinkedHashMap<>();
+doseList = new ArrayList<>();
+rolloutList = new ArrayList<>();
+
+setupMap();
+flatten();]]></InitialSetupCode>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
+			<BeforeSimulationRunCode><![CDATA[//traceln("givenTime" + root.TotalDose/root.GlobalRollout);]]></BeforeSimulationRunCode>
+			<AfterSimulationRunCode><![CDATA[//dataset.add(root.HealthZone.stream().mapToDouble(a->a.orderFullfilRate).sum());
+allHistories.add(root.HA_ofr_history);]]></AfterSimulationRunCode>
 			<SeedValue>1</SeedValue>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
 			<VmArgs><![CDATA[]]></VmArgs>
 			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1777628733227</Id>
+					<Name><![CDATA[allHistories]]></Name>
+					<X>-260</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<ArrayList<double[]>>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1777628733231</Id>
+					<Name><![CDATA[allowedCombos]]></Name>
+					<X>-260</X><Y>70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[Map<Integer, int[]>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1777628733233</Id>
+					<Name><![CDATA[doseList]]></Name>
+					<X>-370</X><Y>70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<Integer>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1777628733235</Id>
+					<Name><![CDATA[rolloutList]]></Name>
+					<X>-370</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<Integer>]]></Type>        
+					</Properties>
+				</Variable>
+			</Variables>
+			<Functions>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1777628733221</Id>
+					<Name><![CDATA[flatten]]></Name>
+					<X>-120</X><Y>130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[for (int dose : allowedCombos.keySet()) {
+        for (int r : allowedCombos.get(dose)) {
+            doseList.add(dose);
+            rolloutList.add(r);
+        }
+    }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1777628733223</Id>
+					<Name><![CDATA[plotThis]]></Name>
+					<X>-120</X><Y>70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int runs = allHistories.size();
 
+for (int r = 0; r < runs; r++) {
 
-			<AllowParallelEvaluations>true</AllowParallelEvaluations>
-			<UseFreeformParameters>false</UseFreeformParameters>
-			<NumberOfRuns>10</NumberOfRuns>
+    int T = allHistories.get(r).size();   // length for THIS run
+    double[] curve = new double[T];
+
+    for (int t = 0; t < T; t++) {
+        double[] snapshot = allHistories.get(r).get(t);
+        curve[t] = Arrays.stream(snapshot).sum();//.orElse(0);
+    }
+
+    // Create dataset sized for THIS run
+    DataSet ds = new DataSet(T);
+
+    for (int t = 0; t < T; t++) {
+        ds.add(t, curve[t]);
+    }
+    Color col = Color.getHSBColor((float) r / runs, 1f, 1f);
+    
+    plot.addDataSet(
+    ds,
+    "Rollout " + rolloutList.get(r) + " | Total Doses " + doseList.get(r),
+    col,
+    true,   // show line
+    false,  // show points
+    Chart.INTERPOLATION_LINEAR,
+    3.0,    // point size (ignored if showPoints=false)
+    Chart.POINT_CIRCLE
+);
+    
+    
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1777628733225</Id>
+					<Name><![CDATA[setupMap]]></Name>
+					<X>-120</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[allowedCombos.put(2600, new int[]{371});
+allowedCombos.put(13000, new int[]{1857});
+allowedCombos.put(26000, new int[]{2500, 3714});
+allowedCombos.put(130000, new int[]{2500, 5000, 10000, 18571});
+allowedCombos.put(260000, new int[]{2500, 5000, 10000, 20000});
+allowedCombos.put(520000, new int[]{2500, 5000, 10000, 20000});]]></Body>
+				</Function>
+			</Functions>
+
+			<Presentation>
+				<Text>
+					<Id>1777628731529</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>40</X><Y>30</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12490271</Color>
+					<Text><![CDATA[ABSupplyChain : ParametersVariation]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>24</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731530</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>50</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12171190</Color>
+					<Text><![CDATA[Iterations completed:]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731531</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>240</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<VisibleCode><![CDATA[getCurrentIteration() > 0]]></VisibleCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12042869</Color>
+					<Text><![CDATA[?]]></Text>
+					<TextCode><![CDATA[format(getNumberOfCompletedIterations())]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731532</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>50</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12566464</Color>
+					<Text><![CDATA[Parameters]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Line>
+					<Id>1777628731533</Id>
+					<Name><![CDATA[line]]></Name>
+					<X>40</X><Y>130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>2</LineWidth>
+					<LineColor>-12566464</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>210</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
+				<Text>
+					<Id>1777628731534</Id>
+					<Name><![CDATA[text4]]></Name>
+					<X>50</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12171190</Color>
+					<Text><![CDATA[disruptionStart]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731535</Id>
+					<Name><![CDATA[text5]]></Name>
+					<X>240</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<VisibleCode><![CDATA[getCurrentIteration() > 0]]></VisibleCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12042869</Color>
+					<Text><![CDATA[?]]></Text>
+					<TextCode><![CDATA[format( disruptionStart )]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1777628731536</Id>
+					<Name><![CDATA[rectangle]]></Name>
+					<X>40</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>210</Width>
+					<Height>30</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-657931</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1777628731537</Id>
+					<Name><![CDATA[text6]]></Name>
+					<X>50</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12171190</Color>
+					<Text><![CDATA[disruptionEnd]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731538</Id>
+					<Name><![CDATA[text7]]></Name>
+					<X>240</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<VisibleCode><![CDATA[getCurrentIteration() > 0]]></VisibleCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12042869</Color>
+					<Text><![CDATA[?]]></Text>
+					<TextCode><![CDATA[format( disruptionEnd )]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731539</Id>
+					<Name><![CDATA[text8]]></Name>
+					<X>50</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12171190</Color>
+					<Text><![CDATA[GlobalResCoeff]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731540</Id>
+					<Name><![CDATA[text9]]></Name>
+					<X>240</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<VisibleCode><![CDATA[getCurrentIteration() > 0]]></VisibleCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12042869</Color>
+					<Text><![CDATA[?]]></Text>
+					<TextCode><![CDATA[format( GlobalResCoeff )]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1777628731541</Id>
+					<Name><![CDATA[rectangle1]]></Name>
+					<X>40</X><Y>230</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>210</Width>
+					<Height>30</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-657931</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1777628731542</Id>
+					<Name><![CDATA[text10]]></Name>
+					<X>50</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12171190</Color>
+					<Text><![CDATA[GlobalRollout]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731543</Id>
+					<Name><![CDATA[text11]]></Name>
+					<X>240</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<VisibleCode><![CDATA[getCurrentIteration() > 0]]></VisibleCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12042869</Color>
+					<Text><![CDATA[?]]></Text>
+					<TextCode><![CDATA[format( GlobalRollout )]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731544</Id>
+					<Name><![CDATA[text12]]></Name>
+					<X>50</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12171190</Color>
+					<Text><![CDATA[TotalDose]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1777628731545</Id>
+					<Name><![CDATA[text13]]></Name>
+					<X>240</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<VisibleCode><![CDATA[getCurrentIteration() > 0]]></VisibleCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12042869</Color>
+					<Text><![CDATA[?]]></Text>
+					<TextCode><![CDATA[format( TotalDose )]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+    			<TimePlot>
+					<Id>1777628733219</Id>
+					<Name><![CDATA[plot]]></Name>
+					<X>450</X><Y>70</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1777628733217</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1777622400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>540</Width>
+					<Height>300</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>430</Width>
+						<Height>240</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>EAST</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<SamplesToKeep>800</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
+			</Presentation>
+
+			<AfterExperimentCode><![CDATA[plotThis();]]></AfterExperimentCode>
+			<AllowParallelEvaluations>false</AllowParallelEvaluations>
+			<UseFreeformParameters>true</UseFreeformParameters>
+			<NumberOfRuns>16</NumberOfRuns>
 			<FreeformParamValue>	
 				<Id>1756374542430</Id>
 			</FreeformParamValue>
@@ -2688,6 +3161,15 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 			</FreeformParamValue>
 			<FreeformParamValue>	
 				<Id>1777477325951</Id>
+				<Expression Class="CodeValue">
+					<Code><![CDATA[rolloutList.get(index)]]></Code>
+				</Expression>
+			</FreeformParamValue>
+			<FreeformParamValue>	
+				<Id>1777627833694</Id>
+				<Expression Class="CodeValue">
+					<Code><![CDATA[doseList.get(index)]]></Code>
+				</Expression>
 			</FreeformParamValue>
 			<RangeVariationParamValue>	
 				<Id>1756374542430</Id>
@@ -2703,6 +3185,10 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 			</RangeVariationParamValue>
 			<RangeVariationParamValue>	
 				<Id>1777477325951</Id>
+				<Type>RANGE</Type>
+			</RangeVariationParamValue>
+			<RangeVariationParamValue>	
+				<Id>1777627833694</Id>
 				<Type>FIXED</Type>
 			</RangeVariationParamValue>
 			<ModelTimeProperties>
