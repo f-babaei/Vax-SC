@@ -2561,10 +2561,18 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 			<Id>1777477298526</Id>
 			<Name><![CDATA[ParametersVariation]]></Name>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
-			<InitialSetupCode><![CDATA[allHistories = new ArrayList<>();
+			<InitialSetupCode><![CDATA[allHistories_HA_ofr = new ArrayList<>();
+allHistories_HA_vi = new ArrayList<>();
+
 allowedCombos = new LinkedHashMap<>();
 doseList = new ArrayList<>();
 rolloutList = new ArrayList<>();
+
+int totalRuns = getMaximumIterations();
+sharedColors = new Color[totalRuns];
+for (int i = 0; i < totalRuns; i++) {
+    sharedColors[i] = Color.getHSBColor((float) i / totalRuns, 1f, 1f);
+}
 
 setupMap();
 flatten();]]></InitialSetupCode>
@@ -2572,8 +2580,12 @@ flatten();]]></InitialSetupCode>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
 			<BeforeSimulationRunCode><![CDATA[//traceln("givenTime" + root.TotalDose/root.GlobalRollout);]]></BeforeSimulationRunCode>
-			<AfterSimulationRunCode><![CDATA[//dataset.add(root.HealthZone.stream().mapToDouble(a->a.orderFullfilRate).sum());
-allHistories.add(root.HA_ofr_history);]]></AfterSimulationRunCode>
+			<AfterSimulationRunCode><![CDATA[allHistories_HA_ofr.add(root.HA_ofr_history);
+allHistories_HA_vi.add(root.HA_vi_history);
+
+plotCurve(root.HA_vi_history, plot2, "avg", getCurrentIteration()-1);
+plotCurve(root.HA_ofr_history, plot3, "sum", getCurrentIteration()-1);
+plotCurve(root.HZ_ofr_history, plot4, "sum", getCurrentIteration()-1);]]></AfterSimulationRunCode>
 			<SeedValue>1</SeedValue>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
 			<VmArgs><![CDATA[]]></VmArgs>
@@ -2581,8 +2593,8 @@ allHistories.add(root.HA_ofr_history);]]></AfterSimulationRunCode>
 			<Variables>
 				<Variable Class="PlainVariable">
 					<Id>1777628733227</Id>
-					<Name><![CDATA[allHistories]]></Name>
-					<X>-260</X><Y>110</Y>
+					<Name><![CDATA[allHistories_HA_ofr]]></Name>
+					<X>-370</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2594,7 +2606,7 @@ allHistories.add(root.HA_ofr_history);]]></AfterSimulationRunCode>
 				<Variable Class="PlainVariable">
 					<Id>1777628733231</Id>
 					<Name><![CDATA[allowedCombos]]></Name>
-					<X>-260</X><Y>70</Y>
+					<X>-370</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2618,13 +2630,37 @@ allHistories.add(root.HA_ofr_history);]]></AfterSimulationRunCode>
 				<Variable Class="PlainVariable">
 					<Id>1777628733235</Id>
 					<Name><![CDATA[rolloutList]]></Name>
-					<X>-370</X><Y>110</Y>
+					<X>-370</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ArrayList<Integer>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1777643007040</Id>
+					<Name><![CDATA[allHistories_HA_vi]]></Name>
+					<X>-370</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<ArrayList<double[]>>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1777645491360</Id>
+					<Name><![CDATA[sharedColors]]></Name>
+					<X>-370</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[Color[]]]></Type>        
 					</Properties>
 				</Variable>
 			</Variables>
@@ -2650,12 +2686,24 @@ allHistories.add(root.HA_ofr_history);]]></AfterSimulationRunCode>
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1777628733223</Id>
-					<Name><![CDATA[plotThis]]></Name>
+					<Name><![CDATA[plotCurves]]></Name>
 					<X>-120</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[allHistories]]></Name>
+						<Type><![CDATA[ArrayList<ArrayList<double[]>>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[plot]]></Name>
+						<Type><![CDATA[TimePlot]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[mode]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
 					<Body><![CDATA[int runs = allHistories.size();
 
 for (int r = 0; r < runs; r++) {
@@ -2665,7 +2713,17 @@ for (int r = 0; r < runs; r++) {
 
     for (int t = 0; t < T; t++) {
         double[] snapshot = allHistories.get(r).get(t);
-        curve[t] = Arrays.stream(snapshot).sum();//.orElse(0);
+        //curve[t] = Arrays.stream(snapshot).sum();//.orElse(0);
+        switch (mode) {
+        case "sum":
+            curve[t] = Arrays.stream(snapshot).sum();
+            break;
+        case "avg":
+            curve[t] = Arrays.stream(snapshot).average().orElse(0);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown mode: " + mode);
+    }
     }
 
     // Create dataset sized for THIS run
@@ -2706,6 +2764,70 @@ allowedCombos.put(26000, new int[]{2500, 3714});
 allowedCombos.put(130000, new int[]{2500, 5000, 10000, 18571});
 allowedCombos.put(260000, new int[]{2500, 5000, 10000, 20000});
 allowedCombos.put(520000, new int[]{2500, 5000, 10000, 20000});]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1777644066655</Id>
+					<Name><![CDATA[plotCurve]]></Name>
+					<X>-120</X><Y>40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[history]]></Name>
+						<Type><![CDATA[ArrayList<double[]>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[plot]]></Name>
+						<Type><![CDATA[TimePlot]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[mode]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[r]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[
+int T = history.size();          // number of timesteps in THIS run
+DataSet ds = new DataSet(T);     // dataset sized for this run
+
+for (int t = 0; t < T; t++) {
+    double[] snapshot = history.get(t);
+
+    double value;
+    switch (mode) {
+        case "sum":
+            value = Arrays.stream(snapshot).sum();
+            break;
+
+        case "avg":
+            value = Arrays.stream(snapshot).average().orElse(0);
+            break;
+
+        default:
+            throw new IllegalArgumentException("Unknown mode: " + mode);
+    }
+
+    ds.add(t, value);
+}
+
+Color col = sharedColors[r];
+
+// Add to TimePlot (must use full signature)
+plot.addDataSet(
+    ds,
+    "Rollout " + rolloutList.get(r) + " | Total Doses " + doseList.get(r),   // auto label
+    col,
+    true,                                  // show line
+    Chart.INTERPOLATION_LINEAR,
+    1.5,
+    Chart.POINT_NONE
+);
+]]></Body>
 				</Function>
 			</Functions>
 
@@ -3087,7 +3209,7 @@ allowedCombos.put(520000, new int[]{2500, 5000, 10000, 20000});]]></Body>
     			<TimePlot>
 					<Id>1777628733219</Id>
 					<Name><![CDATA[plot]]></Name>
-					<X>450</X><Y>70</Y>
+					<X>560</X><Y>630</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3108,15 +3230,15 @@ allowedCombos.put(520000, new int[]{2500, 5000, 10000, 20000});]]></Body>
 						</RecurrenceCode>
 					</RecurrenceProperties>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>540</Width>
-					<Height>300</Height>
+					<Width>490</Width>
+					<Height>290</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
-						<Width>430</Width>
-						<Height>240</Height>
+						<Width>390</Width>
+						<Height>230</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -3124,7 +3246,7 @@ allowedCombos.put(520000, new int[]{2500, 5000, 10000, 20000});]]></Body>
 					<Legend>
 						<Place>EAST</Place>
 						<TextColor>-16777216</TextColor>
-						<Size>30</Size>
+						<Size>20</Size>
 					</Legend>
 					<Labels>
 						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
@@ -3144,9 +3266,250 @@ allowedCombos.put(520000, new int[]{2500, 5000, 10000, 20000});]]></Body>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimePlot>
+    			<TimePlot>
+					<Id>1777642482274</Id>
+					<Name><![CDATA[plot1]]></Name>
+					<X>50</X><Y>630</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1777642482272</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1777622400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>490</Width>
+					<Height>290</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>390</Width>
+						<Height>230</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>EAST</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>20</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<SamplesToKeep>800</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
+    			<TimePlot>
+					<Id>1777643727319</Id>
+					<Name><![CDATA[plot2]]></Name>
+					<X>0</X><Y>310</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1777643727317</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1777622400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>410</Width>
+					<Height>290</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>320</Width>
+						<Height>230</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>EAST</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>10</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<SamplesToKeep>800</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
+    			<TimePlot>
+					<Id>1777644559067</Id>
+					<Name><![CDATA[plot3]]></Name>
+					<X>610</X><Y>0</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1777644559065</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1777622400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>390</Width>
+					<Height>250</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>310</Width>
+						<Height>190</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>EAST</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>20</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>false</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<SamplesToKeep>800</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
+    			<TimePlot>
+					<Id>1777644703877</Id>
+					<Name><![CDATA[plot4]]></Name>
+					<X>640</X><Y>320</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1777644703875</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1777622400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>360</Width>
+					<Height>280</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>280</Width>
+						<Height>220</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>EAST</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>20</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>false</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<SamplesToKeep>800</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
 			</Presentation>
 
-			<AfterExperimentCode><![CDATA[plotThis();]]></AfterExperimentCode>
+			<AfterExperimentCode><![CDATA[//plotCurves(allHistories_HA_ofr, plot, "sum");
+//plotCurves(allHistories_HA_vi, plot1, "sum");]]></AfterExperimentCode>
 			<AllowParallelEvaluations>false</AllowParallelEvaluations>
 			<UseFreeformParameters>true</UseFreeformParameters>
 			<NumberOfRuns>16</NumberOfRuns>
