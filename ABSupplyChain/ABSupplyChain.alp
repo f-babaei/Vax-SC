@@ -2583,7 +2583,7 @@ flatten();]]></InitialSetupCode>
 			<AfterSimulationRunCode><![CDATA[allHistories_HA_ofr.add(root.HA_ofr_history);
 allHistories_HA_vi.add(root.HA_vi_history);
 
-plotCurve(root.HA_vi_history, plot2, "avg", getCurrentIteration()-1);
+plotCurve(root.HA_vi_history, plot2, "sum", getCurrentIteration()-1);
 plotCurve(root.HA_ofr_history, plot3, "sum", getCurrentIteration()-1);
 plotCurve(root.HZ_ofr_history, plot4, "sum", getCurrentIteration()-1);]]></AfterSimulationRunCode>
 			<SeedValue>1</SeedValue>
@@ -3209,7 +3209,7 @@ plot.addDataSet(
     			<TimePlot>
 					<Id>1777628733219</Id>
 					<Name><![CDATA[plot]]></Name>
-					<X>560</X><Y>630</Y>
+					<X>590</X><Y>1060</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3269,7 +3269,7 @@ plot.addDataSet(
     			<TimePlot>
 					<Id>1777642482274</Id>
 					<Name><![CDATA[plot1]]></Name>
-					<X>50</X><Y>630</Y>
+					<X>70</X><Y>1020</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3329,7 +3329,7 @@ plot.addDataSet(
     			<TimePlot>
 					<Id>1777643727319</Id>
 					<Name><![CDATA[plot2]]></Name>
-					<X>0</X><Y>310</Y>
+					<X>0</X><Y>600</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3350,7 +3350,7 @@ plot.addDataSet(
 						</RecurrenceCode>
 					</RecurrenceProperties>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>410</Width>
+					<Width>400</Width>
 					<Height>290</Height>
 					<BackgroundColor/>
 					<BorderColor/>
@@ -3373,7 +3373,7 @@ plot.addDataSet(
 						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
 						<TextColor>-12566464</TextColor>
 					</Labels>
-					<ShowLegend>true</ShowLegend>
+					<ShowLegend>false</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
 					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
 					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
@@ -3389,7 +3389,7 @@ plot.addDataSet(
     			<TimePlot>
 					<Id>1777644559067</Id>
 					<Name><![CDATA[plot3]]></Name>
-					<X>610</X><Y>0</Y>
+					<X>0</X><Y>320</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3410,15 +3410,15 @@ plot.addDataSet(
 						</RecurrenceCode>
 					</RecurrenceProperties>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>390</Width>
-					<Height>250</Height>
+					<Width>420</Width>
+					<Height>280</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
-						<Width>310</Width>
-						<Height>190</Height>
+						<Width>320</Width>
+						<Height>220</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -3433,7 +3433,7 @@ plot.addDataSet(
 						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
 						<TextColor>-12566464</TextColor>
 					</Labels>
-					<ShowLegend>false</ShowLegend>
+					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
 					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
 					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
