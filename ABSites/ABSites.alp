@@ -389,12 +389,6 @@
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[adjFactor]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[Rollout]]></Name>
-				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[VSS *= ResCoeff;
 //Capacity = Rollout*adjFactor;
@@ -2818,12 +2812,6 @@ else {onEmergencyOrder = false;}]]></Body>
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[adjFactor]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[Rollout]]></Name>
-				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 MOB = vaxOrderRate*TDD;
@@ -4734,12 +4722,6 @@ ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from);
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[adjFactor]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[Rollout]]></Name>
 				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[//Capacity = Rollout * adjFactor;
@@ -7164,12 +7146,6 @@ onOrder = false;
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[adjFactor]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[Rollout]]></Name>
 				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[averageDemand = Rollout * adjFactor;
@@ -9660,7 +9636,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 							<Value Class="EntityCodeValue">
 								<IsAgentEntity>true</IsAgentEntity>
 								<EntityEmbeddedObject>
-									<Id>1777475574603</Id>
+									<Id>1780308296378</Id>
 									<ActiveObjectClass>
 										<PackageName><![CDATA[absites]]></PackageName>
 										<ClassName><![CDATA[Vehicle]]></ClassName>
@@ -9716,7 +9692,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 									</LocationNameCode>
 									<InitializationType>LOAD_FROM_DATABASE</InitializationType>
 									<InitializationDatabaseTableQuery>
-										<Id>1777475574602</Id>
+										<Id>1780308296377</Id>
 										<TableReference>
 										</TableReference>
 									</InitializationDatabaseTableQuery>
@@ -10637,12 +10613,6 @@ waitingTime(agent)
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[adjFactor]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[Rollout]]></Name>
 				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[//Capacity = Rollout * adjFactor;
