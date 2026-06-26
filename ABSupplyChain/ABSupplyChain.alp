@@ -202,7 +202,7 @@ HA_icr_history = new ArrayList<>();
 HA_ofr_history = new ArrayList<>();
 
 disruptionStart = 71;//(int) triangular(1, 50, 365);
-disruptionEnd = 113;//(int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
+disruptionEnd = 300;//113;//(int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
 			<DestroyCode><![CDATA[//saveStats();]]></DestroyCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -673,6 +673,7 @@ HA_ofr_history.add(snapshot);
 				<Event>
 					<Id>1777631338356</Id>
 					<Name><![CDATA[stopSim]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-240</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -704,6 +705,60 @@ HA_ofr_history.add(snapshot);
     //traceln("simTime:" + time());
     finishSimulation();    
 }]]></Action>
+				</Event>
+				<Event>
+					<Id>1782469727278</Id>
+					<Name><![CDATA[disrupt1]]></Name>
+					<X>-110</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
+						</Rate>
+						<Id>1782469727276</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1756454400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[int currentDay = (int) time(); // Assuming time() is in days
+double severity = 1.0 - (( (double) currentDay - (double) disruptionStart) / ((double) disruptionEnd - (double) disruptionStart)); // fades over time
+
+if (currentDay >= disruptionStart && currentDay < disruptionEnd) {
+   // Disruption is active
+   // Apply effects: reduce throughput, delay orders, etc.
+   //traceln();
+   for (VaxManufacturer vm: NationalOffices) {
+    vm.MLT = 30+30*(severity); 
+    }
+    
+   //log("Disruption active on day " + currentDay);
+}
+else {
+for (VaxManufacturer vm: NationalOffices) {
+    vm.MLT = 30; 
+    
+    }
+    }
+/*for (VaxManufacturer vm: NationalOffices) {
+    traceln(vm.productionReleaseRate); 
+    
+    }*/]]></Action>
 				</Event>
 			</Events>
 			<Functions>
@@ -2270,7 +2325,7 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 						</OccurrenceTime>
 						<RecurrenceCode Class="CodeUnitValue">
 							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
 						</RecurrenceCode>
 					</RecurrenceProperties>
 					<EmbeddedIcon>false</EmbeddedIcon>

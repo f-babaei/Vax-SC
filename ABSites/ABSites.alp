@@ -9636,7 +9636,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 							<Value Class="EntityCodeValue">
 								<IsAgentEntity>true</IsAgentEntity>
 								<EntityEmbeddedObject>
-									<Id>1780308296378</Id>
+									<Id>1782382678917</Id>
 									<ActiveObjectClass>
 										<PackageName><![CDATA[absites]]></PackageName>
 										<ClassName><![CDATA[Vehicle]]></ClassName>
@@ -9692,7 +9692,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 									</LocationNameCode>
 									<InitializationType>LOAD_FROM_DATABASE</InitializationType>
 									<InitializationDatabaseTableQuery>
-										<Id>1780308296377</Id>
+										<Id>1782382678916</Id>
 										<TableReference>
 										</TableReference>
 									</InitializationDatabaseTableQuery>
