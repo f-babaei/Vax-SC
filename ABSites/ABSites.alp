@@ -1479,7 +1479,7 @@ if (!onOrder) {
 //traceln(DVO/ROT-DesiredVaxDelivery);
 //Order o = new Order(DVO, DesiredVaxDelivery, this, null);
 
-Order o = new Order(max(DVO, VSS*DVO/ROT), DVO/ROT, this, null);
+Order o = new Order(max(DVO, VSS*DVO/ROT), DVO/ROT, this, null, false);
 
 // Sending message
 linkToDistributor.send(o);
@@ -1524,7 +1524,7 @@ double EOT = order.getRest(DAY);
 double orderAmount = min(DVO, max(VSS, EOT)*vaxOrderRate);
 //VI += orderAmount;
 
-Order o = new Order(orderAmount, 0, this, this);
+Order o = new Order(orderAmount, 0, this, null, true);
 linkToDistributor.send(o);
 onEmergencyOrder = true;
 DVO -= orderAmount;
@@ -1571,7 +1571,7 @@ else {return 1;}]]></Body>
 						<Type><![CDATA[Order]]></Type>
 					</Parameter>
 					<Body><![CDATA[VI += shipmentMsg.amount;
-if (shipmentMsg.from == null)
+if (shipmentMsg.emergency == false)
 {onOrder = false;}
 else {onEmergencyOrder = false;}]]></Body>
 				</Function>
@@ -4078,7 +4078,7 @@ double realisedShipment = min(RSV, orderMsg.amount);
 //double realisedShipment = min(VI, orderMsg.amount);
 double realisedRate = vaxShipmentRate;
 RSV -= realisedShipment;
-ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from);
+ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from, false);
 ]]></Body>
 				</Function>
 			</Functions>
@@ -5799,7 +5799,7 @@ ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapa
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[if (!onOrder) {
-Order o = new Order(max(DVO, VSS*DVO/ROT), DVO/ROT, this, null);
+Order o = new Order(max(DVO, VSS*DVO/ROT), DVO/ROT, this, null, false);
 // Sending message
 linkToManufacturer.send(o);
 onOrder = true;
@@ -5844,7 +5844,7 @@ double realisedShipment = min(RSV, orderMsg.amount);
 //double realisedShipment = min(VI, orderMsg.amount);
 double realisedRate = vaxSupplyRate;
 RSV -= realisedShipment;
-ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from);]]></Body>
+ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from, false);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -7869,6 +7869,27 @@ vaxCentre.vaxOrderRate = max(0, currentDemand);
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1782921561062</Id>
+					<Name><![CDATA[emergency]]></Name>
+					<X>50</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1782921561060</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<AgentLinks>
 				<AgentLink>
@@ -9103,13 +9124,17 @@ dest.setText(((Site) shipment.to).Name);]]></Action>
 						<Name><![CDATA[to]]></Name>
 						<Type><![CDATA[Agent]]></Type>
 					</Parameter>
+					<Parameter>
+						<Name><![CDATA[emergency]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
 					<Body><![CDATA[//countinside += quantity;
 //Agent from = getOwner();
 //ship in portions, according to shipment size
 while(quantity>0) {
 	double shipmentquantity = min(VehicleCapacity, quantity);
 	quantity -= shipmentquantity;
-	processShipment.take(new Order(shipmentquantity, rate, from, to));
+	processShipment.take(new Order(shipmentquantity, rate, from, to, emergency));
 }
 ]]></Body>
 				</Function>
@@ -11702,7 +11727,7 @@ ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapa
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[if (!onOrder) {
-Order o = new Order(max(DVO, VSS*DVO/ROT), DVO/ROT, this, null);
+Order o = new Order(max(DVO, VSS*DVO/ROT), DVO/ROT, this, null, false);
 // Sending message
 linkToDistributor.send(o);
 //traceln(time());
@@ -11747,14 +11772,14 @@ CurrentMean = (ShippingDept.VehicleSpeed>50)?ShippingDept:ExpressShipping;
 VOB += orderMsg.amount;
 //updating the order rate based on the maximum observed value from different message sources
 //this is a conservative implementation like H_inf, we may use avg values like H_2
-if (orderMsg.to == null) {
+if (orderMsg.emergency == false) {
 vaxOrderRate = max(vaxOrderRate, orderMsg.amountRate);}
 double realisedShipment = min(RSV, orderMsg.amount);
 double realisedRate = vaxSupplyRate;
 RSV -= realisedShipment;
-if (orderMsg.to == null) {
-CurrentMean.ship(realisedShipment, realisedRate, null, orderMsg.from);}
-else {CurrentMean.ship(realisedShipment, realisedRate, this, orderMsg.from);}
+if (orderMsg.emergency == false) {
+CurrentMean.ship(realisedShipment, realisedRate, this, orderMsg.from, false);}
+else {CurrentMean.ship(realisedShipment, realisedRate, this, orderMsg.from, true);}
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
