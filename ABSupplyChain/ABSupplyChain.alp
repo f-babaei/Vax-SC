@@ -196,10 +196,19 @@ setupHealthZone();
 setupHealthArea();
 setupPopCentres();
 
+NO_vi_history = new ArrayList<>();
+NO_icr_history = new ArrayList<>();
+PHO_vi_history = new ArrayList<>();
+PHO_icr_history = new ArrayList<>();
+
 HZ_ofr_history = new ArrayList<>();
+HZ_vi_history = new ArrayList<>();
+HZ_icr_history = new ArrayList<>();
 HA_vi_history = new ArrayList<>();
 HA_icr_history = new ArrayList<>();
 HA_ofr_history = new ArrayList<>();
+
+
 
 disruptionStart = 71;//(int) triangular(1, 50, 365);
 disruptionEnd = 300;//113;//(int) (disruptionStart+triangular(10, 30, 60));]]></StartupCode>
@@ -298,7 +307,7 @@ disruptionEnd = 300;//113;//(int) (disruptionStart+triangular(10, 30, 60));]]></
 				<Variable Class="PlainVariable">
 					<Id>1768494965050</Id>
 					<Name><![CDATA[HZ_ofr_history]]></Name>
-					<X>560</X><Y>1370</Y>
+					<X>560</X><Y>1410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -310,7 +319,7 @@ disruptionEnd = 300;//113;//(int) (disruptionStart+triangular(10, 30, 60));]]></
 				<Variable Class="PlainVariable">
 					<Id>1768576365957</Id>
 					<Name><![CDATA[HA_vi_history]]></Name>
-					<X>560</X><Y>1410</Y>
+					<X>690</X><Y>1450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -388,6 +397,174 @@ disruptionEnd = 300;//113;//(int) (disruptionStart+triangular(10, 30, 60));]]></
 						<Type><![CDATA[ArrayList<double[]>]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784802816466</Id>
+					<Name><![CDATA[HA_deficit]]></Name>
+					<X>160</X><Y>1490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784804643216</Id>
+					<Name><![CDATA[HZ_icr_history]]></Name>
+					<X>560</X><Y>1370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784804667788</Id>
+					<Name><![CDATA[HZ_vi_history]]></Name>
+					<X>690</X><Y>1370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784804845602</Id>
+					<Name><![CDATA[HZ_deficit]]></Name>
+					<X>160</X><Y>1530</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784806157245</Id>
+					<Name><![CDATA[HZ_vi]]></Name>
+					<X>280</X><Y>1530</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784806168021</Id>
+					<Name><![CDATA[HA_vi]]></Name>
+					<X>280</X><Y>1490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784807979786</Id>
+					<Name><![CDATA[PHO_vi_history]]></Name>
+					<X>690</X><Y>1530</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784807979788</Id>
+					<Name><![CDATA[PHO_icr_history]]></Name>
+					<X>560</X><Y>1530</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784808004203</Id>
+					<Name><![CDATA[NO_vi_history]]></Name>
+					<X>690</X><Y>1570</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784808004205</Id>
+					<Name><![CDATA[NO_icr_history]]></Name>
+					<X>560</X><Y>1570</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ArrayList<double[]>]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784809723594</Id>
+					<Name><![CDATA[PHO_deficit]]></Name>
+					<X>160</X><Y>1570</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784809723596</Id>
+					<Name><![CDATA[PHO_vi]]></Name>
+					<X>280</X><Y>1570</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784809726073</Id>
+					<Name><![CDATA[NO_deficit]]></Name>
+					<X>160</X><Y>1610</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784809726075</Id>
+					<Name><![CDATA[NO_vi]]></Name>
+					<X>280</X><Y>1610</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1756374542430</Id>
 					<Name><![CDATA[disruptionStart]]></Name>
@@ -457,6 +634,7 @@ disruptionEnd = 300;//113;//(int) (disruptionStart+triangular(10, 30, 60));]]></
 				<Variable Class="Parameter">
 					<Id>1777477325951</Id>
 					<Name><![CDATA[GlobalRollout]]></Name>
+					<Description><![CDATA[Total doses per day]]></Description>
 					<X>-240</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -625,6 +803,7 @@ for (VaxLocalDistributor vd : affectedDHOCollection) {
 				<Event>
 					<Id>1768495003413</Id>
 					<Name><![CDATA[updateSet]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>440</X><Y>1370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -656,14 +835,27 @@ for (VaxLocalDistributor vd : affectedDHOCollection) {
     .mapToDouble(a -> a.orderFullfilRate)
     .toArray();
 HZ_ofr_history.add(snapshot);
+
+snapshot = HealthZone.stream()
+    .mapToDouble(a -> a.VI)
+    .toArray();
+HZ_vi_history.add(snapshot);
+
+snapshot = HealthZone.stream()
+    .mapToDouble(a -> a.InventoryCoverageRatio)
+    .toArray();
+HZ_icr_history.add(snapshot);
+
 snapshot = HealthArea.stream()
     .mapToDouble(a -> a.VI)
     .toArray();
 HA_vi_history.add(snapshot);
+
 snapshot = HealthArea.stream()
     .mapToDouble(a -> a.InventoryCoverageRatio)
     .toArray();
 HA_icr_history.add(snapshot);
+
 snapshot = HealthArea.stream()
     .mapToDouble(a -> a.orderFullfilRate)
     .toArray();
@@ -760,6 +952,145 @@ for (VaxManufacturer vm: NationalOffices) {
     traceln(vm.productionReleaseRate); 
     
     }*/]]></Action>
+				</Event>
+				<Event>
+					<Id>1784802604947</Id>
+					<Name><![CDATA[updateIntegrals]]></Name>
+					<X>40</X><Y>1490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
+						</Rate>
+						<Id>1784802604945</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1768550400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[365]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[double[] HA_VSS = HealthArea.stream()
+    .mapToDouble(a -> a.VSS)
+    .toArray();
+
+HA_deficit = computeTrapzIntegral(HA_icr_history, HA_VSS);
+HA_vi      = computeTrapzIntegralSimple(HA_vi_history);
+
+double[] HZ_VSS = HealthZone.stream()
+    .mapToDouble(z -> z.VSS)
+    .toArray();
+
+HZ_deficit = computeTrapzIntegral(HZ_icr_history, HZ_VSS);
+HZ_vi      = computeTrapzIntegralSimple(HZ_vi_history);
+
+double[] PHO_VSS = PHO.stream()
+    .mapToDouble(z -> z.VSS)
+    .toArray();
+
+PHO_deficit = computeTrapzIntegral(PHO_icr_history, PHO_VSS);
+PHO_vi      = computeTrapzIntegralSimple(PHO_vi_history);
+
+double[] NO_VSS = NationalOffices.stream()
+    .mapToDouble(z -> z.VSS)
+    .toArray();
+
+NO_deficit = computeTrapzIntegral(NO_icr_history, NO_VSS);
+NO_vi      = computeTrapzIntegralSimple(NO_vi_history);]]></Action>
+				</Event>
+				<Event>
+					<Id>1784808801252</Id>
+					<Name><![CDATA[updateSet2]]></Name>
+					<X>440</X><Y>1460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
+						</Rate>
+						<Id>1784808801250</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1768550400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[recordHistory(
+    NationalOffices.stream().mapToDouble(a -> a.VI).toArray(),
+    NO_vi_history
+);
+
+recordHistory(
+    NationalOffices.stream().mapToDouble(a -> a.InventoryCoverageRatio).toArray(),
+    NO_icr_history
+);
+
+recordHistory(
+    PHO.stream().mapToDouble(a -> a.VI).toArray(),
+    PHO_vi_history
+);
+
+recordHistory(
+    PHO.stream().mapToDouble(a -> a.InventoryCoverageRatio).toArray(),
+    PHO_icr_history
+);
+
+recordHistory(
+    HealthZone.stream().mapToDouble(a -> a.orderFullfilRate).toArray(),
+    HZ_ofr_history
+);
+
+recordHistory(
+    HealthZone.stream().mapToDouble(a -> a.VI).toArray(),
+    HZ_vi_history
+);
+
+recordHistory(
+    HealthZone.stream().mapToDouble(a -> a.InventoryCoverageRatio).toArray(),
+    HZ_icr_history
+);
+
+recordHistory(
+    HealthArea.stream().mapToDouble(a -> a.VI).toArray(),
+    HA_vi_history
+);
+
+recordHistory(
+    HealthArea.stream().mapToDouble(a -> a.InventoryCoverageRatio).toArray(),
+    HA_icr_history
+);
+
+recordHistory(
+    HealthArea.stream().mapToDouble(a -> a.orderFullfilRate).toArray(),
+    HA_ofr_history
+);
+]]></Action>
 				</Event>
 			</Events>
 			<Functions>
@@ -1008,6 +1339,108 @@ try {
 } catch (Exception e) {
     e.printStackTrace();
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1784806492934</Id>
+					<Name><![CDATA[computeTrapzIntegral]]></Name>
+					<X>160</X><Y>1440</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[history]]></Name>
+						<Type><![CDATA[ArrayList<double[]>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[VSS_by_loc]]></Name>
+						<Type><![CDATA[double[]]]></Type>
+					</Parameter>
+					<Body><![CDATA[int nDays = history.size();
+int nLocs = history.get(0).length;
+
+double total = 0;
+
+for (int loc = 0; loc < nLocs; loc++) {
+
+    double VSS = VSS_by_loc[loc];
+    double sum = 0;
+
+    for (int day = 0; day < nDays - 1; day++) {
+
+        double v1 = history.get(day)[loc];
+        double v2 = history.get(day+1)[loc];
+
+        double d1 = Math.max(VSS - v1, 0);
+        double d2 = Math.max(VSS - v2, 0);
+
+        sum += 0.5 * (d1 + d2);   // trapezoid area, Δt = 1 day
+    }
+
+    total += sum;
+}
+
+return total;
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1784807364948</Id>
+					<Name><![CDATA[computeTrapzIntegralSimple]]></Name>
+					<X>160</X><Y>1410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[history]]></Name>
+						<Type><![CDATA[ArrayList<double[]>]]></Type>
+					</Parameter>
+					<Body><![CDATA[int nDays = history.size();
+int nLocs = history.get(0).length;
+
+double total = 0;
+
+for (int loc = 0; loc < nLocs; loc++) {
+
+    double sum = 0;
+
+    for (int day = 0; day < nDays - 1; day++) {
+
+        double v1 = history.get(day)[loc];
+        double v2 = history.get(day+1)[loc];
+
+        sum += 0.5 * (v1 + v2);
+    }
+
+    total += sum;
+}
+
+return total;
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1784808163188</Id>
+					<Name><![CDATA[recordHistory]]></Name>
+					<X>440</X><Y>1410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[snapshot]]></Name>
+						<Type><![CDATA[double[]]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[history]]></Name>
+						<Type><![CDATA[ArrayList<double[]>]]></Type>
+					</Parameter>
+					<Body><![CDATA[history.add(snapshot);]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -1479,6 +1912,9 @@ try {
 								<Code><![CDATA[GlobalRollout]]></Code>
 							</Value>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[StorageCapacity]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -1659,6 +2095,9 @@ try {
 								<Code><![CDATA[GlobalRollout]]></Code>
 							</Value>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[StorageCapacity]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -1814,6 +2253,9 @@ try {
 							<Value Class="CodeValue">
 								<Code><![CDATA[GlobalRollout]]></Code>
 							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[StorageCapacity]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -2062,7 +2504,7 @@ try {
     			<TimePlot>
 					<Id>1768491783017</Id>
 					<Name><![CDATA[plot2]]></Name>
-					<X>20</X><Y>950</Y>
+					<X>540</X><Y>900</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2414,7 +2856,7 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 					<ShowLabel>false</ShowLabel>
 					<Title><![CDATA[]]></Title>
 					<Width>1000</Width>
-					<Height>640</Height>
+					<Height>600</Height>
 				</Area>
 				<Area>
 					<Id>1776351684245</Id>
@@ -2426,7 +2868,7 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 					<ShowLabel>false</ShowLabel>
 					<Title><![CDATA[]]></Title>
 					<Width>1000</Width>
-					<Height>740</Height>
+					<Height>600</Height>
 				</Area>
 			</Areas>
 
@@ -2547,7 +2989,7 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 			<Name><![CDATA[Simulation]]></Name>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>8192</MaximumMemory>
-			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
+			<RandomNumberGenerationType>randomSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>alPypeRLConnector.getRNG()</CustomGeneratorCode>
 			<SeedValue>1</SeedValue>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
@@ -2612,6 +3054,70 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 			</ModelTimeProperties>
 			<BypassInitialScreen>true</BypassInitialScreen>
 		</SimulationExperiment>
+		<!--   =========  Optimization Experiment   ========  -->
+		<OptimizationExperiment ActiveObjectClassId="1749222362300">
+			<Id>1783675672834</Id>
+			<Name><![CDATA[Optimization]]></Name>
+			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
+			<MaximumMemory>512</MaximumMemory>
+			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
+			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
+			<SeedValue>1</SeedValue>
+			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
+			<VmArgs><![CDATA[]]></VmArgs>
+			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
+
+
+			<Parameter>	
+				<Id>1756374542430</Id>
+				<Type>FIXED</Type>
+			</Parameter>
+			<Parameter>	
+				<Id>1756374552173</Id>
+				<Type>FIXED</Type>
+			</Parameter>
+			<Parameter>	
+				<Id>1765469912917</Id>
+				<Type>FIXED</Type>
+			</Parameter>
+			<Parameter>	
+				<Id>1777477325951</Id>
+				<Type>FIXED</Type>
+			</Parameter>
+			<Parameter>	
+				<Id>1777627833694</Id>
+				<Type>FIXED</Type>
+			</Parameter>
+			<ObjectiveFunctionCode><![CDATA[0]]></ObjectiveFunctionCode>
+			<Objective>MINIMIZE</Objective>  
+			<OptimizationEngine>NATIVE</OptimizationEngine>
+			<AllowParallelEvaluations>true</AllowParallelEvaluations>
+			<ReplicationsProperties>
+				<UseReplication>false</UseReplication>
+				<FixedReplicationsNumber>true</FixedReplicationsNumber>
+				<ReplicationPerIteration>10</ReplicationPerIteration>
+				<MinimumReplication>2</MinimumReplication>
+				<MaximumReplication>10</MaximumReplication>
+				<ConfidenceLevel>LEVEL_80</ConfidenceLevel>
+				<ErrorPercent>0.5</ErrorPercent>
+			</ReplicationsProperties>
+			<PresentationProperties>
+				<EnableZoomAndPanning>true</EnableZoomAndPanning>
+				<Title><![CDATA[ABSupplyChain : Optimization]]></Title>	
+				<EnableDeveloperPanel>true</EnableDeveloperPanel>
+				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
+			</PresentationProperties>
+			<ModelTimeProperties>
+				<StopOption><![CDATA[Stop at specified time]]></StopOption>
+				<InitialDate><![CDATA[1729555200000]]></InitialDate>	
+				<InitialTime><![CDATA[0.0]]></InitialTime>	
+				<FinalDate><![CDATA[1761091200000]]></FinalDate>	
+				<FinalTime><![CDATA[365.0]]></FinalTime>	
+				<StopAfterIterationCount>true</StopAfterIterationCount>
+				<IterationCount>500</IterationCount>
+				<AutomaticStop>false</AutomaticStop>
+			</ModelTimeProperties>
+		</OptimizationExperiment>
 		<!--   =========  Parameter Variation Experiment   ========  -->
 		<ParamVariationExperiment ActiveObjectClassId="1749222362300">
 			<Id>1777477298526</Id>

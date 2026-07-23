@@ -391,15 +391,14 @@
 				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[VSS *= ResCoeff;
-//Capacity = Rollout*adjFactor;
 vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 
 VOB = vaxOrderRate*TDD;
 EVDR = vaxOrderRate;
-VI = vaxOrderRate*(VSS+MOPT+ROT*1/3);
+VI = vaxOrderRate*(VSS+MOPT);//+ROT*1/3);
 DVO = EVDR;
 
-StorageCapacity = 6*7*vaxOrderRate; // six weeks of average daily order]]></StartupCode>
+StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily order]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1741000867358</Id>
@@ -617,7 +616,8 @@ StorageCapacity = 6*7*vaxOrderRate; // six weeks of average daily order]]></Star
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties External="false" Constant="false" Array="false">
-						<Formula><![CDATA[(MOPT/prFunc()+VSS+ROT*1/3)*(EVDR)]]></Formula>
+						<Formula><![CDATA[//(MOPT/prFunc()+VSS+ROT*1/3)*(EVDR)
+(MOPT/prFunc()+VSS)*(EVDR)]]></Formula>
 						<Value><![CDATA[0]]></Value>
 						<Color/>
 					</Properties>
@@ -1427,21 +1427,6 @@ StorageCapacity = 6*7*vaxOrderRate; // six weeks of average daily order]]></Star
 					<LineWidth>1</LineWidth>
 					<Delay>false</Delay>
 				</Link>
-				<Link SourceId="1751096437782" TargetId="1741001703852" Polarity="null">
-					<Height>95.731</Height>
-					<PolarityPosition>0.95</PolarityPosition>
-					<Direction><X>340</X><Y>170</Y></Direction>
-					<Id>1756288780410</Id>
-					<Name><![CDATA[ROT - DesiredInventory]]></Name>
-					<X>60</X><Y>250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Color/>
-					<LineWidth>1</LineWidth>
-					<Delay>false</Delay>
-				</Link>
 			</Dependences>
 			<Events>
 				<Event>
@@ -1570,7 +1555,19 @@ else {return 1;}]]></Body>
 						<Name><![CDATA[shipmentMsg]]></Name>
 						<Type><![CDATA[Order]]></Type>
 					</Parameter>
-					<Body><![CDATA[VI += shipmentMsg.amount;
+					<Body><![CDATA[//VI += shipmentMsg.amount;
+double newVI = VI + shipmentMsg.amount;
+
+if (newVI > StorageCapacity) {
+    double overflow = newVI - StorageCapacity;
+    VI = StorageCapacity;
+
+    // optional: track overflow
+    overflowHistory.add(overflow);
+} else {
+    VI = newVI;
+}
+
 if (shipmentMsg.emergency == false)
 {onOrder = false;}
 else {onEmergencyOrder = false;}]]></Body>
@@ -2378,6 +2375,33 @@ else {onEmergencyOrder = false;}]]></Body>
 					<Value><![CDATA[28.7]]></Value>
 				</TableFunction>
 			</TableFunctions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1784818277101</Id>
+					<Name><![CDATA[overflowHistory]]></Name>
+					<X>230</X><Y>40</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1784818277099</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1784880000000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>100</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1741000867355</Id>
@@ -2812,6 +2836,9 @@ else {onEmergencyOrder = false;}]]></Body>
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[StorageCapacity]]></Name>
+				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 MOB = vaxOrderRate*TDD;
@@ -2819,7 +2846,8 @@ EVDR = vaxOrderRate;
 VI = vaxOrderRate*(VSS+MOPT);
 RSV = VI;
 WIPI = vaxOrderRate*MLT;
-ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapacity);]]></StartupCode>
+ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapacity);
+StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily order]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1741000956564</Id>
@@ -3515,6 +3543,27 @@ ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapa
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1777482717826</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1784819691065</Id>
+					<Name><![CDATA[StorageCapacity]]></Name>
+					<X>180</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1784819691063</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -4254,6 +4303,54 @@ ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from, false);
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
 			<Presentation>
+				<Oval>
+					<Id>1784819724215</Id>
+					<Name><![CDATA[oval]]></Name>
+					<X>-1</X><Y>0</Y>
+					<Label><X>0</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<RadiusX>20.17671515151515</RadiusX>
+					<RadiusY>40</RadiusY>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Oval>
+				<Arc>
+					<Id>1784819724217</Id>
+					<Name><![CDATA[arc]]></Name>
+					<X>-1</X><Y>0</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Dz>0</Dz>
+					<Rotation>0.0</Rotation>
+					<RadiusX>20.176</RadiusX>
+					<RadiusY>40</RadiusY>
+					<StartAngle>-60.0</StartAngle>
+					<Angle>240.0</Angle>
+					<AngleCode><![CDATA[2 * PI * VI / StorageCapacity]]></AngleCode>
+					<FillColor>-16711681</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Arc>
 				<Group>
 					<Id>1741000956568</Id>
 					<Name><![CDATA[factory]]></Name>
@@ -4723,14 +4820,17 @@ ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from, false);
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[StorageCapacity]]></Name>
+				</Parameter>
 			</Parameters>
-			<StartupCode><![CDATA[//Capacity = Rollout * adjFactor;
-vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
+			<StartupCode><![CDATA[vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 VOB = vaxOrderRate*TDD;
 EVDR = vaxOrderRate;
 VI = vaxOrderRate*(VSS+MOPT);
 RSV = VI;
-ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapacity);]]></StartupCode>
+ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapacity);
+StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily order]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1749222671342</Id>
@@ -5359,6 +5459,27 @@ ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapa
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1784819501127</Id>
+					<Name><![CDATA[StorageCapacity]]></Name>
+					<X>340</X><Y>40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1784819501125</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Dependences>
 				<Link SourceId="1749222671415" TargetId="1749222671353" Polarity="null">
@@ -5860,7 +5981,18 @@ ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from, false);]]
 						<Name><![CDATA[shipmentMsg]]></Name>
 						<Type><![CDATA[Order]]></Type>
 					</Parameter>
-					<Body><![CDATA[VI += shipmentMsg.amount;
+					<Body><![CDATA[//VI += shipmentMsg.amount;
+double newVI = VI + shipmentMsg.amount;
+
+if (newVI > StorageCapacity) {
+    double overflow = newVI - StorageCapacity;
+    VI = StorageCapacity;
+
+    // optional: track overflow
+    overflowHistory.add(overflow);
+} else {
+    VI = newVI;
+}
 onOrder = false;
 //traceln(time());]]></Body>
 				</Function>
@@ -6667,6 +6799,33 @@ onOrder = false;
 					<Value><![CDATA[28.7]]></Value>
 				</TableFunction>
 			</TableFunctions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1784818335714</Id>
+					<Name><![CDATA[overflowHistory]]></Name>
+					<X>60</X><Y>40</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1784818335712</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1784880000000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>100</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1749222671511</Id>
@@ -7085,9 +7244,9 @@ onOrder = false;
 					<LineStyle>SOLID</LineStyle>
 					<Width>5</Width>
 					<Height>10</Height>
-					<HeightCode><![CDATA[VI/Capacity*20]]></HeightCode>
+					<HeightCode><![CDATA[VI/StorageCapacity*rectangle.getHeight()]]></HeightCode>
 					<Rotation>180.0</Rotation>
-					<FillColor>-16711936</FillColor>
+					<FillColor>-4565549</FillColor>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Rectangle>
@@ -7383,9 +7542,9 @@ onOrder = false;
 					</Properties>
 					<Action><![CDATA[double mu = averageDemand;///52/weeklySessions;
 double sig = 0.2*mu;
-double currentDemand = mu;//max(0, normal(sig, mu));
+double currentDemand = max(0, normal(sig, mu));
+//double currentDemand = mu;
 
-//vaxCentre.VOB += currentDemand;
 vaxCentre.vaxOrderRate = max(0, currentDemand);
 //vaxCentre.vaxOrderRate = max(0, currentDemand/(7/weeklySessions));]]></Action>
 				</Event>
@@ -9661,7 +9820,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 							<Value Class="EntityCodeValue">
 								<IsAgentEntity>true</IsAgentEntity>
 								<EntityEmbeddedObject>
-									<Id>1782382678917</Id>
+									<Id>1783001577026</Id>
 									<ActiveObjectClass>
 										<PackageName><![CDATA[absites]]></PackageName>
 										<ClassName><![CDATA[Vehicle]]></ClassName>
@@ -9717,7 +9876,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 									</LocationNameCode>
 									<InitializationType>LOAD_FROM_DATABASE</InitializationType>
 									<InitializationDatabaseTableQuery>
-										<Id>1782382678916</Id>
+										<Id>1783001577025</Id>
 										<TableReference>
 										</TableReference>
 									</InitializationDatabaseTableQuery>
@@ -10639,14 +10798,17 @@ waitingTime(agent)
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[StorageCapacity]]></Name>
+				</Parameter>
 			</Parameters>
-			<StartupCode><![CDATA[//Capacity = Rollout * adjFactor;
-vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
+			<StartupCode><![CDATA[vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 VOB = vaxOrderRate*TDD;
 EVDR = vaxOrderRate;
 VI = vaxOrderRate*(VSS+MOPT);
 RSV = VI;
-ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapacity);]]></StartupCode>
+ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapacity);
+StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily order]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1755790360397</Id>
@@ -11287,6 +11449,27 @@ ShippingDept.FleetSize = (int) Math.ceil(vaxOrderRate*2/ShippingDept.VehicleCapa
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1784819536665</Id>
+					<Name><![CDATA[StorageCapacity]]></Name>
+					<X>460</X><Y>40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1784819536663</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Dependences>
 				<Link SourceId="1755790360487" TargetId="1755790360408" Polarity="null">
@@ -11796,7 +11979,19 @@ else {CurrentMean.ship(realisedShipment, realisedRate, this, orderMsg.from, true
 						<Name><![CDATA[shipmentMsg]]></Name>
 						<Type><![CDATA[Order]]></Type>
 					</Parameter>
-					<Body><![CDATA[VI += shipmentMsg.amount;
+					<Body><![CDATA[//VI += shipmentMsg.amount;
+double newVI = VI + shipmentMsg.amount;
+
+if (newVI > StorageCapacity) {
+    double overflow = newVI - StorageCapacity;
+    VI = StorageCapacity;
+
+    // optional: track overflow
+    overflowHistory.add(overflow);
+} else {
+    VI = newVI;
+}
+
 onOrder = false;
 //traceln(time());]]></Body>
 				</Function>
@@ -12603,6 +12798,33 @@ onOrder = false;
 					<Value><![CDATA[28.7]]></Value>
 				</TableFunction>
 			</TableFunctions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1784818339995</Id>
+					<Name><![CDATA[overflowHistory]]></Name>
+					<X>60</X><Y>40</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1784818339993</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1784880000000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>100</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1755790360583</Id>
@@ -12835,9 +13057,9 @@ onOrder = false;
 					<LineStyle>SOLID</LineStyle>
 					<Width>5</Width>
 					<Height>10</Height>
-					<HeightCode><![CDATA[VI/Capacity*rectangle.getHeight()]]></HeightCode>
+					<HeightCode><![CDATA[VI/StorageCapacity*rectangle.getHeight()]]></HeightCode>
 					<Rotation>180.0</Rotation>
-					<FillColor>-16711936</FillColor>
+					<FillColor>-16711681</FillColor>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Rectangle>
