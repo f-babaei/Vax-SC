@@ -2504,7 +2504,8 @@ return total;
     			<TimePlot>
 					<Id>1768491783017</Id>
 					<Name><![CDATA[plot2]]></Name>
-					<X>540</X><Y>900</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>540</X><Y>910</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2573,7 +2574,8 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 					<Id>1774023062714</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-7667573</Color>
-					<Expression2><![CDATA[HealthArea.stream().mapToDouble(a->a.VI).max().orElse(0)]]></Expression2>
+					<Expression2><![CDATA[//HealthArea.stream().mapToDouble(a->a.VI).max().orElse(0)
+NationalOffices.stream().mapToDouble(a->a.VI).sum()]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -2820,6 +2822,100 @@ HealthArea.stream().mapToDouble(a->a.VI).sum()
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-65536</Color>
 					<Expression2><![CDATA[HealthZone.stream().mapToDouble(a->a.orderFullfilRate).sum()]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<SamplesToKeep>100</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[365]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
+    			<TimePlot>
+					<Id>1784886611525</Id>
+					<Name><![CDATA[plot4]]></Name>
+					<X>540</X><Y>640</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<RecurrenceProperties>
+						<Id>1784886611523</Id>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1768550400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[WEEK]]></Unit>
+						</RecurrenceCode>
+					</RecurrenceProperties>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>440</Width>
+					<Height>300</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>360</Width>
+						<Height>210</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<DatasetExpression>  
+						<Title><![CDATA[Total Inventory (Health Areas)]]></Title>
+					<Id>1784886611520</Id>
+					<Expression><![CDATA[my_dataset]]></Expression>
+					<Color>-16776961</Color>
+					<Expression2><![CDATA[//HealthArea.stream().mapToDouble(a->a.orderFullfilRate).sum()
+PHO.stream().mapToDouble(a->a.VI).sum()
+//HealthZone.stream().mapToDouble(a->a.orderFullfilRate).average().orElse(0)]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<DatasetExpression>  
+						<Title><![CDATA[Max Inventory (Health Areas)]]></Title>
+					<Id>1784886611521</Id>
+					<Expression><![CDATA[my_dataset1]]></Expression>
+					<Color>-7667573</Color>
+					<Expression2><![CDATA[//HealthArea.stream().mapToDouble(a->a.VI).max().orElse(0)
+NationalOffices.stream().mapToDouble(a->a.VI).sum()]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<DatasetExpression>  
+						<Title><![CDATA[Total Inventory (Health Zones)]]></Title>
+					<Id>1784886611522</Id>
+					<Expression><![CDATA[my_dataset2]]></Expression>
+					<Color>-23296</Color>
+					<Expression2><![CDATA[HealthZone.stream().mapToDouble(a->a.VI).sum()
+//HealthZone.stream().mapToDouble(a->a.ShippingDept.fleet.utilization()).max().orElse(0)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>

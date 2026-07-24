@@ -2952,6 +2952,21 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 						<Type><![CDATA[Agent]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1784889927079</Id>
+					<Name><![CDATA[prodCoeff]]></Name>
+					<X>340</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[1]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="AuxVariable">
 					<Id>1741088985070</Id>
 					<Name><![CDATA[DeliveryDelay]]></Name>
@@ -3217,7 +3232,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SourceId="1741090074004" TargetId="1741088985088" External="false" Constant="false" Array="false">
-						<Formula><![CDATA[delay3(productionReleaseRate, MLT)*prodCoeff(time(DAY))]]></Formula>
+						<Formula><![CDATA[delay3(productionReleaseRate, MLT)*prodCoeff]]></Formula>
 						<Color/>
 						<ValveIndex>1</ValveIndex>
 						<Points>
@@ -4069,6 +4084,244 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 					<Delay>false</Delay>
 				</Link>
 			</Dependences>
+			<StatechartElements>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1784889393732</Id>
+					<Name><![CDATA[Operational]]></Name>
+					<X>360</X><Y>670</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="100" Height="30">
+						<EntryAction><![CDATA[prodCoeff = 1]]></EntryAction>
+						<FillColor/>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1784889416045</Id>
+					<Name><![CDATA[SemiDisrupted]]></Name>
+					<X>360</X><Y>750</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="100" Height="30">
+						<EntryAction><![CDATA[prodCoeff = 0.5]]></EntryAction>
+						<FillColor/>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1784889428381</Id>
+					<Name><![CDATA[FullyDisrupted]]></Name>
+					<X>530</X><Y>670</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="100" Height="30">
+						<EntryAction><![CDATA[prodCoeff = 0]]></EntryAction>
+						<FillColor/>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="EntryPoint" ParentState="ROOT_NODE">
+					<Id>1784889389132</Id>
+					<Name><![CDATA[statechart]]></Name>
+					<X>410</X><Y>630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>40</Y></Point>
+					</Points>
+					<Properties Target="1784889393732">
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1784889446116</Id>
+					<Name><![CDATA[transition]]></Name>
+					<X>430</X><Y>700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1784889393732" Target="1784889416045" Trigger="rate">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[.87]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1784889473923</Id>
+					<Name><![CDATA[transition1]]></Name>
+					<X>460</X><Y>690</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>70</X><Y>0</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1784889393732" Target="1784889428381" Trigger="rate">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[.13]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1784889489397</Id>
+					<Name><![CDATA[transition2]]></Name>
+					<X>390</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>-50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1784889416045" Target="1784889393732" Trigger="rate">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[.16]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1784889522205</Id>
+					<Name><![CDATA[transition3]]></Name>
+					<X>530</X><Y>680</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>-70</X><Y>0</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1784889428381" Target="1784889393732" Trigger="rate">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[.06]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1784889560942</Id>
+					<Name><![CDATA[transition4]]></Name>
+					<X>570</X><Y>700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+						<Point><X>-110</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1784889428381" Target="1784889416045" Trigger="rate">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[.27]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1784889573174</Id>
+					<Name><![CDATA[transition5]]></Name>
+					<X>460</X><Y>770</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>140</X><Y>0</Y></Point>
+						<Point><X>140</X><Y>-70</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1784889416045" Target="1784889428381" Trigger="rate">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[.1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+			</StatechartElements>
 			<Events>
 				<Event>
 					<Id>1751296976347</Id>
@@ -4178,264 +4431,6 @@ ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from, false);
 					<Value><![CDATA[1.0]]></Value>
 					<Value><![CDATA[1.0]]></Value>
 				</TableFunction>
-				<TableFunction AccessType="public" StaticFunction="false">
-					<Id>1784823789898</Id>
-					<Name><![CDATA[prodCoeff]]></Name>
-					<X>490</X><Y>70</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<InterpolationMethod>STEP</InterpolationMethod>
-					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
-					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
-					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
-					<ValuesQuery>
-						<Id>1784823789896</Id>
-						<TableReference>
-						</TableReference>
-							<ArgumentColumnReference>
-							</ArgumentColumnReference>
-							<ValueColumnReference>
-							</ValueColumnReference>
-					</ValuesQuery>
-// arguments and values
-					<Argument><![CDATA[0.5]]></Argument>
-					<Argument><![CDATA[1.5]]></Argument>
-					<Argument><![CDATA[2.5]]></Argument>
-					<Argument><![CDATA[3.5]]></Argument>
-					<Argument><![CDATA[4.5]]></Argument>
-					<Argument><![CDATA[5.5]]></Argument>
-					<Argument><![CDATA[6.5]]></Argument>
-					<Argument><![CDATA[7.5]]></Argument>
-					<Argument><![CDATA[8.5]]></Argument>
-					<Argument><![CDATA[9.5]]></Argument>
-					<Argument><![CDATA[10.5]]></Argument>
-					<Argument><![CDATA[11.5]]></Argument>
-					<Argument><![CDATA[12.5]]></Argument>
-					<Argument><![CDATA[13.5]]></Argument>
-					<Argument><![CDATA[14.5]]></Argument>
-					<Argument><![CDATA[15.5]]></Argument>
-					<Argument><![CDATA[16.5]]></Argument>
-					<Argument><![CDATA[17.5]]></Argument>
-					<Argument><![CDATA[18.5]]></Argument>
-					<Argument><![CDATA[19.5]]></Argument>
-					<Argument><![CDATA[20.5]]></Argument>
-					<Argument><![CDATA[21.5]]></Argument>
-					<Argument><![CDATA[22.5]]></Argument>
-					<Argument><![CDATA[23.5]]></Argument>
-					<Argument><![CDATA[24.5]]></Argument>
-					<Argument><![CDATA[25.5]]></Argument>
-					<Argument><![CDATA[26.5]]></Argument>
-					<Argument><![CDATA[27.5]]></Argument>
-					<Argument><![CDATA[28.5]]></Argument>
-					<Argument><![CDATA[29.5]]></Argument>
-					<Argument><![CDATA[30.5]]></Argument>
-					<Argument><![CDATA[31.5]]></Argument>
-					<Argument><![CDATA[32.5]]></Argument>
-					<Argument><![CDATA[33.5]]></Argument>
-					<Argument><![CDATA[34.5]]></Argument>
-					<Argument><![CDATA[35.5]]></Argument>
-					<Argument><![CDATA[36.5]]></Argument>
-					<Argument><![CDATA[37.5]]></Argument>
-					<Argument><![CDATA[38.5]]></Argument>
-					<Argument><![CDATA[39.5]]></Argument>
-					<Argument><![CDATA[40.5]]></Argument>
-					<Argument><![CDATA[41.5]]></Argument>
-					<Argument><![CDATA[42.5]]></Argument>
-					<Argument><![CDATA[43.5]]></Argument>
-					<Argument><![CDATA[44.5]]></Argument>
-					<Argument><![CDATA[45.5]]></Argument>
-					<Argument><![CDATA[46.5]]></Argument>
-					<Argument><![CDATA[47.5]]></Argument>
-					<Argument><![CDATA[48.5]]></Argument>
-					<Argument><![CDATA[49.5]]></Argument>
-					<Argument><![CDATA[50.5]]></Argument>
-					<Argument><![CDATA[51.5]]></Argument>
-					<Argument><![CDATA[52.5]]></Argument>
-					<Argument><![CDATA[53.5]]></Argument>
-					<Argument><![CDATA[54.5]]></Argument>
-					<Argument><![CDATA[55.5]]></Argument>
-					<Argument><![CDATA[56.5]]></Argument>
-					<Argument><![CDATA[57.5]]></Argument>
-					<Argument><![CDATA[58.5]]></Argument>
-					<Argument><![CDATA[59.5]]></Argument>
-					<Argument><![CDATA[60.5]]></Argument>
-					<Argument><![CDATA[61.5]]></Argument>
-					<Argument><![CDATA[62.5]]></Argument>
-					<Argument><![CDATA[63.5]]></Argument>
-					<Argument><![CDATA[64.5]]></Argument>
-					<Argument><![CDATA[65.5]]></Argument>
-					<Argument><![CDATA[66.5]]></Argument>
-					<Argument><![CDATA[67.5]]></Argument>
-					<Argument><![CDATA[68.5]]></Argument>
-					<Argument><![CDATA[69.5]]></Argument>
-					<Argument><![CDATA[70.5]]></Argument>
-					<Argument><![CDATA[71.5]]></Argument>
-					<Argument><![CDATA[72.5]]></Argument>
-					<Argument><![CDATA[73.5]]></Argument>
-					<Argument><![CDATA[74.5]]></Argument>
-					<Argument><![CDATA[75.5]]></Argument>
-					<Argument><![CDATA[76.5]]></Argument>
-					<Argument><![CDATA[77.5]]></Argument>
-					<Argument><![CDATA[78.5]]></Argument>
-					<Argument><![CDATA[79.5]]></Argument>
-					<Argument><![CDATA[80.5]]></Argument>
-					<Argument><![CDATA[81.5]]></Argument>
-					<Argument><![CDATA[82.5]]></Argument>
-					<Argument><![CDATA[83.5]]></Argument>
-					<Argument><![CDATA[84.5]]></Argument>
-					<Argument><![CDATA[85.5]]></Argument>
-					<Argument><![CDATA[86.5]]></Argument>
-					<Argument><![CDATA[87.5]]></Argument>
-					<Argument><![CDATA[88.5]]></Argument>
-					<Argument><![CDATA[89.5]]></Argument>
-					<Argument><![CDATA[90.5]]></Argument>
-					<Argument><![CDATA[91.5]]></Argument>
-					<Argument><![CDATA[92.5]]></Argument>
-					<Argument><![CDATA[93.5]]></Argument>
-					<Argument><![CDATA[94.5]]></Argument>
-					<Argument><![CDATA[95.5]]></Argument>
-					<Argument><![CDATA[96.5]]></Argument>
-					<Argument><![CDATA[97.5]]></Argument>
-					<Argument><![CDATA[98.5]]></Argument>
-					<Argument><![CDATA[99.5]]></Argument>
-					<Argument><![CDATA[100.5]]></Argument>
-					<Argument><![CDATA[101.5]]></Argument>
-					<Argument><![CDATA[102.5]]></Argument>
-					<Argument><![CDATA[103.5]]></Argument>
-					<Argument><![CDATA[104.5]]></Argument>
-					<Argument><![CDATA[105.5]]></Argument>
-					<Argument><![CDATA[106.5]]></Argument>
-					<Argument><![CDATA[107.5]]></Argument>
-					<Argument><![CDATA[108.5]]></Argument>
-					<Argument><![CDATA[109.5]]></Argument>
-					<Argument><![CDATA[110.5]]></Argument>
-					<Argument><![CDATA[111.5]]></Argument>
-					<Argument><![CDATA[112.5]]></Argument>
-					<Argument><![CDATA[113.5]]></Argument>
-					<Argument><![CDATA[114.5]]></Argument>
-					<Argument><![CDATA[115.5]]></Argument>
-					<Argument><![CDATA[116.5]]></Argument>
-					<Value><![CDATA[0.0]]></Value>
-					<Value><![CDATA[0.0]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.4]]></Value>
-					<Value><![CDATA[0.7]]></Value>
-					<Value><![CDATA[0.35]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.4]]></Value>
-					<Value><![CDATA[0.4]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.4]]></Value>
-					<Value><![CDATA[0.45]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.575]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.575]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.6]]></Value>
-					<Value><![CDATA[0.4]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.4]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.375]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.45]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.45]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.625]]></Value>
-					<Value><![CDATA[0.45]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.575]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.65]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.45]]></Value>
-					<Value><![CDATA[0.4]]></Value>
-					<Value><![CDATA[0.625]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.6]]></Value>
-					<Value><![CDATA[0.45]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.6]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.45]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.5]]></Value>
-					<Value><![CDATA[0.575]]></Value>
-					<Value><![CDATA[0.45]]></Value>
-					<Value><![CDATA[0.575]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.55]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.4]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.525]]></Value>
-					<Value><![CDATA[0.475]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.425]]></Value>
-					<Value><![CDATA[0.45]]></Value>
-					<Value><![CDATA[0.35]]></Value>
-					<Value><![CDATA[0.3]]></Value>
-					<Value><![CDATA[0.325]]></Value>
-					<Value><![CDATA[0.275]]></Value>
-					<Value><![CDATA[0.25]]></Value>
-					<Value><![CDATA[0.175]]></Value>
-					<Value><![CDATA[0.175]]></Value>
-					<Value><![CDATA[0.1]]></Value>
-					<Value><![CDATA[0.15]]></Value>
-					<Value><![CDATA[0.1]]></Value>
-					<Value><![CDATA[0.1]]></Value>
-					<Value><![CDATA[0.1]]></Value>
-					<Value><![CDATA[0.075]]></Value>
-					<Value><![CDATA[0.075]]></Value>
-					<Value><![CDATA[0.05]]></Value>
-					<Value><![CDATA[0.025]]></Value>
-					<Value><![CDATA[0.0]]></Value>
-				</TableFunction>
 			</TableFunctions>
 			<AgentLinks>
 				<AgentLink>
@@ -4450,6 +4445,11 @@ ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from, false);
 					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
 					<AgentLinkBidirectional>true</AgentLinkBidirectional>
 					<MessageType><![CDATA[Object]]></MessageType>
+					<StatechartReference>
+						<PackageName><![CDATA[absites]]></PackageName>
+						<ClassName><![CDATA[VaxManufacturer]]></ClassName>
+						<ItemName><![CDATA[statechart]]></ItemName>
+					</StatechartReference>
 					<LineStyle>SOLID</LineStyle>
 					<LineWidth>1</LineWidth>
 					<LineColor>-16777216</LineColor>
@@ -4472,6 +4472,11 @@ ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from, false);
 					<AgentLinkBidirectional>true</AgentLinkBidirectional>
 					<BidirectionalPeerId>1751297080162</BidirectionalPeerId>
 					<MessageType><![CDATA[Order]]></MessageType>
+					<StatechartReference>
+						<PackageName><![CDATA[absites]]></PackageName>
+						<ClassName><![CDATA[VaxManufacturer]]></ClassName>
+						<ItemName><![CDATA[statechart]]></ItemName>
+					</StatechartReference>
 					<LineStyle>SOLID</LineStyle>
 					<LineWidth>1</LineWidth>
 					<LineColor>-16777216</LineColor>
