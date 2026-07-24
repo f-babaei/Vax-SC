@@ -3289,7 +3289,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties TargetId="1741090074004" External="false" Constant="false" Array="false">
-						<Formula><![CDATA[max(0, DesiredProduction+WIPGap)]]></Formula>
+						<Formula><![CDATA[max(0, DesiredProduction+WIPGap)*prodCoeff]]></Formula>
 						<Color/>
 						<ValveIndex>1</ValveIndex>
 						<Points>
@@ -4083,6 +4083,36 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 					<LineWidth>1</LineWidth>
 					<Delay>false</Delay>
 				</Link>
+				<Link SourceId="1784889927079" TargetId="1741088984983" Polarity="null">
+					<Height>-39.437</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>90</X><Y>180</Y></Direction>
+					<Id>1784891036238</Id>
+					<Name><![CDATA[prodCoeff - vaxProductionRate]]></Name>
+					<X>340</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+				<Link SourceId="1784889927079" TargetId="1741090390886" Polarity="null">
+					<Height>-28.193</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>-90</X><Y>180</Y></Direction>
+					<Id>1784891728645</Id>
+					<Name><![CDATA[prodCoeff - productionReleaseRate]]></Name>
+					<X>340</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
 			</Dependences>
 			<StatechartElements>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
@@ -4107,7 +4137,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="100" Height="30">
-						<EntryAction><![CDATA[prodCoeff = 0.5]]></EntryAction>
+						<EntryAction><![CDATA[prodCoeff = 1//0.5]]></EntryAction>
 						<FillColor/>
 					</Properties>
 				</StatechartElement>
@@ -4120,7 +4150,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="100" Height="30">
-						<EntryAction><![CDATA[prodCoeff = 0]]></EntryAction>
+						<EntryAction><![CDATA[prodCoeff = 1//0]]></EntryAction>
 						<FillColor/>
 					</Properties>
 				</StatechartElement>
@@ -7805,8 +7835,8 @@ onOrder = false;
 					</Properties>
 					<Action><![CDATA[double mu = averageDemand;///52/weeklySessions;
 double sig = 0.2*mu;
-double currentDemand = max(0, normal(sig, mu));
-//double currentDemand = mu;
+//double currentDemand = max(0, normal(sig, mu));
+double currentDemand = mu;
 
 vaxCentre.vaxOrderRate = max(0, currentDemand);
 //vaxCentre.vaxOrderRate = max(0, currentDemand/(7/weeklySessions));]]></Action>
