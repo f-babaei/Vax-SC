@@ -2836,9 +2836,6 @@ else {onEmergencyOrder = false;}]]></Body>
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[StorageCapacity]]></Name>
-				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
 MOB = vaxOrderRate*TDD;
@@ -3213,7 +3210,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 					<ShowLabel>true</ShowLabel>
 					<Properties SourceId="1741088985088" TargetId="1756202744434" External="false" Constant="false" Array="false">
 						<Formula><![CDATA[//(RSV>ShippingDept.VehicleCapacity)? 0:DesiredShipmentRate*tfFunc(MaxShipmentRate/DesiredShipmentRate)
-(RSV>VI)? 0:DesiredShipmentRate*tfFunc(MaxShipmentRate/DesiredShipmentRate)]]></Formula>
+(RSV>VI)? 0:DesiredShipmentRate*tfFunc(MaxShipmentRate/DesiredShipmentRate)*prodCoeff]]></Formula>
 						<Color/>
 						<ValveIndex>1</ValveIndex>
 						<Points>
@@ -4113,6 +4110,21 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 					<LineWidth>1</LineWidth>
 					<Delay>false</Delay>
 				</Link>
+				<Link SourceId="1784889927079" TargetId="1741088984981" Polarity="null">
+					<Height>20.0</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>290</X><Y>180</Y></Direction>
+					<Id>1784903774165</Id>
+					<Name><![CDATA[prodCoeff - vaxShipmentRate]]></Name>
+					<X>340</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
 			</Dependences>
 			<StatechartElements>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
@@ -4220,7 +4232,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 						<Condition><![CDATA[true]]></Condition>
 						<Rate Class="CodeUnitValue">
 							<Code><![CDATA[.13]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
 						</Rate>
 						<MessageType><![CDATA[Object]]></MessageType>
 						<DefaultTransition>true</DefaultTransition>
@@ -4250,7 +4262,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 						<Condition><![CDATA[true]]></Condition>
 						<Rate Class="CodeUnitValue">
 							<Code><![CDATA[.16]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
 						</Rate>
 						<MessageType><![CDATA[Object]]></MessageType>
 						<DefaultTransition>true</DefaultTransition>
@@ -4280,7 +4292,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 						<Condition><![CDATA[true]]></Condition>
 						<Rate Class="CodeUnitValue">
 							<Code><![CDATA[.06]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
 						</Rate>
 						<MessageType><![CDATA[Object]]></MessageType>
 						<DefaultTransition>true</DefaultTransition>
@@ -4311,7 +4323,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 						<Condition><![CDATA[true]]></Condition>
 						<Rate Class="CodeUnitValue">
 							<Code><![CDATA[.27]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
 						</Rate>
 						<MessageType><![CDATA[Object]]></MessageType>
 						<DefaultTransition>true</DefaultTransition>
@@ -4342,7 +4354,7 @@ StorageCapacity = Capacity;//6*7*vaxOrderRate; // six weeks of average daily ord
 						<Condition><![CDATA[true]]></Condition>
 						<Rate Class="CodeUnitValue">
 							<Code><![CDATA[.1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_MONTH]]></Unit>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
 						</Rate>
 						<MessageType><![CDATA[Object]]></MessageType>
 						<DefaultTransition>true</DefaultTransition>
@@ -5112,9 +5124,6 @@ ShippingDept.ship(realisedShipment, realisedRate, this, orderMsg.from, false);
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[StorageCapacity]]></Name>
 				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
@@ -10113,7 +10122,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 							<Value Class="EntityCodeValue">
 								<IsAgentEntity>true</IsAgentEntity>
 								<EntityEmbeddedObject>
-									<Id>1783001577026</Id>
+									<Id>1784903503529</Id>
 									<ActiveObjectClass>
 										<PackageName><![CDATA[absites]]></PackageName>
 										<ClassName><![CDATA[Vehicle]]></ClassName>
@@ -10169,7 +10178,7 @@ return .1;//orderAgent.amount/orderAgent.amountRate;]]></Body>
 									</LocationNameCode>
 									<InitializationType>LOAD_FROM_DATABASE</InitializationType>
 									<InitializationDatabaseTableQuery>
-										<Id>1783001577025</Id>
+										<Id>1784903503528</Id>
 										<TableReference>
 										</TableReference>
 									</InitializationDatabaseTableQuery>
@@ -11090,9 +11099,6 @@ waitingTime(agent)
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[Name]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[StorageCapacity]]></Name>
 				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[vaxOrderRate = Rollout*adjFactor;//Capacity/52/2/(7/2);
